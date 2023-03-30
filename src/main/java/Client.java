@@ -1,6 +1,9 @@
 import java.net.*;
 import java.io.*;
 
+/**
+ * Client class that connects to the server and sends messages to the server.
+ */
 public class Client {
     private String hostname;
     private int port;
@@ -17,8 +20,10 @@ public class Client {
 
             System.out.println("Connected to the chat server");
 
-            new ReadThread(socket, this).start(); // creates a new thread to read messages from the server
-            new WriteThread(socket, this).start(); // creates a new thread to write messages to the server
+            ReadThread readThread = new ReadThread(socket, this);
+            readThread.start(); // creates a new thread to read messages from the server
+            WriteThread writeThread = new WriteThread(socket, this);
+            writeThread.start(); // creates a new thread to write messages to the server
 
         } catch (UnknownHostException e) {
             System.out.println("Server not found: " + e.getMessage());
@@ -38,7 +43,7 @@ public class Client {
     public static void main(String[] args) {
         if (args.length < 2) return;
 
-        String hostname = args[0]; // server host name
+        String hostname = args[0]; // server host name (ip)
         int port = Integer.parseInt(args[1]); // port number
 
         Client client = new Client(hostname, port);
