@@ -22,10 +22,19 @@ public class Server {
     public void run(int port) {
         try {
             ServerSocket serverSocket = new ServerSocket(port);
-            Socket clientSocket = serverSocket.accept();
             System.out.println("Server is listening on port " + port);
+
+            while (true) {
+                Socket clientSocket = serverSocket.accept(); // keeps listening for a connection and if there is, accept connection
+                System.out.println("New user connected");
+
+                UserThread user = new UserThread(clientSocket, this);
+                userThreads.add(user);
+                user.start(); // run le thread
+            }
         } catch (IOException e) {
             System.out.println("Exception caught when trying to listen on port " + port + " or listening for a connection");
+            e.printStackTrace();
         }
     }
 
@@ -82,6 +91,11 @@ public class Server {
     }
 
     public static void main(String[] args) {
+        if (args.length < 1) {
+            System.out.println("Usage: java Server <port number>");
+            System.exit(0);
+        }
+
         int port = Integer.parseInt(args[0]);
         Server server = new Server();
         server.run(port); // initialize the server
