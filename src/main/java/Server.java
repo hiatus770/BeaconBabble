@@ -73,16 +73,12 @@ public class Server {
 
     /**
      * This method is called by the UserThread class to get a list of all the usernames connected to the server.
-     * @return a formatted string containing all the usernames connected to the server
+     * @return the set containing all the usernames connected to the server
+     * @see Set
+     * @implNote The set return type only works because UserThread is using PrintWriter
      */
-    public String getUsernames() {
-        // matias this is kind of a shitty way to do this
-        // it works for now, but if you want to you can look into other ways to do this
-        String usernameList = "";
-        for (String username : usernames) {
-            usernameList += username + "\n";
-        }
-        return usernameList;
+    public Set getUsernames() {
+        return usernames;
     }
 
     public static void main(String[] args) {

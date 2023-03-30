@@ -10,7 +10,7 @@ import java.io.*;
 public class UserThread extends Thread {
     private Socket socket;
     private Server server;
-    private PrintWriter writer;
+    private PrintWriter writer; // writes formatted representations of objects as text output
 
     public UserThread(Socket socket, Server server) {
         this.socket = socket;
