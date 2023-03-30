@@ -19,7 +19,7 @@ public class Server {
      * @throws IOException if an I/O error occurs when opening the socket
      * @throws IllegalArgumentException if the port parameter is outside the specified range of valid port values (but this likely won't happen)
      */
-    public void init(int port) {
+    public void run(int port) {
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             Socket clientSocket = serverSocket.accept();
@@ -84,7 +84,6 @@ public class Server {
     public static void main(String[] args) {
         int port = Integer.parseInt(args[0]);
         Server server = new Server();
-        server.init(port); // initialize the server
-
+        server.run(port); // initialize the server
     }
 }
