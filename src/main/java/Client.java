@@ -8,10 +8,12 @@ public class Client {
     private String hostname;
     private int port;
     private String username;
+    private String currentIp; // current ip address of the client
 
     public Client(String hostname, int port) {
         this.hostname = hostname;
         this.port = port;
+        currentIp = getIp(); // gets the current ip address of the client
     }
 
     public void run() {
@@ -38,6 +40,16 @@ public class Client {
 
     public String getUsername() {
         return this.username;
+    }
+
+    public String getIp() {
+        try {
+            InetAddress ip = InetAddress.getLocalHost();
+            return ip.getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void main(String[] args) {

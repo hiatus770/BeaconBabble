@@ -1,3 +1,4 @@
+// Acts as the thread that reads the messages from the server and displays it 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,7 +41,7 @@ public class ReadThread extends Thread {
 
                 // prints the username after displaying the server's message
                 if (client.getUsername() != null) {
-                    System.out.println("[" + client.getUsername() + "]: ");
+                    System.out.print("[" + client.getUsername() + "]: ");
                 }
             } catch (IOException e) {
                 System.out.println("Error reading from server: " + e.getMessage());
