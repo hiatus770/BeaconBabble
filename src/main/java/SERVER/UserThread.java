@@ -37,7 +37,8 @@ public class UserThread extends Thread {
             server.broadcast(serverMessage, this); // Broadcasts the newly connected user to all users
 
             String clientMessage;
-
+            
+            // Grabs input from the ReadThread in java client
             do {
                 clientMessage = reader.readLine(); // receives the client message
                 serverMessage = "[" + username + "]: " + clientMessage; // formatting client message

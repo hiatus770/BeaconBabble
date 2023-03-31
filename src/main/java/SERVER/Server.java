@@ -46,7 +46,7 @@ public class Server {
      */
     public void broadcast(String message, UserThread thread) {
         for (UserThread user : userThreads) {
-            if (user != thread) {
+            if (user != thread) { // This is so that we dont send the message back to the user that sent it
                 user.sendMessage(message);
             }
         }

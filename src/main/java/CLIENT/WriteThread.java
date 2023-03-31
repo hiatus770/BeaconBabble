@@ -42,6 +42,7 @@ public class WriteThread extends Thread {
         String text;
 
         do {
+            // THIS IS WHAT WE HAVE TO REWORK! 
             text = console.readLine("[" + username + "]: "); // reads a line of text from the console
             client.messageHistory += ("\n[" + username + "]: " + text);
             writer.println(text); // prints the text to the server
