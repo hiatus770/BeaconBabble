@@ -26,7 +26,7 @@ public class Client {
             readThread.start(); // creates a new thread to read messages from the server
             WriteThread writeThread = new WriteThread(socket, this);
             writeThread.start(); // creates a new thread to write messages to the server
-
+            
         } catch (UnknownHostException e) {
             System.out.println("Server not found: " + e.getMessage());
         } catch (IOException e) {

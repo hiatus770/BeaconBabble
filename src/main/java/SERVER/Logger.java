@@ -11,7 +11,6 @@ import java.io.FileWriter;   // Import the FileWriter class
 // public class Logger {
 //     private String filename; 
 //     private FileWriter file;
-
 //     public Logger(String filename) {
 //         this.filename = filename;
 //         this.file = new FileWriter(filename);

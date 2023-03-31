@@ -8,9 +8,9 @@ import java.util.*;
  * @author goose
  */
 public class Server {
-    private int port;
-    private Set<String> usernames = new HashSet<>();
-    private Set<UserThread> userThreads = new HashSet<>();
+    private int port; // the port number for the server to listen on
+    private Set<String> usernames = new HashSet<>(); // Set of all the usernames 
+    private Set<UserThread> userThreads = new HashSet<>(); // Set of all the user threads
 
     /**
      * This method is called by the main method to initialize the server
