@@ -37,7 +37,12 @@ public class ReadThread extends Thread {
         while (true) {
             try {
                 String response = reader.readLine(); // obtains the response from the server
-                System.out.println("\n" + response); // prints the response from the server
+
+                // System.out.println("\n" + response); // prints the response from the server
+                client.messageHistory += ("\n" + response);
+                // clear screen
+                System.out.print("\033[H\033[2J");
+                System.out.println(client.messageHistory); // prints the username after displaying the server's message
 
                 // prints the username after displaying the server's message
                 if (client.getUsername() != null) {

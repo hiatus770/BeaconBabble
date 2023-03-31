@@ -31,13 +31,14 @@ public class UserThread extends Thread {
             writer = new PrintWriter(output, true);
 
             String username = reader.readLine(); // obtains username from the client
-            server.addUsername(username, this); // adds the username to the set of usernames
+            server.addUsername(username, this); // adds the username to the set of usernames and the user object 
 
             String serverMessage = "New user connected: " + username + ". Welcome!";
             server.broadcast(serverMessage, this); // Broadcasts the newly connected user to all users
 
             String clientMessage;
-
+            
+            // Grabs input from the ReadThread in java client
             do {
                 clientMessage = reader.readLine(); // receives the client message
                 serverMessage = "[" + username + "]: " + clientMessage; // formatting client message
@@ -51,8 +52,10 @@ public class UserThread extends Thread {
             server.broadcast(serverMessage, this);
 
         } catch (IOException e) {
-            System.out.println("Error in UserThread: " + e.getMessage()); // uh oh poopy stinky
-            e.printStackTrace();
+            if (server.fullDebug){
+                System.out.println("Error in UserThread: " + e.getMessage()); // uh oh poopy stinky
+                e.printStackTrace();
+            }
         }
     }
 

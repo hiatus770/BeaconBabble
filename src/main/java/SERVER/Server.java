@@ -11,6 +11,7 @@ public class Server {
     private int port; // the port number for the server to listen on
     private Set<String> usernames = new HashSet<>(); // Set of all the usernames 
     private Set<UserThread> userThreads = new HashSet<>(); // Set of all the user threads
+    public boolean fullDebug = false; // if true, prints out all the debug messages
 
     /**
      * This method is called by the main method to initialize the server
@@ -45,7 +46,7 @@ public class Server {
      */
     public void broadcast(String message, UserThread thread) {
         for (UserThread user : userThreads) {
-            if (user != thread) {
+            if (user != thread) { // This is so that we dont send the message back to the user that sent it
                 user.sendMessage(message);
             }
         }
