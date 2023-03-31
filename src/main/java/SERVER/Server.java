@@ -11,6 +11,7 @@ public class Server {
     private int port; // the port number for the server to listen on
     private Set<String> usernames = new HashSet<>(); // Set of all the usernames 
     private Set<UserThread> userThreads = new HashSet<>(); // Set of all the user threads
+    public boolean fullDebug = false; // if true, prints out all the debug messages
 
     /**
      * This method is called by the main method to initialize the server

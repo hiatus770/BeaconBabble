@@ -9,11 +9,11 @@ public class Client {
     private int port;
     private String username;
     public String messageHistory = ""; // stores all the messages sent by the client and the server
+    private boolean fullDebug = false; // if true, prints out all the debug messages
 
     public Client(String hostname, int port) {
         this.hostname = hostname;
         this.port = port;
-        currentIp = getIp(); // gets the current ip address of the client
     }
 
     public void run() {
@@ -30,7 +30,7 @@ public class Client {
         } catch (UnknownHostException e) {
             System.out.println("Server not found: " + e.getMessage());
         } catch (IOException e) {
-            System.out.println("I/O Error: " + e.getMessage());
+            if (fullDebug) System.out.println("I/O Error: " + e.getMessage());
         }
     }
 
