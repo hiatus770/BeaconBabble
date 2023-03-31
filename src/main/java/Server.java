@@ -28,7 +28,7 @@ public class Server {
                 Socket clientSocket = serverSocket.accept(); // keeps listening for a connection and if there is, accept connection
                 UserThread user = new UserThread(clientSocket, this);
                 userThreads.add(user);
-                System.out.println(user.getUsername() + " has dropped");
+                System.out.println("New user has dropped");
                 user.start(); // run le thread
             }
         } catch (IOException e) {
