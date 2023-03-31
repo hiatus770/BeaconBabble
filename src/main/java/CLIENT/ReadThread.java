@@ -43,7 +43,7 @@ public class ReadThread extends Thread {
                 if (client.getUsername() != null) {
                     System.out.print("[" + client.getUsername() + "]: ");
                 }
-            } catch (IOException e) {
+            } catch (IOException e){ 
                 System.out.println("Error reading from server: " + e.getMessage());
                 e.printStackTrace();
                 break;
