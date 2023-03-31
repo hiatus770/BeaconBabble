@@ -52,7 +52,7 @@ public class UserThread extends Thread {
             server.broadcast(serverMessage, this);
 
         } catch (IOException e) {
-            if (Server.fullDebug){
+            if (server.fullDebug){
                 System.out.println("Error in UserThread: " + e.getMessage()); // uh oh poopy stinky
                 e.printStackTrace();
             }
