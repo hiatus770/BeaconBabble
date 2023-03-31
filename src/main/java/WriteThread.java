@@ -35,8 +35,7 @@ public class WriteThread extends Thread {
     public void run() {
         Console console = System.console(); // returns the console object associated with the current Java application
 
-        //String username = console.readLine("\nEnter your name: "); // reads a line of text from the console
-        String username = "test";
+        String username = console.readLine("\nEnter your name: "); // reads a line of text from the console
         client.setUsername(username);
         writer.println(username); // prints the username to the server
 
