@@ -9,6 +9,7 @@ public class Client {
     private int port;
     private String username;
     private String currentIp; // current ip address of the client
+    public String messageHistory = ""; // stores all the messages sent by the client and the server
 
     public Client(String hostname, int port) {
         this.hostname = hostname;
@@ -26,7 +27,7 @@ public class Client {
             readThread.start(); // creates a new thread to read messages from the server
             WriteThread writeThread = new WriteThread(socket, this);
             writeThread.start(); // creates a new thread to write messages to the server
-            
+
         } catch (UnknownHostException e) {
             System.out.println("Server not found: " + e.getMessage());
         } catch (IOException e) {

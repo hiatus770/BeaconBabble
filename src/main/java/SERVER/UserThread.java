@@ -31,7 +31,7 @@ public class UserThread extends Thread {
             writer = new PrintWriter(output, true);
 
             String username = reader.readLine(); // obtains username from the client
-            server.addUsername(username, this); // adds the username to the set of usernames
+            server.addUsername(username, this); // adds the username to the set of usernames and the user object 
 
             String serverMessage = "New user connected: " + username + ". Welcome!";
             server.broadcast(serverMessage, this); // Broadcasts the newly connected user to all users
