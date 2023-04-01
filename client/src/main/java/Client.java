@@ -73,17 +73,6 @@ public class Client extends JPanel implements ActionListener {
 
             ReadThread readThread = new ReadThread(socket, this);
             readThread.start(); // creates a new thread to read messages from the server
-            //WriteThread writeThread = new WriteThread(socket, client);
-            //writeThread.start(); // creates a new thread to write messages to the server
-
-            /*while (!message.equals("/exit")) {
-                if (sendMessage) {
-                    System.out.println("waiting for a message");
-                    writer.println(message); // sends the message to the server
-                    System.out.println("message sent");
-                    sendMessage = false;
-                }
-            }*/
         } catch (UnknownHostException e) {
             System.out.println("Server not found: " + e.getMessage());
         } catch (IOException e) {
@@ -108,36 +97,6 @@ public class Client extends JPanel implements ActionListener {
 
         Client client = new Client(hostname, port);
         client.run();
-
-        // trying to connect to the socket
-        /*try {
-            Socket socket = new Socket(hostname, port); // creates a socket and connects it to the specified port number at the specified IP address
-            client.writer = new PrintWriter(socket.getOutputStream(), true);
-
-            System.out.println("Connected to the chat server");
-            client.createFrame(hostname, port, client);
-            client.username = JOptionPane.showInputDialog("Enter a username: ");
-            client.incomingMessageBox.setText("Welcome to the chat, " + client.username + "!");
-            client.writer.println(client.username); // sending the username to the server
-
-            ReadThread readThread = new ReadThread(socket, client);
-            readThread.start(); // creates a new thread to read messages from the server
-            //WriteThread writeThread = new WriteThread(socket, client);
-            //writeThread.start(); // creates a new thread to write messages to the server
-
-            /*while (!client.message.equals("/exit")) {
-                if (client.sendMessage) {
-                    System.out.println("waiting for a message");
-                    client.writer.println(client.message); // sends the message to the server
-                    System.out.println("message sent");
-                    client.sendMessage = false;
-                }
-            }*/ /*
-        } catch (UnknownHostException e) {
-            System.out.println("Server not found: " + e.getMessage());
-        } catch (IOException e) {
-            if (client.fullDebug) System.out.println("I/O Error: " + e.getMessage());
-        }*/
     }
 
     @Override
