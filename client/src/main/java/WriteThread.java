@@ -1,8 +1,7 @@
-import java.io.Console;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
+import javax.swing.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * Thread responsible for writing messages to the server.
@@ -33,20 +32,13 @@ public class WriteThread extends Thread {
     }
 
     public void run() {
-        Console console = System.console(); // returns the console object associated with the current Java application
-
-        String username = console.readLine("\nEnter your name: "); // reads a line of text from the console
-        client.setUsername(username);
-        writer.println(username); // prints the username to the server
-
-        String text;
-
-        do {
-            // THIS IS WHAT WE HAVE TO REWORK! 
-            text = console.readLine("[" + username + "]: "); // reads a line of text from the console
-            client.messageHistory += ("\n[" + username + "]: " + text);
-            writer.println(text); // prints the text to the server
-        } while (!text.equals("/exit"));
+        while (client.message != "/exit") {
+            if (client.sendMessage) {
+                writer.println(client.message); // sends the message to the server
+                System.out.println("message sent");
+                client.sendMessage = false;
+            }
+        }
 
         try {
             socket.close();
