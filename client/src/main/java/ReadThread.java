@@ -36,9 +36,8 @@ public class ReadThread extends Thread {
     public void run() {
         while (true) {
             try {
-                client.incomingMessage = reader.readLine(); // sets the incoming message to the response from the server
-                System.out.println("from server:" + client.incomingMessage);
-                client.incomingMessageBox.setText(client.incomingMessageBox.getText() + client.incomingMessage + "\n"); // sets the text of the incoming message box to the incoming message
+                String incomingMessage = reader.readLine(); // sets the incoming message to the response from the server
+                client.incomingMessageBox.setText(client.incomingMessageBox.getText() + incomingMessage + "\n"); // sets the text of the incoming message box to the incoming message
             } catch (IOException e){
                 System.out.println("Error reading from server: " + e.getMessage());
                 e.printStackTrace();
