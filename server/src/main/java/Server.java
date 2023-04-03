@@ -14,7 +14,9 @@ public class Server {
     public boolean fullDebug = false; // if true, prints out all the debug messages
 
     /**
-     * This method is called by the main method to initialize the server
+     * This method is called by the main method to initialize the server.
+     * It continuously listens for new connections.
+     * If there is a new connection, is creates a new UserThread object for the new user.
      * @param port the port number for the server to listen on
      *             (must be between 0 and 65535)
      * @throws IOException if an I/O error occurs when opening the socket
@@ -29,7 +31,7 @@ public class Server {
                 Socket clientSocket = serverSocket.accept(); // keeps listening for a connection and if there is, accept connection
                 UserThread user = new UserThread(clientSocket, this);
                 userThreads.add(user);
-                System.out.println("New user has dropped");
+                System.out.println("New user has connected from " + clientSocket.getInetAddress().getHostAddress() + " on port " + clientSocket.getPort());
                 user.start(); // run le thread
             }
         } catch (IOException e) {
@@ -46,7 +48,7 @@ public class Server {
      */
     public void broadcast(String message, UserThread thread) {
         for (UserThread user : userThreads) {
-            if (user != thread) { // This is so that we dont send the message back to the user that sent it
+            if (user != thread) { // This is so that we don't send the message back to the user that sent it
                 user.sendMessage(message);
             }
         }
@@ -90,14 +92,17 @@ public class Server {
         return usernames;
     }
 
+    /**
+     * Main method for the server. Initializes a server object and calls the run method.
+     * @param args
+     */
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        /*if (args.length < 1) { // ill figure out args for gradle later
+        if (args.length < 1) {
             System.out.println("Usage: java Server <port number>");
             System.exit(0);
-        }*/
-        System.out.print("Enter port: ");
-        int port = Integer.parseInt(input.nextLine());
+        }
+        int port = Integer.parseInt(args[0]);
         Server server = new Server();
         server.run(port); // initialize the server
     }

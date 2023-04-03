@@ -118,6 +118,10 @@ public class Client extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Main method for the client, handles for the command line arguments and initializing the client object
+     * @param args
+     */
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         if (args.length < 2) return; // ill figure out args for gradle later
@@ -129,11 +133,19 @@ public class Client extends JPanel implements ActionListener {
         client.run();
     }
 
+    /**
+     * Processes the event when the user presses the enter key or the send button.
+     * Responsible for sending the message to the server.
+     * @see ActionListener
+     * @see PrintWriter
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         message = outgoingMessage.getText();
         System.out.println(message);
         writer.println(message); // sends the message to the server
+        // sets the text in the message box to the username and the message ADDED ON TO the rest of the text
         incomingMessageBox.setText(incomingMessageBox.getText() + "[" + username + "]: " + outgoingMessage.getText() + "\n");
         outgoingMessage.setText("");
 

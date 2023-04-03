@@ -19,6 +19,8 @@ public class UserThread extends Thread {
 
     /**
      * Runs the user thread. Handles all the interactions the user thread should be able to do with the server.
+     * This includes receiving messages from the user, sending messages to the user, and removing the user from the server when they disconnect.
+     * @author goose and hiatus
      */
     public void run() {
         try {
@@ -35,6 +37,8 @@ public class UserThread extends Thread {
 
             String serverMessage = "New user connected: " + username + ". Welcome!";
             server.broadcast(serverMessage, this); // Broadcasts the newly connected user to all users
+
+            printUsers(); // prints a list of online users to the newly connected user
 
             String clientMessage;
             
@@ -66,7 +70,7 @@ public class UserThread extends Thread {
         if (server.hasUsers()) {
             writer.println("Connected users: " + server.getUsernames());
         } else {
-            writer.println("No other users connected");
+            writer.println("No other users connected.");
         }
     }
 
