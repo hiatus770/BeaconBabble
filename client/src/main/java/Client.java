@@ -72,7 +72,7 @@ public class Client extends JPanel implements ActionListener {
         constraints.gridy = 0; // sets the x position of the component to the first grid spot
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1.0;
-        constraints.weighty = 1;
+        constraints.weighty = 1.0;
         add(scrollPane, constraints);
 
     }
@@ -86,9 +86,7 @@ public class Client extends JPanel implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);
         frame.setSize(400, 300);
-
         frame.add(client);
-
         frame.setVisible(true);
     }
 
@@ -99,7 +97,10 @@ public class Client extends JPanel implements ActionListener {
      */
     public void run() {
         try {
+            // Start a socket at the hostname and port
             Socket socket = new Socket(hostname, port); // creates a socket and connects it to the specified port number at the specified IP address
+
+            // Writing
             writer = new PrintWriter(socket.getOutputStream(), true);
 
             System.out.println("Connected to the chat server");
@@ -109,6 +110,7 @@ public class Client extends JPanel implements ActionListener {
             incomingMessageBox.setText(incomingMessageBox.getText() + "\nWelcome to the chat, " + username + "!\n");
             writer.println(username); // sending the username to the server
 
+            // Start the read thread for the program, this will add any received messages to the incomingMessageBox
             ReadThread readThread = new ReadThread(socket, this);
             readThread.start(); // creates a new thread to read messages from the server
         } catch (UnknownHostException e) {
