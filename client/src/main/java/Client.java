@@ -1,6 +1,5 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.net.*;
 import java.io.*;
 import javax.swing.*;
@@ -84,6 +83,15 @@ public class Client extends JPanel implements ActionListener {
     private void createFrame(Client client) {
         JFrame frame = new JFrame("Beacon");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // add a window listener to the frame so that when the window is closed, the program exits
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                writer.println("/exit");
+                System.out.println("Exiting!");
+            }
+        });
+        
         frame.setResizable(true);
         frame.setSize(400, 300);
         frame.add(client);
@@ -106,13 +114,16 @@ public class Client extends JPanel implements ActionListener {
             System.out.println("Connected to the chat server");
             incomingMessageBox.setText("Connected to the chat server on address " + hostname + " on port " + port + ".");
             createFrame(this); // creates the window frame for the client
+            
+            // Get the username from the user 
             username = JOptionPane.showInputDialog("Enter a username: ");
             incomingMessageBox.setText(incomingMessageBox.getText() + "\nWelcome to the chat, " + username + "!\n");
             writer.println(username); // sending the username to the server
 
             // Start the read thread for the program, this will add any received messages to the incomingMessageBox
             ReadThread readThread = new ReadThread(socket, this);
-            readThread.start(); // creates a new thread to read messages from the server
+            readThread.start(); // Start the readthread 
+
         } catch (UnknownHostException e) {
             System.out.println("Server not found: " + e.getMessage());
         } catch (IOException e) {

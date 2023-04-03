@@ -105,5 +105,5 @@ public class Server {
         int port = Integer.parseInt(args[0]);
         Server server = new Server();
         server.run(port); // initialize the server
-    }
+    } 
 }
