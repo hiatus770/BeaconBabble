@@ -73,7 +73,6 @@ public class Client extends JPanel implements ActionListener {
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
         add(scrollPane, constraints);
-
     }
 
     /**
