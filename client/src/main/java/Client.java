@@ -3,6 +3,8 @@ import java.awt.event.*;
 import java.net.*;
 import java.io.*;
 import javax.swing.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Scanner;
 
 /**
@@ -17,6 +19,7 @@ public class Client extends JPanel implements ActionListener {
     private int port; // port to connect on
     private String username, message; // username, message being sent to the server
     private PrintWriter writer; // used for writing messages to the server
+    private String timeStamp; // the time stamp of the message
     private boolean fullDebug = false; // if true, prints out all the debug messages
     public JTextArea incomingMessageBox;
     public JTextField outgoingMessage;
@@ -83,7 +86,8 @@ public class Client extends JPanel implements ActionListener {
         JFrame frame = new JFrame("Beacon");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // add a window listener to the frame so that when the window is closed, the program exits
+        // add a window listener to the frame so that when the window is closed, the program exits and sends an exit signal to the server
+        // this is necessary to avoid the server keeping the client in the list of connected clients
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 writer.println("/exit");
@@ -155,10 +159,11 @@ public class Client extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         message = outgoingMessage.getText();
+        timeStamp = new SimpleDateFormat("MMM d HH:mm").format(Calendar.getInstance().getTime()); // gets the current time
         System.out.println(message);
         writer.println(message); // sends the message to the server
         // sets the text in the message box to the username and the message ADDED ON TO the rest of the text
-        incomingMessageBox.setText(incomingMessageBox.getText() + "[" + username + "]: " + outgoingMessage.getText() + "\n");
+        incomingMessageBox.setText(incomingMessageBox.getText() + "[" + timeStamp + "] [" + username + "]: " + outgoingMessage.getText() + "\n");
         outgoingMessage.setText("");
 
         incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength());
