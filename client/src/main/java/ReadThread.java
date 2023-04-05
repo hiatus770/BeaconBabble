@@ -1,4 +1,5 @@
 // Acts as the thread that reads the messages from the server and displays it 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +14,11 @@ public class ReadThread extends Thread {
     private BufferedReader reader;
     private Socket socket;
     private Client client;
+
+    // for the notification tray
+    private SystemTray tray;
+    private Image image;
+    private TrayIcon trayIcon;
 
     /**
      * Implements thread responsible for reading messages from the server.
@@ -34,10 +40,30 @@ public class ReadThread extends Thread {
     }
 
     public void run() {
+        tray = SystemTray.getSystemTray(); // initialize a system tray
+        image = Toolkit.getDefaultToolkit().getImage("icon.png"); // make an icon
+        trayIcon = new TrayIcon(image, "Beacon"); // initialize a tray icon
+        trayIcon.setImageAutoSize(true);
+        trayIcon.setToolTip("Beacon");
+        trayIcon.setImage(image);
+
+        try {
+            tray.add(trayIcon); // adds to the system tray
+        } catch (AWTException e) {
+            throw new RuntimeException(e);
+        }
+
         while (true) {
             try {
                 String incomingMessage = reader.readLine(); // sets the incoming message to the response from the server
-                client.incomingMessageBox.setText(client.incomingMessageBox.getText() + incomingMessage + "\n"); // sets the text of the incoming message box to the incoming message
+                client.incomingMessageBox.setText(client.incomingMessageBox.getText() + "\n" + incomingMessage); // sets the text of the incoming message box to the incoming message
+                client.incomingMessageBox.setCaretPosition(client.incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
+                //trayIcon.displayMessage("Beacon", incomingMessage, TrayIcon.MessageType.INFO);
+                // checks if the frame is active
+                if (!client.frame.isActive()) {
+                    // send a notification to the user
+                    trayIcon.displayMessage("Beacon", incomingMessage, TrayIcon.MessageType.INFO);
+                }
             } catch (IOException e){
                 System.out.println("Error reading from server: " + e.getMessage());
                 e.printStackTrace();

@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.TrayIcon.MessageType;
 import java.net.*;
 import java.io.*;
 import javax.swing.*;
@@ -21,8 +22,11 @@ public class Client extends JPanel implements ActionListener {
     private PrintWriter writer; // used for writing messages to the server
     private String timeStamp; // the time stamp of the message
     private boolean fullDebug = false; // if true, prints out all the debug messages
+
+    // GUI components are public to avoid needing getters and setters for them as they are accessed in the read thread
     public JTextArea incomingMessageBox;
     public JTextField outgoingMessage;
+    public JFrame frame;
 
     /**
      * Constructor for the Client class.
@@ -78,12 +82,48 @@ public class Client extends JPanel implements ActionListener {
         add(scrollPane, constraints);
     }
 
+    public static String[] getConnection() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new SpringLayout());
+
+        JTextField hostnameField = new JTextField(20);
+        JTextField portField = new JTextField(20);
+
+        Object[] message = {
+                "Host name:", hostnameField,
+                "Port:", portField
+        };
+
+        // keep running until the user enters a valid hostname and port
+        do {
+            int result = JOptionPane.showConfirmDialog(null, message, "Beacon", JOptionPane.OK_CANCEL_OPTION);
+            // a lot of error handling for the connection dialog
+            if (result == JOptionPane.OK_OPTION) {
+                if (hostnameField.getText().equals("") && portField.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please enter a host name and port number.", "Beacon", JOptionPane.ERROR_MESSAGE);
+                } else if (portField.getText().matches("[a-zA-Z]+")) {
+                    JOptionPane.showMessageDialog(null, "Please enter a number for the port.", "Beacon", JOptionPane.ERROR_MESSAGE);
+                } else if (portField.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please enter a port number.", "Beacon", JOptionPane.ERROR_MESSAGE);
+                } else if (hostnameField.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please enter a host name.", "Beacon", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    return new String[] {hostnameField.getText(), portField.getText()};
+                }
+            } else {
+                return null;
+            }
+        } while (true);
+
+
+    }
+
     /**
      * Creates a new frame for the client.
      * @param client the client that is creating the frame
      */
     private void createFrame(Client client) {
-        JFrame frame = new JFrame("Beacon");
+        frame = new JFrame("Beacon");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // add a window listener to the frame so that when the window is closed, the program exits and sends an exit signal to the server
@@ -95,8 +135,8 @@ public class Client extends JPanel implements ActionListener {
             }
         });
         
-        frame.setResizable(true);
-        frame.setSize(400, 300);
+        frame.setResizable(true); // allow frame to be resized
+        frame.setSize(400, 300); // set dimensions
         frame.add(client);
         frame.setVisible(true);
     }
@@ -104,14 +144,18 @@ public class Client extends JPanel implements ActionListener {
     /**
      * Runs the client-side code.
      * Contains the socket connection to the server, writing messages to the server, and GUI.
+     * @throws UnknownHostException if the hostname is not found
+     * @throws IOException if there is an I/O server
+     * @throws Exception if there is a strange error
+     * @return true if the client runs successfully, false if there is an error
      * @author goose
      */
-    public void run() {
+    public boolean run() {
         try {
             // Start a socket at the hostname and port
             Socket socket = new Socket(hostname, port); // creates a socket and connects it to the specified port number at the specified IP address
 
-            // Writing
+            // Writing to the server
             writer = new PrintWriter(socket.getOutputStream(), true);
 
             System.out.println("Connected to the chat server");
@@ -120,33 +164,47 @@ public class Client extends JPanel implements ActionListener {
             
             // Get the username from the user 
             username = JOptionPane.showInputDialog("Enter a username: ");
-            incomingMessageBox.setText(incomingMessageBox.getText() + "\nWelcome to the chat, " + username + "!\n");
+            incomingMessageBox.setText(incomingMessageBox.getText() + "\nWelcome to the chat, " + username + "!");
             writer.println(username); // sending the username to the server
 
             // Start the read thread for the program, this will add any received messages to the incomingMessageBox
             ReadThread readThread = new ReadThread(socket, this);
-            readThread.start(); // Start the readthread 
+            readThread.start(); // Start the ReadThread
 
+            return true;
         } catch (UnknownHostException e) {
-            System.out.println("Server not found: " + e.getMessage());
+            if (fullDebug) System.out.println("Server not found: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Server not found: " + e.getMessage(), "Beacon", JOptionPane.ERROR_MESSAGE);
+            return false;
         } catch (IOException e) {
             if (fullDebug) System.out.println("I/O Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "I/O Error: " + e.getMessage(), "Beacon", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } catch (Exception e) {
+            if (fullDebug) System.out.println("Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Beacon", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
 
     /**
      * Main method for the client, handles for the command line arguments and initializing the client object
-     * @param args
+     * @param args bruh
      */
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        if (args.length < 2) return; // ill figure out args for gradle later
+        // store connection info into a string array
+        String[] connectionInfo = getConnection();
 
-        String hostname = args[0]; // server host name (ip)
-        int port = Integer.parseInt(args[1]); // port number
+        // if the connection info is null (the user pressed cancel), exit the program
+        if (connectionInfo == null) System.exit(0);
+        Client client = new Client(connectionInfo[0], Integer.parseInt(connectionInfo[1]));
 
-        Client client = new Client(hostname, port);
-        client.run();
+        // keep running the client until the user enters a valid hostname and port
+        while(!client.run()) {
+            connectionInfo = getConnection();
+            if (connectionInfo == null) System.exit(0);
+            client = new Client(connectionInfo[0], Integer.parseInt(connectionInfo[1]));
+        }
     }
 
     /**
@@ -158,14 +216,14 @@ public class Client extends JPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        message = outgoingMessage.getText();
+        message = outgoingMessage.getText(); // get the text in the message box
         timeStamp = new SimpleDateFormat("MMM d HH:mm").format(Calendar.getInstance().getTime()); // gets the current time
         System.out.println(message);
         writer.println(message); // sends the message to the server
         // sets the text in the message box to the username and the message ADDED ON TO the rest of the text
-        incomingMessageBox.setText(incomingMessageBox.getText() + "[" + timeStamp + "] [" + username + "]: " + outgoingMessage.getText() + "\n");
-        outgoingMessage.setText("");
+        incomingMessageBox.setText(incomingMessageBox.getText() + "\n" + timeStamp + " [" + username + "]: " + outgoingMessage.getText());
+        outgoingMessage.setText(""); // reset the text box
 
-        incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength());
+        incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
     }
 }
