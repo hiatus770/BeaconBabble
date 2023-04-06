@@ -237,7 +237,7 @@ public class Client extends JPanel implements ActionListener {
         writer.println(message); 
 
         // sets the text in the message box to the username and the message ADDED ON TO the rest of the text
-        incomingMessageBox.setText(incomingMessageBox.getText() + message);
+        incomingMessageBox.setText(incomingMessageBox.getText() + message + "\n");
         outgoingMessage.setText(""); // reset the text box
 
         incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box

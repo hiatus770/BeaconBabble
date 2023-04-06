@@ -45,10 +45,9 @@ public class UserThread extends Thread {
 
             String clientMessage = "";
 
-            // keeps broadcasting messages from this user until they disconnect
+            // Keeps reading messages from the client until the client sends a /exit message
             while (!clientMessage.equals("/exit")) {
-                // sends message AFTER the thread has received the message, this forces the loop to check for an exit message
-                // timeStamp = new SimpleDateFormat("MMM d HH:mm").format(Calendar.getInstance().getTime()); // gets the current time
+                // Sends message AFTER the thread has received the message, this forces the loop to check for an exit message
                 serverMessage = clientMessage; // formatting client message
                 server.broadcast(serverMessage, this); // broadcasts the client message to all users
 
@@ -63,11 +62,12 @@ public class UserThread extends Thread {
             server.removeUsername(username, this); 
             socket.close(); 
 
-            serverMessage = username + " has left the room."; // bye bye message
+            // Sends a message to all users that the user has left the room before exiting 
+            serverMessage = username + " has left the room."; 
             server.broadcast(serverMessage, this);
 
         } catch (IOException e) {
-            // Catch the error 
+            // Catch the error if the user disconnects and print to the server 
             if (server.fullDebug){
                 System.out.println("Error in UserThread: " + e.getMessage()); 
                 e.printStackTrace();
