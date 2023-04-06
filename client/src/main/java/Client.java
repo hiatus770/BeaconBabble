@@ -138,7 +138,7 @@ public class Client extends JPanel implements ActionListener {
         frame.setSize(400, 300); // set dimensions
         frame.add(client);
         frame.setVisible(true);
-        Image icon = new ImageIcon(getClass().getResource("../resources/icon.png")).getImage();
+        Image icon = new ImageIcon(getClass().getResource("resources/icon.png")).getImage();
         try {
             frame.setIconImage(icon);
         } catch (Exception e) {

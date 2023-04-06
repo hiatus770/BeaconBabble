@@ -42,7 +42,7 @@ public class ReadThread extends Thread {
 
     public void run() {
         tray = SystemTray.getSystemTray(); // initialize a system tray
-        Image icon = new ImageIcon(getClass().getResource("../resources/icon.png")).getImage();
+        Image icon = new ImageIcon(getClass().getResource("resources/icon.png")).getImage();
         trayIcon = new TrayIcon(icon, "Beacon"); // initialize a tray icon
         trayIcon.setImageAutoSize(true);
         trayIcon.setToolTip("Beacon");
