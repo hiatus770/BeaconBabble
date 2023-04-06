@@ -8,8 +8,7 @@ import java.util.*;
  * @author goose
  */
 public class Server {
-    private int port; // the port number for the server to listen on
-    private Set<String> usernames = new HashSet<>(); // Set of all the usernames 
+    private Set<String> usernames = new HashSet<>(); // Set of all the usernames
     private Set<UserThread> userThreads = new HashSet<>(); // Set of all the user threads
     public boolean fullDebug = false; // if true, prints out all the debug messages
 
@@ -17,21 +16,20 @@ public class Server {
      * This method is called by the main method to initialize the server.
      * It continuously listens for new connections.
      * If there is a new connection, is creates a new UserThread object for the new user.
+     * @throws IOException if there is an error with listening on the port
      * @param port the port number for the server to listen on
      *             (must be between 0 and 65535)
-     * @throws IOException if an I/O error occurs when opening the socket
-     * @throws IllegalArgumentException if the port parameter is outside the specified range of valid port values (but this likely won't happen)
      */
     public void run(int port) {
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             System.out.println("Server is listening on port " + port);
 
-            while (true) {
+            while (true) { // fix this while true loop later @hiatus
                 Socket clientSocket = serverSocket.accept(); // keeps listening for a connection and if there is, accept connection
                 UserThread user = new UserThread(clientSocket, this);
                 userThreads.add(user);
-                System.out.println("New user has connected from " + clientSocket.getInetAddress().getHostAddress() + " on port " + clientSocket.getPort());
+                System.out.println("New user has connected from " + clientSocket.getInetAddress().getHostAddress() + " from port " + clientSocket.getPort());
                 user.start(); // run le thread
             }
         } catch (IOException e) {
@@ -88,13 +86,13 @@ public class Server {
      * @see Set
      * @implNote The set return type only works because UserThread is using PrintWriter
      */
-    public Set getUsernames() {
+    public Set<String> getUsernames() {
         return usernames;
     }
 
     /**
      * Main method for the server. Initializes a server object and calls the run method.
-     * @param args
+     * @param args the command line arguments for the port number to listen on
      */
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);

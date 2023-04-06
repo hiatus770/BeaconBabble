@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.awt.TrayIcon.MessageType;
 import java.net.*;
 import java.io.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -134,11 +135,16 @@ public class Client extends JPanel implements ActionListener {
                 System.out.println("Exiting!");
             }
         });
-        
         frame.setResizable(true); // allow frame to be resized
         frame.setSize(400, 300); // set dimensions
         frame.add(client);
         frame.setVisible(true);
+        Image icon = new ImageIcon(getClass().getResource("icon.png")).getImage();
+        try {
+            frame.setIconImage(icon);
+        } catch (Exception e) {
+            System.out.println("Could not find icon.png");
+        }
     }
 
     /**
