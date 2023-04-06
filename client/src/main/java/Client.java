@@ -115,8 +115,6 @@ public class Client extends JPanel implements ActionListener {
                 return null;
             }
         } while (true);
-
-
     }
 
     /**

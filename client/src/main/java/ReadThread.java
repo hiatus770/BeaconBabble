@@ -1,4 +1,5 @@
 // Acts as the thread that reads the messages from the server and displays it 
+import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,11 +42,11 @@ public class ReadThread extends Thread {
 
     public void run() {
         tray = SystemTray.getSystemTray(); // initialize a system tray
-        image = Toolkit.getDefaultToolkit().getImage("icon.png"); // make an icon
-        trayIcon = new TrayIcon(image, "Beacon"); // initialize a tray icon
+        Image icon = new ImageIcon(getClass().getResource("icon.png")).getImage();
+        trayIcon = new TrayIcon(icon, "Beacon"); // initialize a tray icon
         trayIcon.setImageAutoSize(true);
         trayIcon.setToolTip("Beacon");
-        trayIcon.setImage(image);
+        trayIcon.setImage(icon);
 
         try {
             tray.add(trayIcon); // adds to the system tray
