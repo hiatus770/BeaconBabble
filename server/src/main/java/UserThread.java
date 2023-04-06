@@ -48,24 +48,28 @@ public class UserThread extends Thread {
             // keeps broadcasting messages from this user until they disconnect
             while (!clientMessage.equals("/exit")) {
                 // sends message AFTER the thread has received the message, this forces the loop to check for an exit message
-                timeStamp = new SimpleDateFormat("MMM d HH:mm").format(Calendar.getInstance().getTime()); // gets the current time
-                serverMessage = timeStamp  + " [" + username + "]: " + clientMessage; // formatting client message
+                // timeStamp = new SimpleDateFormat("MMM d HH:mm").format(Calendar.getInstance().getTime()); // gets the current time
+                serverMessage = clientMessage; // formatting client message
                 server.broadcast(serverMessage, this); // broadcasts the client message to all users
 
                 // Grabs input from the ReadThread in java client
                 clientMessage = reader.readLine(); // receives the client message
-
+                
+                // Print the client message 
+                System.out.println(clientMessage); 
             }
 
-            server.removeUsername(username, this); // removes the username from the set of usernames after they DC
-            socket.close(); // close le socket
+            // Removes the user and closes the socket fromthe server
+            server.removeUsername(username, this); 
+            socket.close(); 
 
             serverMessage = username + " has left the room."; // bye bye message
             server.broadcast(serverMessage, this);
 
         } catch (IOException e) {
+            // Catch the error 
             if (server.fullDebug){
-                System.out.println("Error in UserThread: " + e.getMessage()); // uh oh poopy stinky
+                System.out.println("Error in UserThread: " + e.getMessage()); 
                 e.printStackTrace();
             }
         }

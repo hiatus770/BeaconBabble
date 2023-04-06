@@ -156,7 +156,6 @@ public class Client extends JPanel implements ActionListener {
      * @author goose
      */
     public boolean run() {
-        System.out.println("INSIDE RUN(); Connecting to " + hostname + " on port " + port); 
         try {
             // Start a socket at the hostname and port
             Socket socket = new Socket(hostname, port); // creates a socket and connects it to the specified port number at the specified IP address
@@ -195,41 +194,50 @@ public class Client extends JPanel implements ActionListener {
 
     /**
      * Main method for the client, handles for the command line arguments and initializing the client object
-     * @param args bruh
      */
     public static void main(String[] args) {
-        // store connection info into a string array
+        // Store the string connection information 
         String[] connectionInfo = getConnection();
 
         // if the connection info is null (the user pressed cancel), exit the program
         if (connectionInfo == null) System.exit(0);
-        System.out.println("hostname: " + connectionInfo[0] + ", port: " + connectionInfo[1]);
+        
+        // Initiate the client object that is passed to the user thread 
         Client client = new Client(connectionInfo[0], Integer.parseInt(connectionInfo[1]));
 
         // keep running the client until the user enters a valid hostname and port
-        // while(!client.run()) {
-        //     connectionInfo = getConnection();
-        //     if (connectionInfo == null) System.exit(0);
-        //     client = new Client(connectionInfo[0], Integer.parseInt(connectionInfo[1]));
-        // }
-        client.run();
+        while(!client.run()) {
+            connectionInfo = getConnection();
+            if (connectionInfo == null) System.exit(0);
+            client = new Client(connectionInfo[0], Integer.parseInt(connectionInfo[1]));
+        }
     }
 
     /**
      * Processes the event when the user presses the enter key or the send button.
-     * Responsible for sending the message to the server.
+     * Responsible for sending the message to the server
+     * This class sends the message including the user data and the timestamp to the server
      * @see ActionListener
      * @see PrintWriter
-     * @param e the event to be processed
+     * @param e Event passed from the action listener
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        message = outgoingMessage.getText(); // get the text in the message box
-        timeStamp = new SimpleDateFormat("MMM d HH:mm").format(Calendar.getInstance().getTime()); // gets the current time
+
+        // Get the current time and format it
+        timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime()); 
+
+        // Get what is currently typed in the message box and the timestamp  
+        message = "\n" + timeStamp + " [" + username + "]: " + outgoingMessage.getText(); 
+
+        // Print for debugging
         System.out.println(message);
-        writer.println(message); // sends the message to the server
+        
+        // Write the message to the server socket 
+        writer.println(message); 
+
         // sets the text in the message box to the username and the message ADDED ON TO the rest of the text
-        incomingMessageBox.setText(incomingMessageBox.getText() + "\n" + timeStamp + " [" + username + "]: " + outgoingMessage.getText());
+        incomingMessageBox.setText(incomingMessageBox.getText() + message);
         outgoingMessage.setText(""); // reset the text box
 
         incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
