@@ -59,6 +59,7 @@ public class ReadThread extends Thread {
                 String incomingMessage = reader.readLine(); // sets the incoming message to the response from the server
                 client.incomingMessageBox.setText(client.incomingMessageBox.getText() + incomingMessage + "\n"); // sets the text of the incoming message box to the incoming message
                 client.incomingMessageBox.setCaretPosition(client.incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
+                System.out.println(incomingMessage); 
 
                 // checks if the frame is active
                 if (!client.frame.isActive()) {
