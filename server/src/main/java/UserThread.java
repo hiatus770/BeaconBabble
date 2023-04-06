@@ -1,5 +1,7 @@
 import java.net.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * This thread is responsible for handling all the communication with a single client.
@@ -11,6 +13,7 @@ public class UserThread extends Thread {
     private Socket socket;
     private Server server;
     private PrintWriter writer; // writes formatted representations of objects as text output
+    private String timeStamp; // the time stamp of the message
 
     public UserThread(Socket socket, Server server) {
         this.socket = socket;
@@ -40,14 +43,19 @@ public class UserThread extends Thread {
 
             printUsers(); // prints a list of online users to the newly connected user
 
-            String clientMessage;
-            
-            // Grabs input from the ReadThread in java client
-            do {
-                clientMessage = reader.readLine(); // receives the client message
-                serverMessage = "[" + username + "]: " + clientMessage; // formatting client message
+            String clientMessage = "";
+
+            // keeps broadcasting messages from this user until they disconnect
+            while (!clientMessage.equals("/exit")) {
+                // sends message AFTER the thread has received the message, this forces the loop to check for an exit message
+                timeStamp = new SimpleDateFormat("MMM d HH:mm").format(Calendar.getInstance().getTime()); // gets the current time
+                serverMessage = timeStamp  + " [" + username + "]: " + clientMessage; // formatting client message
                 server.broadcast(serverMessage, this); // broadcasts the client message to all users
-            } while (!clientMessage.equals("/exit"));
+
+                // Grabs input from the ReadThread in java client
+                clientMessage = reader.readLine(); // receives the client message
+
+            }
 
             server.removeUsername(username, this); // removes the username from the set of usernames after they DC
             socket.close(); // close le socket
