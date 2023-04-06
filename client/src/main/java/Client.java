@@ -164,12 +164,12 @@ public class Client extends JPanel implements ActionListener {
             writer = new PrintWriter(socket.getOutputStream(), true);
 
             System.out.println("Connected to the chat server");
-            incomingMessageBox.setText("Connected to the chat server on address " + hostname + " on port " + port + ".");
+            incomingMessageBox.setText("Connected to the chat server on address " + hostname + " on port " + port + ".\n");
             createFrame(this); // creates the window frame for the client
             
             // Get the username from the user 
             username = JOptionPane.showInputDialog("Enter a username: ");
-            incomingMessageBox.setText(incomingMessageBox.getText() + "\nWelcome to the chat, " + username + "!");
+            incomingMessageBox.setText(incomingMessageBox.getText() + "Welcome to the chat, " + username + "!\n");
             writer.println(username); // sending the username to the server
 
             // Start the read thread for the program, this will add any received messages to the incomingMessageBox
@@ -228,7 +228,7 @@ public class Client extends JPanel implements ActionListener {
         timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime()); 
 
         // Get what is currently typed in the message box and the timestamp  
-        message = "\n" + timeStamp + " [" + username + "]: " + outgoingMessage.getText(); 
+        message = timeStamp + " [" + username + "]: " + outgoingMessage.getText(); 
 
         // Print for debugging
         System.out.println(message);
@@ -237,7 +237,7 @@ public class Client extends JPanel implements ActionListener {
         writer.println(message); 
 
         // sets the text in the message box to the username and the message ADDED ON TO the rest of the text
-        incomingMessageBox.setText(incomingMessageBox.getText() + message + "\n");
+        incomingMessageBox.setText(incomingMessageBox.getText()+ message + "\n");
         outgoingMessage.setText(""); // reset the text box
 
         incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
