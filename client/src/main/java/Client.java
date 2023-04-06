@@ -22,7 +22,7 @@ public class Client extends JPanel implements ActionListener {
     private String username, message; // username, message being sent to the server
     private PrintWriter writer; // used for writing messages to the server
     private String timeStamp; // the time stamp of the message
-    private boolean fullDebug = false; // if true, prints out all the debug messages
+    private boolean fullDebug = true; // if true, prints out all the debug messages
 
     // GUI components are public to avoid needing getters and setters for them as they are accessed in the read thread
     public JTextArea incomingMessageBox;
@@ -109,6 +109,7 @@ public class Client extends JPanel implements ActionListener {
                 } else if (hostnameField.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Please enter a host name.", "Beacon", JOptionPane.ERROR_MESSAGE);
                 } else {
+                    System.out.println("hostname: " + hostnameField.getText() + ", port: " + portField.getText());
                     return new String[] {hostnameField.getText(), portField.getText()};
                 }
             } else {
@@ -125,19 +126,19 @@ public class Client extends JPanel implements ActionListener {
         frame = new JFrame("Beacon");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // add a window listener to the frame so that when the window is closed, the program exits and sends an exit signal to the server
-        // this is necessary to avoid the server keeping the client in the list of connected clients
+        // If the user closes the window then send the exit window 
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 writer.println("/exit");
                 System.out.println("Exiting!");
             }
         });
+
         frame.setResizable(true); // allow frame to be resized
         frame.setSize(400, 300); // set dimensions
         frame.add(client);
         frame.setVisible(true);
-        Image icon = new ImageIcon(getClass().getResource("icon.png")).getImage();
+        Image icon = new ImageIcon(getClass().getResource("../resources/icon.png")).getImage();
         try {
             frame.setIconImage(icon);
         } catch (Exception e) {
@@ -155,6 +156,7 @@ public class Client extends JPanel implements ActionListener {
      * @author goose
      */
     public boolean run() {
+        System.out.println("INSIDE RUN(); Connecting to " + hostname + " on port " + port); 
         try {
             // Start a socket at the hostname and port
             Socket socket = new Socket(hostname, port); // creates a socket and connects it to the specified port number at the specified IP address
@@ -201,14 +203,16 @@ public class Client extends JPanel implements ActionListener {
 
         // if the connection info is null (the user pressed cancel), exit the program
         if (connectionInfo == null) System.exit(0);
+        System.out.println("hostname: " + connectionInfo[0] + ", port: " + connectionInfo[1]);
         Client client = new Client(connectionInfo[0], Integer.parseInt(connectionInfo[1]));
 
         // keep running the client until the user enters a valid hostname and port
-        while(!client.run()) {
-            connectionInfo = getConnection();
-            if (connectionInfo == null) System.exit(0);
-            client = new Client(connectionInfo[0], Integer.parseInt(connectionInfo[1]));
-        }
+        // while(!client.run()) {
+        //     connectionInfo = getConnection();
+        //     if (connectionInfo == null) System.exit(0);
+        //     client = new Client(connectionInfo[0], Integer.parseInt(connectionInfo[1]));
+        // }
+        client.run();
     }
 
     /**

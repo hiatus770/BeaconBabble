@@ -30,7 +30,7 @@ public class ReadThread extends Thread {
     public ReadThread(Socket socket, Client client) {
         this.socket = socket;
         this.client = client;
-
+ 
         try {
             InputStream input = socket.getInputStream(); // takes in a input stream from the socket
             reader = new BufferedReader(new InputStreamReader(input)); // just reads the input from above
@@ -42,7 +42,7 @@ public class ReadThread extends Thread {
 
     public void run() {
         tray = SystemTray.getSystemTray(); // initialize a system tray
-        Image icon = new ImageIcon(getClass().getResource("icon.png")).getImage();
+        Image icon = new ImageIcon(getClass().getResource("../resources/icon.png")).getImage();
         trayIcon = new TrayIcon(icon, "Beacon"); // initialize a tray icon
         trayIcon.setImageAutoSize(true);
         trayIcon.setToolTip("Beacon");
