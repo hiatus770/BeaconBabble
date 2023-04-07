@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4461d697-394c-40f6-8c5e-2486d70bcec8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/ReadThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/ReadThread.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/resources/logs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/server/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/UserThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/UserThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/UserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/UserThread.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +20,9 @@
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/server">
       <ProjectState />
     </projectState>
   </component>
@@ -45,9 +53,32 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/matia/Documents/BeaconBabble/client"
+    "last_opened_file_path": "C:/Users/matia/OneDrive/Documents/BeaconBabble",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="gradlew" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/server/gradlew" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/server" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Shell Script.gradlew" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

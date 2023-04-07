@@ -3,14 +3,15 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Handles all the server duties.
+ * This code is generates an instance of userthread whenever a user connects to the server 
  * This includes initializing the server, broadcasting messages to all users, and keeping track of all the usernames.
- * @author goose
+ * @author Goose et al.
  */
 public class Server {
     private Set<String> usernames = new HashSet<>(); // Set of all the usernames
     private Set<UserThread> userThreads = new HashSet<>(); // Set of all the user threads
     public boolean fullDebug = false; // if true, prints out all the debug messages
+    MessageLogger logger = new MessageLogger(); // logger for the server
 
     /**
      * This method is called by the main method to initialize the server.
@@ -25,9 +26,13 @@ public class Server {
             ServerSocket serverSocket = new ServerSocket(port);
             System.out.println("Server is listening on port " + port);
 
-            while (true) { // fix this while true loop later @hiatus
+            // Log the information
+            logger.log("Server started on port " + port);
+
+            // Keep on searching for new users and add them to the userthread
+            while (true) {
                 Socket clientSocket = serverSocket.accept(); // keeps listening for a connection and if there is, accept connection
-                UserThread user = new UserThread(clientSocket, this);
+                UserThread user = new UserThread(clientSocket, this, logger);
                 userThreads.add(user);
                 System.out.println("New user has connected from " + clientSocket.getInetAddress().getHostAddress() + " from port " + clientSocket.getPort());
                 user.start(); // run le thread
@@ -103,5 +108,6 @@ public class Server {
         int port = Integer.parseInt(args[0]);
         Server server = new Server();
         server.run(port); // initialize the server
+
     } 
 }
