@@ -99,12 +99,32 @@ public class UserThread extends Thread {
                     // Add ip information
                     logger.log("[IP: " + socket.getInetAddress().getHostAddress() + "] " + clientMessage);
                 }
+
+                // checks if the user changed their username
+                if (clientMessage.contains("/chgusrnmcd")) {
+                    // Get the new username from the client message
+                    String newUsername = clientMessage.substring(12);
+
+                    // Remove the old username from the server
+                    server.removeUsername(username, this);
+
+                    // Add the new username to the server
+                    server.addUsername(newUsername, this);
+
+                    // Set the username to the new username
+                    String oldUsername = username;
+                    username = newUsername;
+
+                    // Send a message to the client that the username has been changed
+                    writer.println("Username changed to " + username + ".");
+                    clientMessage = oldUsername + " has changed their username to " + username + ".";
+                }
             }
 
             // Log the information including the IP address
             logger.log("User " + username + " has disconnected from the server at " + socket.getInetAddress().getHostAddress());    
 
-            // Removes the user and closes the socket fromthe server
+            // Removes the user and closes the socket from the server
             server.removeUsername(username, this); 
             socket.close(); 
 
