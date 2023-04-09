@@ -47,75 +47,8 @@ public class Client extends JPanel implements ActionListener {
         this.hostname = hostname;
         this.port = port;
 
-        // make a text area for incoming messages
-        incomingMessageBox = new JTextArea();
-        incomingMessageBox.setEditable(false);
-        incomingMessageBox.setLineWrap(true);
-        incomingMessageBox.setWrapStyleWord(true);
-        JScrollPane scrollPane = new JScrollPane(incomingMessageBox); // scrollable pane for the message box
-
-        // make a text input box for outgoing messages
-        outgoingMessage = new JTextField();
-        outgoingMessage.addActionListener(this);
-
-        // make a send button
-        JButton sendButton = new JButton("Send");
-        sendButton.setPreferredSize(new Dimension(70, outgoingMessage.getPreferredSize().height)); // setting a small preferred size for the button
-        sendButton.addActionListener(this);
-
-        // constraint properties for the outgoing message box
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.gridwidth = GridBagConstraints.RELATIVE;
-        constraints.gridy = 1; // sets the y position of the component to the second grid spot
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 2.0;
-        add(outgoingMessage, constraints);
-
-        // constraint properties for the button
-        constraints.gridwidth = GridBagConstraints.REMAINDER;
-        constraints.fill = GridBagConstraints.NONE;
-        constraints.anchor = GridBagConstraints.LINE_END;
-        // setting weightx to 0 makes sure that the button stays in its own grid spot and doesnt take up like half the space of the message box
-        // if you're wondering what that means you can change it to 1 and see for yourself
-        constraints.weightx = 0;
-        add(sendButton, constraints); // adds the button right next to the message box
-
-        // constraint properties for the incoming message box
-        constraints.gridy = 0; // sets the x position of the component to the first grid spot
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 1.0;
-        constraints.weighty = 1.0;
-        add(scrollPane, constraints);
-
-        // creates a menu category for the menu bar
-        JMenu settingsMenu = new JMenu("Settings");
-        JMenuItem changeUsername = new JMenuItem("Change username");
-        changeUsername.addActionListener(e -> { // lambda expression for the change username button
-            // prompts the user to enter a new username
-            username = JOptionPane.showInputDialog(frame, "Enter a new username:", "Beacon", JOptionPane.PLAIN_MESSAGE);
-            // if the user presses cancel, the username is set to null
-            if (username == null) {
-                username = "Anonymous";
-            } else if (username.equals("")) {
-                username = "Anonymous";
-            }
-            // if the user presses ok, the username is set to the input
-            else {
-                writer.println("/chgusrnmcd " + username);
-                writer.flush();
-            }
-        });
-
-        JMenuItem changeServer = new JMenuItem("Change server");
-        JMenuItem changePort = new JMenuItem("Change port");
-
-        settingsMenu.add(changeUsername);
-        settingsMenu.add(changeServer);
-        settingsMenu.add(changePort);
-
-        // creates menu bar, adds the settings menu to it
-        menuBar = new JMenuBar();
-        menuBar.add(settingsMenu);
+        this.createGUIComponents(); // creates the GUI components
+        this.createMenuBar();
     }
 
     /**
@@ -186,6 +119,88 @@ public class Client extends JPanel implements ActionListener {
         } catch (Exception e) {
             System.out.println("Could not find icon.png");
         }
+    }
+
+    /**
+     * Creates components for the client.
+     * @author goose
+     */
+    private void createGUIComponents() {
+        // make a text area for incoming messages
+        incomingMessageBox = new JTextArea();
+        incomingMessageBox.setEditable(false);
+        incomingMessageBox.setLineWrap(true);
+        incomingMessageBox.setWrapStyleWord(true);
+        JScrollPane scrollPane = new JScrollPane(incomingMessageBox); // scrollable pane for the message box
+
+        // make a text input box for outgoing messages
+        outgoingMessage = new JTextField();
+        outgoingMessage.addActionListener(this);
+
+        // make a send button
+        JButton sendButton = new JButton("Send");
+        sendButton.setPreferredSize(new Dimension(70, outgoingMessage.getPreferredSize().height)); // setting a small preferred size for the button
+        sendButton.addActionListener(this);
+
+        // constraint properties for the outgoing message box
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridwidth = GridBagConstraints.RELATIVE;
+        constraints.gridy = 1; // sets the y position of the component to the second grid spot
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 2.0;
+        add(outgoingMessage, constraints);
+
+        // constraint properties for the button
+        constraints.gridwidth = GridBagConstraints.REMAINDER;
+        constraints.fill = GridBagConstraints.NONE;
+        constraints.anchor = GridBagConstraints.LINE_END;
+        // setting weightx to 0 makes sure that the button stays in its own grid spot and doesnt take up like half the space of the message box
+        // if you're wondering what that means you can change it to 1 and see for yourself
+        constraints.weightx = 0;
+        add(sendButton, constraints); // adds the button right next to the message box
+
+        // constraint properties for the incoming message box
+        constraints.gridy = 0; // sets the x position of the component to the first grid spot
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.weightx = 1.0;
+        constraints.weighty = 1.0;
+        add(scrollPane, constraints);
+    }
+
+    /**
+     * Creates the menu bar for the client.
+     * @author goose
+     */
+    private void createMenuBar() {
+        // creates a menu category for the menu bar
+        JMenu settingsMenu = new JMenu("Settings");
+        JMenuItem changeUsername = new JMenuItem("Change username");
+        changeUsername.addActionListener(e -> { // lambda expression for the change username button
+            // prompts the user to enter a new username
+            username = JOptionPane.showInputDialog(frame, "Enter a new username:", "Beacon", JOptionPane.PLAIN_MESSAGE);
+            // if the user presses cancel, the username is set to null
+            if (username == null) {
+                username = "Anonymous";
+            } else if (username.equals("")) {
+                username = "Anonymous";
+            }
+            // if the user presses ok, the username is set to the input
+            else {
+                writer.println("/chgusrnmcd " + username);
+                writer.flush();
+            }
+        });
+
+        JMenuItem changeServer = new JMenuItem("Change server");
+        JMenuItem changePort = new JMenuItem("Change port");
+
+        settingsMenu.add(changeUsername);
+        settingsMenu.add(changeServer);
+        settingsMenu.add(changePort);
+
+        // creates menu bar, adds the settings menu to it
+        menuBar = new JMenuBar();
+        menuBar.add(settingsMenu);
     }
 
     /**
@@ -260,10 +275,12 @@ public class Client extends JPanel implements ActionListener {
 
     /**
      * Processes the event when the user presses the enter key or the send button.
-     * Responsible for sending the message to the server
-     * This class sends the message including the user data and the timestamp to the server
+     * Responsible for sending the message including the user data and the timestamp to the server.
+     * This method is only identified separately because the same method is used for both the enter key and the send button.
+     * Otherwise, this would have been a lambda function, similar to the one used for the menu bar.
      * @see ActionListener
      * @see PrintWriter
+     * @see SimpleDateFormat
      * @param e Event passed from the action listener
      */
     @Override
