@@ -5,6 +5,8 @@ import java.net.*;
 import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.MenuKeyEvent;
+import javax.swing.event.MenuKeyListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -14,7 +16,7 @@ import java.util.Scanner;
  * Inherits the JPanel class for the GUI and implements ActionListener for polling keyboard input.
  * @see javax.swing.JPanel for more information on JPanel.
  * @see ActionListener for more information on ActionListener.
- * @author goose and hiatus
+ * @author goose, hiatus
  */
 public class Client extends JPanel implements ActionListener {
     private String hostname; // hostname of the server
@@ -27,6 +29,7 @@ public class Client extends JPanel implements ActionListener {
     // GUI components are public to avoid needing getters and setters for them as they are accessed in the read thread
     public JTextArea incomingMessageBox;
     public JTextField outgoingMessage;
+    public JMenuBar menuBar;
     public JFrame frame;
 
     /**
@@ -47,6 +50,8 @@ public class Client extends JPanel implements ActionListener {
         // make a text area for incoming messages
         incomingMessageBox = new JTextArea();
         incomingMessageBox.setEditable(false);
+        incomingMessageBox.setLineWrap(true);
+        incomingMessageBox.setWrapStyleWord(true);
         JScrollPane scrollPane = new JScrollPane(incomingMessageBox); // scrollable pane for the message box
 
         // make a text input box for outgoing messages
@@ -81,8 +86,43 @@ public class Client extends JPanel implements ActionListener {
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
         add(scrollPane, constraints);
+
+        // creates a menu category for the menu bar
+        JMenu settingsMenu = new JMenu("Settings");
+        JMenuItem changeUsername = new JMenuItem("Change username");
+        changeUsername.addActionListener(e -> { // lambda expression for the change username button
+            // prompts the user to enter a new username
+            username = JOptionPane.showInputDialog(frame, "Enter a new username:", "Beacon", JOptionPane.PLAIN_MESSAGE);
+            // if the user presses cancel, the username is set to null
+            if (username == null) {
+                username = "Anonymous";
+            } else if (username.equals("")) {
+                username = "Anonymous";
+            }
+            // if the user presses ok, the username is set to the input
+            else {
+                writer.println("/chgusrnmcd " + username);
+                writer.flush();
+            }
+        });
+
+        JMenuItem changeServer = new JMenuItem("Change server");
+        JMenuItem changePort = new JMenuItem("Change port");
+
+        settingsMenu.add(changeUsername);
+        settingsMenu.add(changeServer);
+        settingsMenu.add(changePort);
+
+        // creates menu bar, adds the settings menu to it
+        menuBar = new JMenuBar();
+        menuBar.add(settingsMenu);
     }
 
+    /**
+     * Prompts the user to input a hostname and port through a dialog box.
+     * @return An array of strings containing the hostname and port.
+     * @author goose, hiatus
+     */
     public static String[] getConnection() {
         JPanel panel = new JPanel();
         panel.setLayout(new SpringLayout());
@@ -138,6 +178,8 @@ public class Client extends JPanel implements ActionListener {
         frame.setSize(400, 300); // set dimensions
         frame.add(client);
         frame.setVisible(true);
+        frame.setJMenuBar(menuBar);
+
         Image icon = new ImageIcon(getClass().getResource("resources/icon.png")).getImage();
         try {
             frame.setIconImage(icon);
@@ -169,6 +211,9 @@ public class Client extends JPanel implements ActionListener {
             
             // Get the username from the user 
             username = JOptionPane.showInputDialog("Enter a username: ");
+            if (username.equals("")) {
+                username = "Anonymous";
+            }
             incomingMessageBox.setText(incomingMessageBox.getText() + "Welcome to the chat, " + username + "!\n");
             writer.println(username); // sending the username to the server
 
@@ -237,7 +282,7 @@ public class Client extends JPanel implements ActionListener {
         writer.println(message); 
 
         // sets the text in the message box to the username and the message ADDED ON TO the rest of the text
-        incomingMessageBox.setText(incomingMessageBox.getText()+ message + "\n");
+        incomingMessageBox.setText(incomingMessageBox.getText() + message + "\n");
         outgoingMessage.setText(""); // reset the text box
 
         incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
