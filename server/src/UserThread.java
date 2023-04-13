@@ -1,4 +1,8 @@
+import com.google.api.services.gmail.model.Message;
+
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.swing.*;
 import java.net.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -70,10 +74,16 @@ public class UserThread extends Thread {
             OutputStream output = socket.getOutputStream(); 
             writer = new PrintWriter(output, true);
 
-            EmailAuthentication emailAuth = new EmailAuthentication();
+            EmailAuthentication gmail = new EmailAuthentication();
+            String recipient = reader.readLine(); // obtains email from the client
 
-            String email = reader.readLine(); // obtains email from the client
-            emailAuth.send(email, random.nextInt(100000) + 899999); // sends the email to the user
+            if (!recipient.contains("@") || !recipient.contains(".")) {
+                writer.println("Invalid email address");
+                throw new IllegalArgumentException("Invalid email address");
+            } else if (!recipient.contains("@ycdsbk12.ca"))
+                writer.println("Please use your YCDSBK12 email address.");
+
+            gmail.sendEmail("beaconauthentication@gmail.com", recipient, "Beacon Authentication", "Your authentication code is: " + random.nextInt(999999) + ".\n If you did not request this, feel free to ignore.");
 
             String username = reader.readLine(); // obtains username from the client
             server.addUsername(username, this); // adds the username to the set of usernames and the user object 
