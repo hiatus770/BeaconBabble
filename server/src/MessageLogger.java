@@ -8,21 +8,21 @@ import java.io.File;
  */
 public class MessageLogger {
 
-    String logFile = "resources/logs.txt";
+    public File logFile;
     /**
-     * This method is ran when the server is started and makes sure there is a log file to write to, otherwise it will throw an error
-     * @param args
-     * @author Hiatus770, Jamin
-     * @throws IOException
+     * This method is ran when the server is started and makes sure there is a log file to write to.
+     * The method also checks if a file already exists before creating a new file.
+     * @author Hiatus770, Jamin, goose
+     * @throws IOException if there is an error with creating the file
      */
-    public static void main(String args[]) {
+    public MessageLogger() {
         // Checks if the log file exists, if not, it creates it
-        File logFile = new File("resources/logs.txt");
-        if (logFile.exists()) {
+        this.logFile = new File("src/resources/logs.txt");
+        if (this.logFile.exists()) {
             System.out.println("Log file exists");
         } else {
             try {
-                logFile.createNewFile();
+                this.logFile.createNewFile();
             } catch (IOException e) {
                 System.out.println("An error occurred when creating the log file");
                 e.printStackTrace();
@@ -36,6 +36,7 @@ public class MessageLogger {
      * @param user
      * @param time
      * @author Hiatus770, Jamin
+     * By the way this method is never used
      */
     public void log(String message, String user, String time) {
         try {
@@ -45,10 +46,10 @@ public class MessageLogger {
             messages[3] = time;
 
             // Make sure to append to the file  instead of overwriting it
-            FileWriter myWriter = new FileWriter(logFile, true);
+            FileWriter fileWriter = new FileWriter(this.logFile, true);
 
-            myWriter.append("\n" + messages[0] + " " + messages[1] + " " + messages[2]);
-            myWriter.close();
+            fileWriter.append("\n" + messages[0] + " " + messages[1] + " " + messages[2]);
+            fileWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -61,9 +62,9 @@ public class MessageLogger {
      */
     public void log(String message){
         try {
-            FileWriter writer = new FileWriter(logFile, true);
-            writer.append("\n" + message);
-            writer.close();
+            FileWriter fileWriter = new FileWriter(this.logFile, true);
+            fileWriter.append("\n").append(message); // intellij says string concatenation is bad and to change to chained append calls
+            fileWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred when writing to " + logFile);
             e.printStackTrace();

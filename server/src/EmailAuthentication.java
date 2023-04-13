@@ -1,48 +1,50 @@
+import java.io.*;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.mail.MessagingException;
+import com.google.api.services.gmail.model.Message;
+import org.apache.commons.codec.binary.Base64;
 
 public class EmailAuthentication {
-    public String recipient;
-    private String sender = "beaconauthentication@gmail.com";
-    private String password = "thehuangtherivas";
 
-    public EmailAuthentication() {
+    /**
+     * Creates a MimeMessage using the parameters provided.
+     * @param sender    Email address of the sender
+     * @param recipient Email address of the recipient
+     * @param message   Message to be sent
+     * @return          MimeMessage to be used to send email
+     * @throws MessagingException if sad
+     */
+    public static MimeMessage createEmail(String sender, String recipient, String subject, String message) throws MessagingException {
+        Properties properties = new Properties();
+        Session session = Session.getDefaultInstance(properties, null);
 
+        MimeMessage email = new MimeMessage(session);
+
+        email.setFrom(new InternetAddress(sender));
+        email.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(recipient));
+        email.setSubject(subject);
+        email.setText(message);
+
+        return email;
     }
 
     /**
-     * Responsible for sending the email to the recipient.
-     * @param recipient The email address of the recipient.
-     * @param code The authentication code.
+     * Create a message from an email.
+     *
+     * @param email Email to be set to raw of message
+     * @return      Message containing base64url encoded email.
+     * @throws MessagingException
+     * @throws IOException
      */
-    public void send(String recipient, int code) throws MessagingException {
-        // Get properties object
-        Properties properties = new Properties();
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.socketFactory.port", "465");
-        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.port", "465");
-
-        // Get the Session object
-        Session session = Session.getDefaultInstance(properties, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(sender, password);
-            }
-        });
-
-        // Compose the message
-        // all the message properties
-        MimeMessage message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(sender));
-        message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-        message.setSubject("Beacon Authentication Code");
-        message.setText("This is your authentication code. Type it into the confirmation box. \n" + Integer.toString(code) + "If you did not request this code, please ignore this email.");
-
-        // Send message
-        Transport.send(message);
-        System.out.println("Email sent.");
+    public static Message createEmailMessage(MimeMessage email) throws MessagingException, IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        email.writeTo(buffer);
+        byte[] bytes = buffer.toByteArray();
+        String encodedEmail = Base64.encodeBase64URLSafeString(bytes);
+        Message message = new Message();
+        message.setRaw(encodedEmail);
+        return message;
     }
 }

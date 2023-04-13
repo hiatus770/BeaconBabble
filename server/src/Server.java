@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * This code is generates an instance of userthread whenever a user connects to the server 
  * This includes initializing the server, broadcasting messages to all users, and keeping track of all the usernames.
- * @author Goose et al.
+ * @author goose et al.
  */
 public class Server {
     private Set<String> usernames = new HashSet<>(); // Set of all the usernames
