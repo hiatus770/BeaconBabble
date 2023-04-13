@@ -1,14 +1,7 @@
-import com.google.api.services.gmail.model.Message;
-
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import javax.swing.*;
 import java.net.*;
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Random;
-import java.util.logging.Logger;
 
 /**
  * This thread is responsible for handling all the communication with a single client.
@@ -74,16 +67,11 @@ public class UserThread extends Thread {
             OutputStream output = socket.getOutputStream(); 
             writer = new PrintWriter(output, true);
 
-            EmailAuthentication gmail = new EmailAuthentication();
+            Email email = new Email("beaconauthenticator@gmail.com");
             String recipient = reader.readLine(); // obtains email from the client
-
-            if (!recipient.contains("@") || !recipient.contains(".")) {
-                writer.println("Invalid email address");
-                throw new IllegalArgumentException("Invalid email address");
-            } else if (!recipient.contains("@ycdsbk12.ca"))
-                writer.println("Please use your YCDSBK12 email address.");
-
-            gmail.sendEmail("beaconauthentication@gmail.com", recipient, "Beacon Authentication", "Your authentication code is: " + random.nextInt(999999) + ".\n If you did not request this, feel free to ignore.");
+            String authCode = Integer.toString(random.nextInt(999999));
+            email.sendEmail(recipient, "Beacon Authenticator", "Your authentication code is: " + authCode);
+            writer.println(authCode);
 
             String username = reader.readLine(); // obtains username from the client
             server.addUsername(username, this); // adds the username to the set of usernames and the user object 
