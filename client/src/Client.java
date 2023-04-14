@@ -167,6 +167,10 @@ public class Client extends JPanel implements ActionListener {
         add(scrollPane, constraints);
     }
 
+    private void emailAuthentication() {
+
+    }
+
     /**
      * Creates the menu bar for the client.
      * @author goose
@@ -220,9 +224,35 @@ public class Client extends JPanel implements ActionListener {
             // Writing to the server
             writer = new PrintWriter(socket.getOutputStream(), true);
 
+            // Reading from the server (only used for email auth)
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
             // Obtain email from the user
-            String email = JOptionPane.showInputDialog("Enter your email: ");
+            String email = "";
+            boolean validEmail = false;
+            while (!validEmail) {
+                email = JOptionPane.showInputDialog("Enter your email: ");
+                if (!email.contains("@") || !email.contains(".")) {
+                    JOptionPane.showMessageDialog(frame, "Invalid email address.", "Beacon", JOptionPane.ERROR_MESSAGE); // change writer statements
+                    throw new IllegalArgumentException("Invalid email address");
+                } else if (!email.contains("@ycdsbk12.ca"))
+                    JOptionPane.showMessageDialog(frame, "Please use a YCDSBK12 account.", "Beacon", JOptionPane.ERROR_MESSAGE); // change writer statements
+                else validEmail = true;
+            }
+
+            String trueAuthCode = reader.readLine();
+
             writer.println(email); // sending the email to the server
+            boolean authenticated = false;
+            while (!authenticated) {
+                String userAuthCode = JOptionPane.showInputDialog("Enter the authentication code: ");
+
+                if (!userAuthCode.equals(trueAuthCode)) {
+                    JOptionPane.showMessageDialog(frame, "Authentication failed. Please try again.", "Beacon", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    authenticated = true;
+                }
+            }
 
             System.out.println("Connected to the chat server");
             incomingMessageBox.setText("Connected to the chat server on address " + hostname + " on port " + port + ".\n");
