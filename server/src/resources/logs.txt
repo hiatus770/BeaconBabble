@@ -1,3 +1,5 @@
 
 Server started on port 8000
 Server started on port 8000
+Server started on port 8000
+User oliver.huang24@ycdsbk12.ca has connected to the server from 127.0.0.1

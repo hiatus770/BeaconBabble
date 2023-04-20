@@ -1,7 +1,6 @@
-import javax.mail.MessagingException;
 import java.net.*;
 import java.io.*;
-import java.util.Random;
+import java.util.Arrays;
 
 /**
  * This thread is responsible for handling all the communication with a single client.
@@ -17,9 +16,7 @@ public class UserThread extends Thread {
 
     // Message writing object and the timestamp for the message
     private PrintWriter writer;
-    private String timeStamp;
     MessageLogger logger;
-    Random random = new Random();
 
     /**
      *  Userthread constructor, only takes the server socket between the client and it takes the server object to access the server methods
@@ -32,13 +29,13 @@ public class UserThread extends Thread {
 
 
     /**
-     * Prints a list of online users to the newly connected user.
+     * Prints a list of online macAddresses.txt to the newly connected user.
      */
     public void printUsers() {
         if (server.hasUsers()) {
-            writer.println("Connected users: " + server.getUsernames());
+            writer.println("Connected macAddresses.txt: " + server.getUsernames());
         } else {
-            writer.println("No other users connected.");
+            writer.println("No other macAddresses.txt connected.");
         }
     }
 
@@ -67,22 +64,21 @@ public class UserThread extends Thread {
             OutputStream output = socket.getOutputStream(); 
             writer = new PrintWriter(output, true);
 
-            Email email = new Email("beaconauthenticator@gmail.com");
-            String recipient = reader.readLine(); // obtains email from the client
-            String authCode = Integer.toString(random.nextInt(999999));
-            email.sendEmail(recipient, "Beacon Authenticator", "Your authentication code is: " + authCode);
-            writer.println(authCode);
+            // grabs user mac address
+            byte[] macAddrRaw = NetworkInterface.getByInetAddress(socket.getInetAddress()).getHardwareAddress();
 
             String username = reader.readLine(); // obtains username from the client
+            server.addMacAddress(macAddrRaw); // adds the mac address to the file
+
             server.addUsername(username, this); // adds the username to the set of usernames and the user object 
 
             String serverMessage = "New user connected: " + username + ". Welcome!";
-            server.broadcast(serverMessage, this); // Broadcasts the newly connected user to all users
+            server.broadcast(serverMessage, this); // Broadcasts the newly connected user to all macAddresses.txt
             
             // Log the information
             logger.log("User " + username + " has connected to the server from " + socket.getInetAddress().getHostAddress());
 
-            // Prints a list of online users to the newly connected user
+            // Prints a list of online macAddresses.txt to the newly connected user
             printUsers();
 
             // String for the client message
@@ -92,7 +88,7 @@ public class UserThread extends Thread {
             while (!clientMessage.equals("/exit")) {
                 // Sends message AFTER the thread has received the message, this forces the loop to check for an exit message
                 serverMessage = clientMessage; // formatting client message
-                server.broadcast(serverMessage, this); // broadcasts the client message to all users
+                server.broadcast(serverMessage, this); // broadcasts the client message to all macAddresses.txt
 
                 // Grabs input from the ReadThread in java client
                 clientMessage = reader.readLine(); // receives the client message
@@ -134,7 +130,7 @@ public class UserThread extends Thread {
             server.removeUsername(username, this); 
             socket.close(); 
 
-            // Sends a message to all users that the user has left the room before exiting 
+            // Sends a message to all macAddresses.txt that the user has left the room before exiting
             serverMessage = username + " has left the room."; 
             server.broadcast(serverMessage, this);
 
@@ -144,8 +140,6 @@ public class UserThread extends Thread {
                 System.out.println("Error in UserThread: " + e.getMessage()); 
                 e.printStackTrace();
             }
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
         }
     }
 

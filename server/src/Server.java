@@ -3,13 +3,14 @@ import java.io.*;
 import java.util.*;
 
 /**
- * This code is generates an instance of userthread whenever a user connects to the server 
- * This includes initializing the server, broadcasting messages to all users, and keeping track of all the usernames.
+ * This code is generates an instance of user thread whenever a user connects to the server
+ * This includes initializing the server, broadcasting messages to all macAddresses.txt, and keeping track of all the usernames.
  * @author goose et al.
  */
 public class Server {
-    private Set<String> usernames = new HashSet<>(); // Set of all the usernames
+    private Set<String> onlineUsers = new HashSet<>(); // Set of all the macAddresses.txt currently online
     private Set<UserThread> userThreads = new HashSet<>(); // Set of all the user threads
+    private Set<byte[]> macAddresses = new HashSet<>(); // hashset of all the mac addresses
     public boolean fullDebug = false; // if true, prints out all the debug messages
     MessageLogger logger = new MessageLogger(); // logger for the server
 
@@ -29,7 +30,7 @@ public class Server {
             // Log the information
             logger.log("Server started on port " + port);
 
-            // Keep on searching for new users and add them to the userthread
+            // Keep on searching for new macAddresses.txt and add them to the userthread
             while (true) {
                 Socket clientSocket = serverSocket.accept(); // keeps listening for a connection and if there is, accept connection
                 UserThread user = new UserThread(clientSocket, this, logger);
@@ -44,8 +45,8 @@ public class Server {
     }
 
     /**
-     * This method is called by the UserThread class to send a message to all users.
-     * The method loops through all the users in the ArrayList of user threads and sends the message to each user.
+     * This method is called by the UserThread class to send a message to all macAddresses.txt.
+     * The method loops through all the macAddresses.txt in the ArrayList of user threads and sends the message to each user.
      * @param message the message to be sent
      * @param thread the thread that sent the message
      */
@@ -63,7 +64,7 @@ public class Server {
      * @param username the username of the user to be removed
      */
     public void addUsername(String username, UserThread userThread) {
-        usernames.add(username);
+        onlineUsers.add(username);
         userThreads.add(userThread);
     }
 
@@ -73,16 +74,16 @@ public class Server {
      * @param username the username of the user to be removed
      */
     public void removeUsername(String username, UserThread userThread) {
-        usernames.remove(username);
+        onlineUsers.remove(username);
         userThreads.remove(userThread);
     }
 
     /**
-     * This method is called by the UserThread class to check if there are any users connected to the server.
-     * @return true if there are users connected to the server, false otherwise
+     * This method is called by the UserThread class to check if there are any macAddresses.txt connected to the server.
+     * @return true if there are macAddresses.txt connected to the server, false otherwise
      */
     public boolean hasUsers() {
-        return !this.usernames.isEmpty();
+        return !this.onlineUsers.isEmpty();
     }
 
     /**
@@ -92,7 +93,55 @@ public class Server {
      * @implNote The set return type only works because UserThread is using PrintWriter
      */
     public Set<String> getUsernames() {
-        return usernames;
+        return onlineUsers;
+    }
+
+    /**
+     * This method is called by the UserThread class to add a user's mac address to the HashMap of mac addresses.
+     * @return the HashMap containing all the mac addresses and the corresponding username
+     */
+    public Set<byte[]> getMacAddresses() throws IOException {
+        BufferedReader fileReader = new BufferedReader(new FileReader("macAddresses.txt"));
+        Set<byte[]> macAddresses = new HashSet<>();
+        String line;
+        while ((line = fileReader.readLine()) != null) {
+            String[] macAddress = line.split(":");
+            byte[] mac = new byte[6];
+
+            for (int i = 0; i < 6; i++) {
+                mac[i] = (byte) Integer.parseInt(macAddress[i], 16);
+            }
+
+            macAddresses.add(mac);
+        }
+
+        return macAddresses;
+    }
+
+    /**
+     * Adds a mac address to the hashset of mac addresses.
+     * @param macAddress the mac address to be added, in the form of a byte array
+     */
+    public void addMacAddress(byte[] macAddress) throws IOException {
+        BufferedReader fileReader = new BufferedReader(new FileReader("macAddresses.txt"));
+        PrintWriter fileWriter = new PrintWriter(new FileWriter("macAddresses.txt", true));
+        StringBuilder macString = new StringBuilder();
+        StringBuilder fullFile = new StringBuilder();
+
+        while (fileReader.readLine() != null) {
+            fullFile.append(fileReader.readLine());
+        }
+
+        for (int i = 0; i < 6; i++) {
+            macString.append(String.format("%02X", macAddress[i]));
+            if (i != 5) {
+                macString.append(":");
+            }
+        }
+        if (!fullFile.toString().contains(macString.toString())) {
+            fileWriter.println(macString);
+            macAddresses.add(macAddress);
+        }
     }
 
     /**
@@ -100,7 +149,6 @@ public class Server {
      * @param args the command line arguments for the port number to listen on
      */
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
         if (args.length < 1) {
             System.out.println("Usage: java Server <port number>");
             System.exit(0);
