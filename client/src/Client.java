@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.event.MenuKeyEvent;
 import javax.swing.event.MenuKeyListener;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -23,7 +24,6 @@ public class Client extends JPanel implements ActionListener {
     private int port; // port to connect on
     private String username, message; // username, message being sent to the server
     private PrintWriter writer; // used for writing messages to the server
-    private String timeStamp; // the time stamp of the message
     private boolean fullDebug = true; // if true, prints out all the debug messages
 
     // GUI components are public to avoid needing getters and setters for them as they are accessed in the read thread
@@ -167,10 +167,6 @@ public class Client extends JPanel implements ActionListener {
         add(scrollPane, constraints);
     }
 
-    private void emailAuthentication() {
-
-    }
-
     /**
      * Creates the menu bar for the client.
      * @author goose
@@ -223,36 +219,6 @@ public class Client extends JPanel implements ActionListener {
 
             // Writing to the server
             writer = new PrintWriter(socket.getOutputStream(), true);
-
-            // Reading from the server (only used for email auth)
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            // Obtain email from the user
-            String email = "";
-            boolean validEmail = false;
-            while (!validEmail) {
-                email = JOptionPane.showInputDialog("Enter your email: ");
-                if (!email.contains("@") || !email.contains(".")) {
-                    JOptionPane.showMessageDialog(frame, "Invalid email address.", "Beacon", JOptionPane.ERROR_MESSAGE); // change writer statements
-                    throw new IllegalArgumentException("Invalid email address");
-                } else if (!email.contains("@ycdsbk12.ca"))
-                    JOptionPane.showMessageDialog(frame, "Please use a YCDSBK12 account.", "Beacon", JOptionPane.ERROR_MESSAGE); // change writer statements
-                else validEmail = true;
-            }
-
-            String trueAuthCode = reader.readLine();
-
-            writer.println(email); // sending the email to the server
-            boolean authenticated = false;
-            while (!authenticated) {
-                String userAuthCode = JOptionPane.showInputDialog("Enter the authentication code: ");
-
-                if (!userAuthCode.equals(trueAuthCode)) {
-                    JOptionPane.showMessageDialog(frame, "Authentication failed. Please try again.", "Beacon", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    authenticated = true;
-                }
-            }
 
             System.out.println("Connected to the chat server");
             incomingMessageBox.setText("Connected to the chat server on address " + hostname + " on port " + port + ".\n");
@@ -321,7 +287,8 @@ public class Client extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         // Get the current time and format it
-        timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime()); 
+        // the time stamp of the message
+        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
 
         // Get what is currently typed in the message box and the timestamp  
         message = timeStamp + " [" + username + "]: " + outgoingMessage.getText(); 
