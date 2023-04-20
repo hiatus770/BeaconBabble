@@ -1,6 +1,5 @@
 import java.net.*;
 import java.io.*;
-import java.util.Arrays;
 
 /**
  * This thread is responsible for handling all the communication with a single client.
@@ -29,13 +28,13 @@ public class UserThread extends Thread {
 
 
     /**
-     * Prints a list of online macAddresses.txt to the newly connected user.
+     * Prints a list of online users to the newly connected user.
      */
     public void printUsers() {
         if (server.hasUsers()) {
-            writer.println("Connected macAddresses.txt: " + server.getUsernames());
+            writer.println("Connected user: " + server.getUsernames());
         } else {
-            writer.println("No other macAddresses.txt connected.");
+            writer.println("No other users connected.");
         }
     }
 
