@@ -10,9 +10,14 @@ import java.util.*;
 public class Server {
     private Set<String> onlineUsers = new HashSet<>(); // Set of all the macAddresses.txt currently online
     private Set<UserThread> userThreads = new HashSet<>(); // Set of all the user threads
-    private Set<byte[]> macAddresses = new HashSet<>(); // hashset of all the mac addresses
     public boolean fullDebug = false; // if true, prints out all the debug messages
     MessageLogger logger = new MessageLogger(); // logger for the server
+    MACLogger macLogger = new MACLogger(); // logger for the mac addresses
+
+    // this is only to errors with the MACLogger
+    public Server() throws IOException {
+
+    }
 
     /**
      * This method is called by the main method to initialize the server.
@@ -100,19 +105,11 @@ public class Server {
      * This method is called by the UserThread class to add a user's mac address to the HashMap of mac addresses.
      * @return the HashMap containing all the mac addresses and the corresponding username
      */
-    public Set<byte[]> getMacAddresses() throws IOException {
+    public Set<String> getMacAddresses() throws IOException {
         BufferedReader fileReader = new BufferedReader(new FileReader("macAddresses.txt"));
-        Set<byte[]> macAddresses = new HashSet<>();
-        String line;
-        while ((line = fileReader.readLine()) != null) {
-            String[] macAddress = line.split(":");
-            byte[] mac = new byte[6];
-
-            for (int i = 0; i < 6; i++) {
-                mac[i] = (byte) Integer.parseInt(macAddress[i], 16);
-            }
-
-            macAddresses.add(mac);
+        Set<String> macAddresses = new HashSet<>();
+        while (fileReader.ready()) {
+            macAddresses.add(fileReader.readLine());
         }
 
         return macAddresses;
@@ -123,24 +120,16 @@ public class Server {
      * @param macAddress the mac address to be added, in the form of a byte array
      */
     public void addMacAddress(byte[] macAddress) throws IOException {
-        BufferedReader fileReader = new BufferedReader(new FileReader("macAddresses.txt"));
-        PrintWriter fileWriter = new PrintWriter(new FileWriter("macAddresses.txt", true));
         StringBuilder macString = new StringBuilder();
-        StringBuilder fullFile = new StringBuilder();
-
-        while (fileReader.readLine() != null) {
-            fullFile.append(fileReader.readLine());
-        }
-
+        // converts each byte into string format
         for (int i = 0; i < 6; i++) {
+            // intellij recommends using StringBuilder for concatenation
             macString.append(String.format("%02X", macAddress[i]));
-            if (i != 5) {
-                macString.append(":");
-            }
         }
-        if (!fullFile.toString().contains(macString.toString())) {
-            fileWriter.println(macString);
-            macAddresses.add(macAddress);
+
+        // if the mac address is not already in the file, log it
+        if (!getMacAddresses().contains(macString.toString())) {
+            macLogger.log(macString.toString());
         }
     }
 
@@ -148,7 +137,7 @@ public class Server {
      * Main method for the server. Initializes a server object and calls the run method.
      * @param args the command line arguments for the port number to listen on
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         if (args.length < 1) {
             System.out.println("Usage: java Server <port number>");
             System.exit(0);
@@ -156,6 +145,5 @@ public class Server {
         int port = Integer.parseInt(args[0]);
         Server server = new Server();
         server.run(port); // initialize the server
-
-    } 
+    }
 }
