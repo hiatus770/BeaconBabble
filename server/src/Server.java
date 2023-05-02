@@ -12,7 +12,6 @@ public class Server {
     private Set<UserThread> userThreads = new HashSet<>(); // Set of all the user threads
     public boolean fullDebug = false; // if true, prints out all the debug messages
     MessageLogger logger = new MessageLogger(); // logger for the server
-    MACLogger macLogger = new MACLogger(); // logger for the mac addresses
 
     // this is only to errors with the MACLogger
     public Server() throws IOException {
@@ -99,38 +98,6 @@ public class Server {
      */
     public Set<String> getUsernames() {
         return onlineUsers;
-    }
-
-    /**
-     * This method is called by the UserThread class to add a user's mac address to the HashMap of mac addresses.
-     * @return the HashMap containing all the mac addresses and the corresponding username
-     */
-    public Set<String> getMacAddresses() throws IOException {
-        BufferedReader fileReader = new BufferedReader(new FileReader("macAddresses.txt"));
-        Set<String> macAddresses = new HashSet<>();
-        while (fileReader.ready()) {
-            macAddresses.add(fileReader.readLine());
-        }
-
-        return macAddresses;
-    }
-
-    /**
-     * Adds a mac address to the hashset of mac addresses.
-     * @param macAddress the mac address to be added, in the form of a byte array
-     */
-    public void addMacAddress(byte[] macAddress) throws IOException {
-        StringBuilder macString = new StringBuilder();
-        // converts each byte into string format
-        for (int i = 0; i < 6; i++) {
-            // intellij recommends using StringBuilder for concatenation
-            macString.append(String.format("%02X", macAddress[i]));
-        }
-
-        // if the mac address is not already in the file, log it
-        if (!getMacAddresses().contains(macString.toString())) {
-            macLogger.log(macString.toString());
-        }
     }
 
     /**

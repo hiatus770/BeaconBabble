@@ -64,10 +64,7 @@ public class UserThread extends Thread {
             writer = new PrintWriter(output, true);
 
             // grabs user mac address
-            byte[] macAddrRaw = NetworkInterface.getByInetAddress(socket.getInetAddress()).getHardwareAddress();
-
             String username = reader.readLine(); // obtains username from the client
-            server.addMacAddress(macAddrRaw); // adds the mac address to the file
 
             server.addUsername(username, this); // adds the username to the set of usernames and the user object 
 
