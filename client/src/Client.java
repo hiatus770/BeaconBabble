@@ -1,16 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.TrayIcon.MessageType;
 import java.net.*;
 import java.io.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.MenuKeyEvent;
-import javax.swing.event.MenuKeyListener;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Scanner;
 
 /**
  * Client class that connects to the server and sends messages to the server.
@@ -215,14 +209,31 @@ public class Client extends JPanel implements ActionListener {
     public boolean run() {
         try {
             // Start a socket at the hostname and port
-            Socket socket = new Socket(hostname, port); // creates a socket and connects it to the specified port number at the specified IP address
+            Socket socket = new Socket(hostname, port); // Creates a socket and connects it to the specified port number at the specified IP address
 
             // Writing to the server
             writer = new PrintWriter(socket.getOutputStream(), true);
 
             System.out.println("Connected to the chat server");
             incomingMessageBox.setText("Connected to the chat server on address " + hostname + " on port " + port + ".\n");
-            createFrame(this); // creates the window frame for the client
+            createFrame(this); // Creates the window frame for the client
+            
+            // Password authentication
+            JPasswordField password = new JPasswordField(10);
+            JPanel panel = new JPanel();
+            panel.add(new JLabel("Enter a password:"));
+            panel.add(password);
+            String[] options = {"OK", "Cancel"};
+            int option = JOptionPane.showOptionDialog(null, panel, "Password Verification", JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+            
+            // Exit the program if the user presses cancel
+            if (option == 0) {
+                writer.println(password.getPassword()); // Sends the password to the server
+            } else {
+                writer.println("/exit");
+                socket.close();
+                return false;
+            }
             
             // Get the username from the user 
             username = JOptionPane.showInputDialog("Enter a username: ");

@@ -62,6 +62,14 @@ public class UserThread extends Thread {
             // Output stream for the socket which lets the server write to this userthread 
             OutputStream output = socket.getOutputStream(); 
             writer = new PrintWriter(output, true);
+            PasswordVerify passwordVerify = new PasswordVerify(new File("out/production/server/resources/password.txt"));
+
+            String password = reader.readLine();
+            if (!passwordVerify.verify(password)) {
+                writer.println("Incorrect password.");
+                socket.close();
+                return;
+            }
 
             // grabs user mac address
             String username = reader.readLine(); // obtains username from the client
