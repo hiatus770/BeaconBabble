@@ -15,6 +15,7 @@ public class UserThread extends Thread {
 
     // Message writing object and the timestamp for the message
     private PrintWriter writer;
+    private BufferedReader reader;
     MessageLogger logger;
 
     /**
@@ -54,22 +55,23 @@ public class UserThread extends Thread {
     public void run() {
         try {
             // Setting up the user information before the while loop
-            InputStream input = socket.getInputStream(); // returns an input stream for this socket
 
             // Reads text from the character-input stream above
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             // Output stream for the socket which lets the server write to this userthread 
-            OutputStream output = socket.getOutputStream(); 
-            writer = new PrintWriter(output, true);
+            writer = new PrintWriter(socket.getOutputStream(), true);
+            /* TODO: Password verification
             PasswordVerify passwordVerify = new PasswordVerify(new File("out/production/server/resources/password.txt"));
 
+            // Keeps notifying client that password is wrong until it's right
             String password = reader.readLine();
-            if (!passwordVerify.verify(password)) {
-                writer.println("Incorrect password.");
-                socket.close();
-                return;
+            while (!passwordVerify.verify(password)) {
+                writer.println("wrongpassword"); 
+                password = reader.readLine();
             }
+            writer.println("verified"); // sends verified to the client to let them know they have been verified
+            */
 
             // grabs user mac address
             String username = reader.readLine(); // obtains username from the client
@@ -113,7 +115,6 @@ public class UserThread extends Thread {
 
                     // Remove the old username from the server
                     server.removeUsername(username, this);
-
                     // Add the new username to the server
                     server.addUsername(newUsername, this);
 
@@ -129,6 +130,7 @@ public class UserThread extends Thread {
 
             // Log the information including the IP address
             logger.log("User " + username + " has disconnected from the server at " + socket.getInetAddress().getHostAddress());    
+            System.out.println("User " + username + " has disconnected from the server at " + socket.getInetAddress().getHostAddress());
 
             // Removes the user and closes the socket from the server
             server.removeUsername(username, this); 

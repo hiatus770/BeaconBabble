@@ -9,6 +9,8 @@ import java.io.File;
 public class MessageLogger {
 
     public File logFile;
+    private FileWriter fileWriter;
+
     /**
      * This method is ran when the server is started and makes sure there is a log file to write to.
      * The method also checks if a file already exists before creating a new file.
@@ -17,7 +19,7 @@ public class MessageLogger {
      */
     public MessageLogger() {
         // Checks if the log file exists, if not, it creates it
-        this.logFile = new File("out/production/server/resources/logs.txt");
+        this.logFile = new File("src/resources/logs.txt");
         if (this.logFile.exists()) {
             System.out.println("Log file exists");
         } else {
@@ -36,7 +38,7 @@ public class MessageLogger {
      */
     public void log(String message){
         try {
-            FileWriter fileWriter = new FileWriter(this.logFile, true);
+            fileWriter = new FileWriter(logFile, true);
             fileWriter.append("\n").append(message); // intellij says string concatenation is bad and to change to chained append calls
             fileWriter.close();
         } catch (IOException e) {

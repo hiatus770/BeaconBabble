@@ -9,3 +9,25 @@ User lmfao has connected to the server from 127.0.0.1
 [IP: 127.0.0.1] 09:59 [lmfao]: lol
 [IP: 127.0.0.1] 09:59 [lmfao]: lol
 [IP: 127.0.0.1] 09:59 [lmfao]: lol
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User hello has connected to the server from 127.0.0.1
+User hello has disconnected from the server at 127.0.0.1
+User esf has connected to the server from 127.0.0.1
+User esf has disconnected from the server at 127.0.0.1
+Server started on port 8000
+User hello has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] 00:45 [hello]: sdfsdf
+[IP: 127.0.0.1] 00:45 [hello]: sdfsd
+[IP: 127.0.0.1] 00:45 [hello]: fsdf
+[IP: 127.0.0.1] 00:45 [hello]: sdf
+User hello has disconnected from the server at 127.0.0.1

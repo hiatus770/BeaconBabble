@@ -18,6 +18,7 @@ public class Client extends JPanel implements ActionListener {
     private int port; // port to connect on
     private String username, message; // username, message being sent to the server
     private PrintWriter writer; // used for writing messages to the server
+    private BufferedReader reader; // used for reading messages from the server 
     private boolean fullDebug = true; // if true, prints out all the debug messages
 
     // GUI components are public to avoid needing getters and setters for them as they are accessed in the read thread
@@ -25,6 +26,8 @@ public class Client extends JPanel implements ActionListener {
     public JTextField outgoingMessage;
     public JMenuBar menuBar;
     public JFrame frame;
+
+    public Icon icon = new ImageIcon(getClass().getResource("resources/icon.png"));
 
     /**
      * Constructor for the Client class.
@@ -213,27 +216,29 @@ public class Client extends JPanel implements ActionListener {
 
             // Writing to the server
             writer = new PrintWriter(socket.getOutputStream(), true);
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             System.out.println("Connected to the chat server");
             incomingMessageBox.setText("Connected to the chat server on address " + hostname + " on port " + port + ".\n");
             createFrame(this); // Creates the window frame for the client
             
-            // Password authentication
-            JPasswordField password = new JPasswordField(10);
-            JPanel panel = new JPanel();
-            panel.add(new JLabel("Enter a password:"));
-            panel.add(password);
-            String[] options = {"OK", "Cancel"};
-            int option = JOptionPane.showOptionDialog(null, panel, "Password Verification", JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
-            
-            // Exit the program if the user presses cancel
-            if (option == 0) {
+            /* TODO: Password authentication
+            do {
+                JPasswordField password = new JPasswordField(10);
+                Object[] message = {
+                    "Password:", password
+                };
+                int passwordOption = JOptionPane.showConfirmDialog(null, message, "Beacon", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                // Exit the program if the user presses cancel
+                if (passwordOption != 0) {
+                    writer.println("/exit");
+                    socket.close();
+                    return true;
+                }
+
                 writer.println(password.getPassword()); // Sends the password to the server
-            } else {
-                writer.println("/exit");
-                socket.close();
-                return false;
-            }
+                System.out.println(password.getPassword());
+            } while (reader.readLine().equals("wrongpassword"));*/
             
             // Get the username from the user 
             username = JOptionPane.showInputDialog("Enter a username: ");
@@ -260,27 +265,6 @@ public class Client extends JPanel implements ActionListener {
             if (fullDebug) System.out.println("Error: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Beacon", JOptionPane.ERROR_MESSAGE);
             return false;
-        }
-    }
-
-    /**
-     * Main method for the client, handles for the command line arguments and initializing the client object
-     */
-    public static void main(String[] args) {
-        // Store the string connection information 
-        String[] connectionInfo = getConnection();
-
-        // if the connection info is null (the user pressed cancel), exit the program
-        if (connectionInfo == null) System.exit(0);
-        
-        // Initiate the client object that is passed to the user thread 
-        Client client = new Client(connectionInfo[0], Integer.parseInt(connectionInfo[1]));
-
-        // keep running the client until the user enters a valid hostname and port
-        while(!client.run()) {
-            connectionInfo = getConnection();
-            if (connectionInfo == null) System.exit(0);
-            client = new Client(connectionInfo[0], Integer.parseInt(connectionInfo[1]));
         }
     }
 
@@ -316,4 +300,27 @@ public class Client extends JPanel implements ActionListener {
 
         incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
     }
+
+    /**
+     * Main method for the client, handles for the command line arguments and initializing the client object
+     */
+    public static void main(String[] args) {
+        // Store the string connection information 
+        String[] connectionInfo = getConnection();
+
+        // if the connection info is null (the user pressed cancel), exit the program
+        if (connectionInfo == null) System.exit(0);
+        
+        // Initiate the client object that is passed to the user thread 
+        Client client = new Client(connectionInfo[0], Integer.parseInt(connectionInfo[1]));
+
+        // keep running the connection box until the user enters a valid hostname and port
+        while(!client.run()) {
+            connectionInfo = getConnection();
+            if (connectionInfo == null) System.exit(0);
+            client = new Client(connectionInfo[0], Integer.parseInt(connectionInfo[1]));
+        }
+    }
+
+    
 }

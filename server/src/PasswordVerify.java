@@ -7,8 +7,9 @@ public class PasswordVerify {
     String password;
 
     public PasswordVerify(File passwordFile) throws IOException {
-        BufferedReader fileReader = new BufferedReader(new FileReader(passwordFile));
-        this.password = fileReader.readLine().substring(9);
+        try (BufferedReader fileReader = new BufferedReader(new FileReader(passwordFile))) {
+            this.password = fileReader.readLine().substring(9);
+        }
     }
 
     public boolean verify(String password) {
