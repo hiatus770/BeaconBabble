@@ -27,8 +27,7 @@ public class Server {
      *             (must be between 0 and 65535)
      */
     public void run(int port) {
-        try {
-            ServerSocket serverSocket = new ServerSocket(port);
+        try (ServerSocket serverSocket = new ServerSocket(port);){
             System.out.println("Server is listening on port " + port);
 
             // Log the information
