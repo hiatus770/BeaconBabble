@@ -31,3 +31,47 @@ User hello has connected to the server from 127.0.0.1
 [IP: 127.0.0.1] 00:45 [hello]: fsdf
 [IP: 127.0.0.1] 00:45 [hello]: sdf
 User hello has disconnected from the server at 127.0.0.1
+Server started on port 8000
+User lol has connected to the server from 127.0.0.1
+User hello has connected to the server from 127.0.0.1
+User hello has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] 09:14 [hello]: sdlckdmlskmdc
+User hello has disconnected from the server at 127.0.0.1
+User sldkcmsldkmcslc has connected to the server from 127.0.0.1
+User sldkcmsldkmcslc has disconnected from the server at 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User kjnkjnkj has connected to the server from 127.0.0.1
+User kjnkjnkj has disconnected from the server at 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User lskdmclskdmclsdc has connected to the server from 127.0.0.1
+User lskdmclskdmclsdc has disconnected from the server at 127.0.0.1
+Server started on port 8000
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User hello has connected to the server from 127.0.0.1
+User lskdmclksdmc has connected to the server from 127.0.0.1
+User lol has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User beacon has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User beacon has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] 10:43 [beacon]: LETS GOOOO
+[IP: 127.0.0.1] 10:43 [beacon]: LETS FUCKING GOOOOOOO
+User beacon has disconnected from the server at 127.0.0.1

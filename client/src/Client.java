@@ -3,8 +3,6 @@ import java.awt.event.*;
 import java.net.*;
 import java.io.*;
 import javax.swing.*;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 /**
  * Client class that connects to the server and sends messages to the server.
@@ -13,10 +11,10 @@ import java.util.Calendar;
  * @see ActionListener for more information on ActionListener.
  * @author goose, hiatus
  */
-public class Client extends JPanel implements ActionListener {
+public class Client {
     private String hostname; // hostname of the server
     private int port; // port to connect on
-    private String username, message; // username, message being sent to the server
+    private String username; // username, message being sent to the server
     private PrintWriter writer; // used for writing messages to the server
     private BufferedReader reader; // used for reading messages from the server 
     private boolean fullDebug = true; // if true, prints out all the debug messages
@@ -37,15 +35,8 @@ public class Client extends JPanel implements ActionListener {
      * @author goose
      */
     public Client(String hostname, int port) {
-        super(new GridBagLayout());
-
-        message = ""; // sets the message being sent to an empty string
-
         this.hostname = hostname;
         this.port = port;
-
-        this.createGUIComponents(); // creates the GUI components
-        this.createMenuBar();
     }
 
     /**
@@ -88,116 +79,12 @@ public class Client extends JPanel implements ActionListener {
         } while (true);
     }
 
-    /**
-     * Creates a new frame for the client.
-     * @param client the client that is creating the frame
-     */
-    private void createFrame(Client client) {
-        frame = new JFrame("Beacon");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // If the user closes the window then send the exit window 
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                writer.println("/exit");
-                System.out.println("Exiting!");
-            }
-        });
-
-        frame.setResizable(true); // allow frame to be resized
-        frame.setSize(400, 300); // set dimensions
-        frame.add(client);
-        frame.setVisible(true);
-        frame.setJMenuBar(menuBar);
-
-        Image icon = new ImageIcon(getClass().getResource("resources/icon.png")).getImage();
-        try {
-            frame.setIconImage(icon);
-        } catch (Exception e) {
-            System.out.println("Could not find icon.png");
-        }
+    public String getUsername() {
+        return username;
     }
 
-    /**
-     * Creates components for the client.
-     * @author goose
-     */
-    private void createGUIComponents() {
-        // make a text area for incoming messages
-        incomingMessageBox = new JTextArea();
-        incomingMessageBox.setEditable(false);
-        incomingMessageBox.setLineWrap(true);
-        incomingMessageBox.setWrapStyleWord(true);
-        JScrollPane scrollPane = new JScrollPane(incomingMessageBox); // scrollable pane for the message box
-
-        // make a text input box for outgoing messages
-        outgoingMessage = new JTextField();
-        outgoingMessage.addActionListener(this);
-
-        // make a send button
-        JButton sendButton = new JButton("Send");
-        sendButton.setPreferredSize(new Dimension(70, outgoingMessage.getPreferredSize().height)); // setting a small preferred size for the button
-        sendButton.addActionListener(this);
-
-        // constraint properties for the outgoing message box
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.gridwidth = GridBagConstraints.RELATIVE;
-        constraints.gridy = 1; // sets the y position of the component to the second grid spot
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 2.0;
-        add(outgoingMessage, constraints);
-
-        // constraint properties for the button
-        constraints.gridwidth = GridBagConstraints.REMAINDER;
-        constraints.fill = GridBagConstraints.NONE;
-        constraints.anchor = GridBagConstraints.LINE_END;
-        // setting weightx to 0 makes sure that the button stays in its own grid spot and doesnt take up like half the space of the message box
-        // if you're wondering what that means you can change it to 1 and see for yourself
-        constraints.weightx = 0;
-        add(sendButton, constraints); // adds the button right next to the message box
-
-        // constraint properties for the incoming message box
-        constraints.gridy = 0; // sets the x position of the component to the first grid spot
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 1.0;
-        constraints.weighty = 1.0;
-        add(scrollPane, constraints);
-    }
-
-    /**
-     * Creates the menu bar for the client.
-     * @author goose
-     */
-    private void createMenuBar() {
-        // creates a menu category for the menu bar
-        JMenu settingsMenu = new JMenu("Settings");
-        JMenuItem changeUsername = new JMenuItem("Change username");
-        changeUsername.addActionListener(e -> { // lambda expression for the change username button
-            // prompts the user to enter a new username
-            username = JOptionPane.showInputDialog(frame, "Enter a new username:", "Beacon", JOptionPane.PLAIN_MESSAGE);
-            // if the user presses cancel, the username is set to null
-            if (username == null) {
-                username = "Anonymous";
-            } else if (username.equals("")) {
-                username = "Anonymous";
-            }
-            // if the user presses ok, the username is set to the input
-            else {
-                writer.println("/chgusrnmcd " + username);
-                writer.flush();
-            }
-        });
-
-        JMenuItem changeServer = new JMenuItem("Change server");
-        JMenuItem changePort = new JMenuItem("Change port");
-
-        settingsMenu.add(changeUsername);
-        settingsMenu.add(changeServer);
-        settingsMenu.add(changePort);
-
-        // creates menu bar, adds the settings menu to it
-        menuBar = new JMenuBar();
-        menuBar.add(settingsMenu);
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /**
@@ -213,15 +100,17 @@ public class Client extends JPanel implements ActionListener {
         try {
             // Start a socket at the hostname and port
             Socket socket = new Socket(hostname, port); // Creates a socket and connects it to the specified port number at the specified IP address
-
+            GUI gui = new GUI(socket, this); // Creates the GUI for the client (the message box and the send button
             // Writing to the server
             writer = new PrintWriter(socket.getOutputStream(), true);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+            gui.createFrame(gui); // Creates the frame for the GUI
+
             System.out.println("Connected to the chat server");
-            incomingMessageBox.setText("Connected to the chat server on address " + hostname + " on port " + port + ".\n");
-            createFrame(this); // Creates the window frame for the client
+            gui.incomingMessageBox.setText("Connected to the chat server on address " + hostname + " on port " + port + ".\n");
             
+
             /* TODO: Password authentication
             do {
                 JPasswordField password = new JPasswordField(10);
@@ -242,14 +131,19 @@ public class Client extends JPanel implements ActionListener {
             
             // Get the username from the user 
             username = JOptionPane.showInputDialog("Enter a username: ");
-            if (username.equals("")) {
+            if (username == null) {
+                writer.println("/exit");
+                socket.close();
+                System.exit(0);
+            } else if (username.equals("")) {
                 username = "Anonymous";
             }
-            incomingMessageBox.setText(incomingMessageBox.getText() + "Welcome to the chat, " + username + "!\n");
+
+            gui.incomingMessageBox.setText(gui.incomingMessageBox.getText() + "Welcome to the chat, " + username + "!\n");
             writer.println(username); // sending the username to the server
 
             // Start the read thread for the program, this will add any received messages to the incomingMessageBox
-            ReadThread readThread = new ReadThread(socket, this);
+            ReadThread readThread = new ReadThread(socket, this, gui);
             readThread.start(); // Start the ReadThread
 
             return true;
@@ -266,39 +160,6 @@ public class Client extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Beacon", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-    }
-
-    /**
-     * Processes the event when the user presses the enter key or the send button.
-     * Responsible for sending the message including the user data and the timestamp to the server.
-     * This method is only identified separately because the same method is used for both the enter key and the send button.
-     * Otherwise, this would have been a lambda function, similar to the one used for the menu bar.
-     * @see ActionListener
-     * @see PrintWriter
-     * @see SimpleDateFormat
-     * @param e Event passed from the action listener
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        // Get the current time and format it
-        // the time stamp of the message
-        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
-
-        // Get what is currently typed in the message box and the timestamp  
-        message = timeStamp + " [" + username + "]: " + outgoingMessage.getText(); 
-
-        // Print for debugging
-        System.out.println(message);
-        
-        // Write the message to the server socket 
-        writer.println(message); 
-
-        // sets the text in the message box to the username and the message ADDED ON TO the rest of the text
-        incomingMessageBox.setText(incomingMessageBox.getText() + message + "\n");
-        outgoingMessage.setText(""); // reset the text box
-
-        incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
     }
 
     /**
@@ -321,6 +182,4 @@ public class Client extends JPanel implements ActionListener {
             client = new Client(connectionInfo[0], Integer.parseInt(connectionInfo[1]));
         }
     }
-
-    
 }

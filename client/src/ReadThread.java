@@ -15,6 +15,7 @@ public class ReadThread extends Thread {
     private BufferedReader reader;
     private Socket socket;
     private Client client;
+    private GUI gui;
 
     // for the notification tray
     private SystemTray tray;
@@ -27,9 +28,10 @@ public class ReadThread extends Thread {
      * @param client the client that is reading from the server
      * @author goose and hiatus
      */
-    public ReadThread(Socket socket, Client client) {
+    public ReadThread(Socket socket, Client client, GUI gui) {
         this.socket = socket;
         this.client = client;
+        this.gui = gui;
  
         try {
             InputStream input = socket.getInputStream(); // takes in a input stream from the socket
@@ -57,12 +59,12 @@ public class ReadThread extends Thread {
         while (true) {
             try {
                 String incomingMessage = reader.readLine(); // sets the incoming message to the response from the server
-                client.incomingMessageBox.setText(client.incomingMessageBox.getText() + incomingMessage + "\n"); // sets the text of the incoming message box to the incoming message
-                client.incomingMessageBox.setCaretPosition(client.incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
+                gui.incomingMessageBox.setText(gui.incomingMessageBox.getText() + incomingMessage + "\n"); // sets the text of the incoming message box to the incoming message
+                gui.incomingMessageBox.setCaretPosition(gui.incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
                 System.out.println(incomingMessage); 
 
                 // checks if the frame is active
-                if (!client.frame.isActive()) {
+                if (!gui.frame.isActive()) {
                     // send a notification to the user
                     trayIcon.displayMessage("Beacon", incomingMessage, TrayIcon.MessageType.INFO);
                 }
