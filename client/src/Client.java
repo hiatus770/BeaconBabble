@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
 import java.io.*;
@@ -16,7 +15,6 @@ public class Client {
     private int port; // port to connect on
     private String username; // username, message being sent to the server
     private PrintWriter writer; // used for writing messages to the server
-    private BufferedReader reader; // used for reading messages from the server 
     private boolean fullDebug = true; // if true, prints out all the debug messages
 
     // GUI components are public to avoid needing getters and setters for them as they are accessed in the read thread
@@ -103,7 +101,6 @@ public class Client {
             GUI gui = new GUI(socket, this); // Creates the GUI for the client (the message box and the send button
             // Writing to the server
             writer = new PrintWriter(socket.getOutputStream(), true);
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             gui.createFrame(gui); // Creates the frame for the GUI
 

@@ -13,13 +13,10 @@ import java.net.Socket;
  */
 public class ReadThread extends Thread {
     private BufferedReader reader;
-    private Socket socket;
-    private Client client;
     private GUI gui;
 
     // for the notification tray
     private SystemTray tray;
-    private Image image;
     private TrayIcon trayIcon;
 
     /**
@@ -29,8 +26,6 @@ public class ReadThread extends Thread {
      * @author goose and hiatus
      */
     public ReadThread(Socket socket, Client client, GUI gui) {
-        this.socket = socket;
-        this.client = client;
         this.gui = gui;
  
         try {

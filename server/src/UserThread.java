@@ -15,7 +15,6 @@ public class UserThread extends Thread {
 
     // Message writing object and the timestamp for the message
     private PrintWriter writer;
-    private BufferedReader reader;
     MessageLogger logger;
 
     /**
