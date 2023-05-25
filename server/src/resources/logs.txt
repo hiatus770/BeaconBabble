@@ -75,3 +75,6 @@ User beacon has connected to the server from 127.0.0.1
 [IP: 127.0.0.1] 10:43 [beacon]: LETS GOOOO
 [IP: 127.0.0.1] 10:43 [beacon]: LETS FUCKING GOOOOOOO
 User beacon has disconnected from the server at 127.0.0.1
+Server started on port 8000
+User hello has connected to the server from 127.0.0.1
+User hello has disconnected from the server at 127.0.0.1
