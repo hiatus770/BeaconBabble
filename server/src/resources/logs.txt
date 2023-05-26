@@ -78,3 +78,42 @@ User beacon has disconnected from the server at 127.0.0.1
 Server started on port 8000
 User hello has connected to the server from 127.0.0.1
 User hello has disconnected from the server at 127.0.0.1
+Server started on port 8000
+User oliver has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] 11:10 [oliver]: s
+[IP: 127.0.0.1] 11:10 [oliver]: s
+[IP: 127.0.0.1] 11:10 [oliver]: s
+[IP: 127.0.0.1] 11:10 [oliver]: s
+User oliver has disconnected from the server at 127.0.0.1
+User oliver has connected to the server from 127.0.0.1
+User oliver has disconnected from the server at 127.0.0.1
+User oliver has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] [11:32] <oliver>: what the
+[IP: 127.0.0.1] [11:32] <oliver>: hell
+[IP: 127.0.0.1] [11:32] <oliver>: LOL
+User oliver has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] [11:33] <oliver>: what
+[IP: 127.0.0.1] [11:33] <oliver>: what
+User oliver has disconnected from the server at 127.0.0.1
+User oliver has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] [11:34] <oliver>: ?
+[IP: 127.0.0.1] [11:34] <oliver>: ?
+[IP: 127.0.0.1] [11:34] <oliver>: 
+[IP: 127.0.0.1] [11:34] <oliver>: 
+[IP: 127.0.0.1] [11:34] <oliver>: 
+[IP: 127.0.0.1] [11:34] <oliver>: ?
+[IP: 127.0.0.1] [11:34] <oliver>: ?
+[IP: 127.0.0.1] [11:34] <oliver>: bruh
+[IP: 127.0.0.1] [11:34] <oliver>: bruh
+User oliver has disconnected from the server at 127.0.0.1
+User oliver has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] [12:45] <oliver>: hello
+[IP: 127.0.0.1] [12:45] <oliver>: hello
+[IP: 127.0.0.1] [12:45] <oliver>: hello
+[IP: 127.0.0.1] [12:45] <oliver>: hello
+[IP: 127.0.0.1] [12:45] <oliver>: hello
+[IP: 127.0.0.1] /chgusrnmcd bruh
+[IP: 127.0.0.1] [12:45] <bruh>: hello
+[IP: 127.0.0.1] [12:45] <bruh>: /users
+[IP: 127.0.0.1] [12:45] <bruh>: /users
+[IP: 127.0.0.1] /chgusrnmcd oliver

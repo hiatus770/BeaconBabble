@@ -1,5 +1,7 @@
 // Acts as the thread that reads the messages from the server and displays it 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -54,7 +56,7 @@ public class ReadThread extends Thread {
         while (true) {
             try {
                 String incomingMessage = reader.readLine(); // sets the incoming message to the response from the server
-                gui.incomingMessageBox.setText(gui.incomingMessageBox.getText() + incomingMessage + "\n"); // sets the text of the incoming message box to the incoming message
+                gui.incomingMessages.insertString(gui.incomingMessages.getLength(), incomingMessage + "\n", gui.clientstyle); // sets the text of the incoming message box to the incoming message
                 gui.incomingMessageBox.setCaretPosition(gui.incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
                 System.out.println(incomingMessage); 
 
@@ -67,6 +69,8 @@ public class ReadThread extends Thread {
                 System.out.println("Error reading from server: " + e.getMessage());
                 e.printStackTrace();
                 break;
+            } catch (BadLocationException e) {
+                e.printStackTrace();
             }
         }
     }
