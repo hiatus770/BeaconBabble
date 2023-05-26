@@ -2,6 +2,8 @@ import java.awt.event.*;
 import java.net.*;
 import java.io.*;
 import javax.swing.*;
+import javax.swing.text.Style;
+import javax.swing.text.StyledDocument;
 
 /**
  * Client class that connects to the server and sends messages to the server.
@@ -116,7 +118,7 @@ public class Client {
             // Writing to the server
             writer = new PrintWriter(socket.getOutputStream(), true);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        
+
             String response = "";
             while (!response.equals("correctpassword")) {
                 String password = getPassword();
@@ -134,9 +136,9 @@ public class Client {
 
             gui.createFrame(gui); // Creates the frame for the GUI
             System.out.println("Connected to the chat server");
-            gui.incomingMessageBox.setText("Connected to the chat server on address " + hostname + " on port " + port + ".\n");
+            gui.incomingMessages.insertString(gui.incomingMessages.getLength(), "Connected to the chat server on address " + hostname + " on port " + port + ".\n", gui.serverstyle);
 
-            // Get the username from the    user 
+            // Get the username from the user 
             username = JOptionPane.showInputDialog("Enter a username: ");
             if (username == null) {
                 writer.println("/exit");
@@ -146,7 +148,8 @@ public class Client {
                 username = "Anonymous";
             }
 
-            gui.incomingMessageBox.setText(gui.incomingMessageBox.getText() + "Welcome to the chat, " + username + "!\n");
+            gui.incomingMessages.insertString(gui.incomingMessages.getLength(), "Welcome to the chat, " + username + "!\n", gui.serverstyle);
+            
             writer.println(username); // sending the username to the server
 
             // Start the read thread for the program, this will add any received messages to the incomingMessageBox

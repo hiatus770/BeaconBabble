@@ -1,4 +1,9 @@
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -10,13 +15,18 @@ public class GUI extends JPanel implements ActionListener{
     public Socket socket;
     public Client client;
 
-    public JTextArea incomingMessageBox;
+    public JTextPane incomingMessageBox;
     public JTextField outgoingMessage;
     public JMenuBar menuBar;
     public JFrame frame;
     public JPanel panel;
     public JButton sendButton;
     public JScrollPane scrollPane;
+
+    public StyledDocument incomingMessages;
+    public Style serverstyle;
+    public Style clientstyle;
+    public Style mystyle;
 
     String message;
 
@@ -71,11 +81,17 @@ public class GUI extends JPanel implements ActionListener{
     }
 
     public void createGUIcomponents() {
-        incomingMessageBox = new JTextArea();
+        incomingMessageBox = new JTextPane();
         incomingMessageBox.setEditable(false);
-        incomingMessageBox.setLineWrap(true);
-        incomingMessageBox.setWrapStyleWord(true);
         JScrollPane scrollPane = new JScrollPane(incomingMessageBox);
+        incomingMessages = incomingMessageBox.getStyledDocument();
+        serverstyle = incomingMessageBox.addStyle("Server message", null);
+        clientstyle = incomingMessageBox.addStyle("Client message", null);
+        mystyle = incomingMessageBox.addStyle("My message", null);
+
+        StyleConstants.setForeground(serverstyle, Color.BLUE);
+        StyleConstants.setForeground(clientstyle, new Color(53, 0, 0));
+        StyleConstants.setForeground(mystyle, Color.BLACK);
         
         outgoingMessage = new JTextField();
         outgoingMessage.addActionListener(this);
@@ -161,7 +177,7 @@ public class GUI extends JPanel implements ActionListener{
         String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
 
         // Get what is currently typed in the message box and the timestamp  
-        message = timeStamp + " [" + client.getUsername() + "]: " + outgoingMessage.getText(); 
+        message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText(); 
 
         // Print for debugging
         System.out.println(message);
@@ -170,7 +186,12 @@ public class GUI extends JPanel implements ActionListener{
         writer.println(message); 
 
         // sets the text in the message box to the username and the message ADDED ON TO the rest of the text
-        incomingMessageBox.setText(incomingMessageBox.getText() + message + "\n");
+        try {
+            incomingMessages.insertString(incomingMessages.getLength(), message + "\n", mystyle);
+        } catch (BadLocationException e1) {
+            e1.printStackTrace();
+        }
+
         outgoingMessage.setText(""); // reset the text box
 
         incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
