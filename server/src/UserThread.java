@@ -16,14 +16,22 @@ public class UserThread extends Thread {
     // Message writing object and the timestamp for the message
     private PrintWriter writer;
     MessageLogger logger;
+    BufferedReader reader;
+    PasswordVerify passwordVerify;
 
     /**
      *  Userthread constructor, only takes the server socket between the client and it takes the server object to access the server methods
+     * @throws IOException
      */
-     public UserThread(Socket socket, Server server, MessageLogger logger) {
+     public UserThread(Socket socket, Server server, MessageLogger logger) throws IOException {
         this.socket = socket;
         this.server = server;
         this.logger = logger;
+        // Reads text from the character-input stream above
+        reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        // Output stream for the socket which lets the server write to this userthread 
+        writer = new PrintWriter(socket.getOutputStream(), true);
+        passwordVerify = new PasswordVerify(new File("src/resources/password.txt"));
     }
 
 
@@ -53,24 +61,13 @@ public class UserThread extends Thread {
      */
     public void run() {
         try {
-            // Setting up the user information before the while loop
-
-            // Reads text from the character-input stream above
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            // Output stream for the socket which lets the server write to this userthread 
-            writer = new PrintWriter(socket.getOutputStream(), true);
-            /* TODO: Password verification
-            PasswordVerify passwordVerify = new PasswordVerify(new File("out/production/server/resources/password.txt"));
-
-            // Keeps notifying client that password is wrong until it's right
-            String password = reader.readLine();
-            while (!passwordVerify.verify(password)) {
-                writer.println("wrongpassword"); 
-                password = reader.readLine();
+            // Password verification
+            while (!passwordVerify.verify(reader.readLine())) {
+                writer.println("incorrectpassword");
+                socket.close();
+                return;
             }
-            writer.println("verified"); // sends verified to the client to let them know they have been verified
-            */
+            writer.println("correctpassword");
 
             // grabs user mac address
             String username = reader.readLine(); // obtains username from the client

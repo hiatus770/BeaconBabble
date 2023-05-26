@@ -15,6 +15,7 @@ public class Client {
     private int port; // port to connect on
     private String username; // username, message being sent to the server
     private PrintWriter writer; // used for writing messages to the server
+    private BufferedReader reader;
     private boolean fullDebug = true; // if true, prints out all the debug messages
 
     // GUI components are public to avoid needing getters and setters for them as they are accessed in the read thread
@@ -35,6 +36,19 @@ public class Client {
     public Client(String hostname, int port) {
         this.hostname = hostname;
         this.port = port;
+    }
+
+    public String getPassword() {
+        JPasswordField passworldField = new JPasswordField(20);
+        Object[] message = {
+                "Password:", passworldField
+        };
+        int result = JOptionPane.showConfirmDialog(null, message, "Beacon", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            return new String(passworldField.getPassword());
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -101,32 +115,28 @@ public class Client {
             GUI gui = new GUI(socket, this); // Creates the GUI for the client (the message box and the send button
             // Writing to the server
             writer = new PrintWriter(socket.getOutputStream(), true);
-
-            gui.createFrame(gui); // Creates the frame for the GUI
-
-            System.out.println("Connected to the chat server");
-            gui.incomingMessageBox.setText("Connected to the chat server on address " + hostname + " on port " + port + ".\n");
-            
-
-            /* TODO: Password authentication
-            do {
-                JPasswordField password = new JPasswordField(10);
-                Object[] message = {
-                    "Password:", password
-                };
-                int passwordOption = JOptionPane.showConfirmDialog(null, message, "Beacon", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-                // Exit the program if the user presses cancel
-                if (passwordOption != 0) {
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                        
+            String response = "";
+            while (!response.equals("correctpassword")) {
+                String password = getPassword();
+                if (password == null) {
                     writer.println("/exit");
                     socket.close();
-                    return true;
+                    System.exit(0);
                 }
+                writer.println(password);
+                response = reader.readLine();
+                if (response.equals("incorrectpassword")) {
+                    JOptionPane.showMessageDialog(null, "Incorrect password.", "Beacon", JOptionPane.ERROR_MESSAGE);
+                }
+            }
 
-                writer.println(password.getPassword()); // Sends the password to the server
-                System.out.println(password.getPassword());
-            } while (reader.readLine().equals("wrongpassword"));*/
-            
-            // Get the username from the user 
+            gui.createFrame(gui); // Creates the frame for the GUI
+            System.out.println("Connected to the chat server");
+            gui.incomingMessageBox.setText("Connected to the chat server on address " + hostname + " on port " + port + ".\n");
+
+            // Get the username from the    user 
             username = JOptionPane.showInputDialog("Enter a username: ");
             if (username == null) {
                 writer.println("/exit");
