@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -28,28 +29,34 @@ public class GUI extends JPanel implements ActionListener{
     public Style clientstyle;
     public Style mystyle;
 
-    String message;
+    private String message;
 
-
-    public PrintWriter writer;
-    public BufferedReader reader;
+    private PrintWriter writer;
+    private BufferedReader reader;
 
     public Icon icon = new ImageIcon(getClass().getResource("resources/icon.png"));
 
+    // TODO: Add a method to make setting messages in the incomingMessageBox easier
+
+    /**
+     * Constructor for the GUI class. 
+     * Creates all the components for the window.
+     * @param socket
+     * @param client
+     * @throws IOException
+     */
     public GUI(Socket socket, Client client) throws IOException {
         super(new GridBagLayout());
-
         this.socket = socket;
         this.client = client;
-
-        message = "";
-
-        writer = new PrintWriter(socket.getOutputStream(), true); // used for writing messages to the server
+        message = ""; // initialize message to empty string
+        writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
         reader = new BufferedReader(new java.io.InputStreamReader(socket.getInputStream())); // used for reading messages from the server
     }
 
     /**
-     * Creates a new frame for the client.
+     * Creates a frame for the client.
+     * @author goose
      */
     public void createFrame(GUI gui) {
         createGUIcomponents();
@@ -80,11 +87,17 @@ public class GUI extends JPanel implements ActionListener{
         }
     }
 
+    /**
+     * Creates GUI components for the client.
+     * @author goose
+     */
     public void createGUIcomponents() {
         incomingMessageBox = new JTextPane();
         incomingMessageBox.setEditable(false);
+        incomingMessageBox.setEditorKit(new WrapEditorKit());
         JScrollPane scrollPane = new JScrollPane(incomingMessageBox);
         incomingMessages = incomingMessageBox.getStyledDocument();
+
         serverstyle = incomingMessageBox.addStyle("Server message", null);
         clientstyle = incomingMessageBox.addStyle("Client message", null);
         mystyle = incomingMessageBox.addStyle("My message", null);
@@ -172,18 +185,13 @@ public class GUI extends JPanel implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Get the current time and format it
-        // the time stamp of the message
+        // Formatting the current time to be displayed in the message
         String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
 
-        // Get what is currently typed in the message box and the timestamp  
+        // Format and package the message to be sent to the server
         message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText(); 
-
-        // Print for debugging
-        System.out.println(message);
-        
-        // Write the message to the server socket 
-        writer.println(message); 
+        System.out.println(message); // Print for debugging
+        writer.println(message); // Write the message to the server socket
 
         // sets the text in the message box to the username and the message ADDED ON TO the rest of the text
         try {
@@ -193,7 +201,6 @@ public class GUI extends JPanel implements ActionListener{
         }
 
         outgoingMessage.setText(""); // reset the text box
-
         incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
     } 
 }

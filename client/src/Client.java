@@ -1,5 +1,6 @@
 import java.awt.event.*;
 import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.io.*;
 import javax.swing.*;
 import javax.swing.text.Style;
@@ -112,24 +113,26 @@ public class Client {
      */
     public boolean run() {
         try {
-            // Start a socket at the hostname and port
-            Socket socket = new Socket(hostname, port); // Creates a socket and connects it to the specified port number at the specified IP address
-            GUI gui = new GUI(socket, this); // Creates the GUI for the client (the message box and the send button
-            // Writing to the server
-            writer = new PrintWriter(socket.getOutputStream(), true);
+            // Start a socket at hostname and port
+            Socket socket = new Socket(hostname, port); 
+            // Creates the GUI for the client (the message box and the send button
+            GUI gui = new GUI(socket, this); 
+            // Initializing readers and writers
+            writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+            // Gets and checks the password provided by the user
             String response = "";
-            while (!response.equals("correctpassword")) {
-                String password = getPassword();
-                if (password == null) {
+            while (!response.equals("correctpassword")) { // While the password is incorrect, keep asking for a password
+                String password = getPassword(); // Retrieve password
+                if (password == null) { // If the user presses cancel, exit the program
                     writer.println("/exit");
                     socket.close();
                     System.exit(0);
                 }
-                writer.println(password);
-                response = reader.readLine();
-                if (response.equals("incorrectpassword")) {
+                writer.println(password); // Send the password to the server
+                response = reader.readLine(); // Get the response from the server
+                if (response.equals("incorrectpassword")) { // If the password is incorrect, display an error message
                     JOptionPane.showMessageDialog(null, "Incorrect password.", "Beacon", JOptionPane.ERROR_MESSAGE);
                 }
             }

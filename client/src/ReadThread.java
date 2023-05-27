@@ -5,7 +5,6 @@ import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
@@ -31,14 +30,17 @@ public class ReadThread extends Thread {
         this.gui = gui;
  
         try {
-            InputStream input = socket.getInputStream(); // takes in a input stream from the socket
-            reader = new BufferedReader(new InputStreamReader(input)); // just reads the input from above
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Reads an input stream from the socket
         } catch (IOException e) {
             System.out.println("Error getting input stream: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
+    /**
+     * Runs the thread.
+     * @author goose and hiatus
+     */
     public void run() {
         tray = SystemTray.getSystemTray(); // initialize a system tray
         Image icon = new ImageIcon(getClass().getResource("resources/icon.png")).getImage();
@@ -53,11 +55,13 @@ public class ReadThread extends Thread {
             throw new RuntimeException(e);
         }
 
-        while (true) {
+        while (true) { // thread stops once the user presses the exit button
             try {
                 String incomingMessage = reader.readLine(); // sets the incoming message to the response from the server
-                gui.incomingMessages.insertString(gui.incomingMessages.getLength(), incomingMessage + "\n", gui.clientstyle); // sets the text of the incoming message box to the incoming message
-                gui.incomingMessageBox.setCaretPosition(gui.incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
+                // sets the text of the incoming message box to the incoming message
+                gui.incomingMessages.insertString(gui.incomingMessages.getLength(), incomingMessage + "\n", gui.clientstyle); 
+                // scrolls to the bottom of the incoming message box
+                gui.incomingMessageBox.setCaretPosition(gui.incomingMessageBox.getDocument().getLength()); 
                 System.out.println(incomingMessage); 
 
                 // checks if the frame is active
@@ -68,7 +72,6 @@ public class ReadThread extends Thread {
             } catch (IOException e){
                 System.out.println("Error reading from server: " + e.getMessage());
                 e.printStackTrace();
-                break;
             } catch (BadLocationException e) {
                 e.printStackTrace();
             }

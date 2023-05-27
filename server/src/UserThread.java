@@ -1,4 +1,5 @@
 import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.io.*;
 
 /**
@@ -30,7 +31,7 @@ public class UserThread extends Thread {
         // Reads text from the character-input stream above
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         // Output stream for the socket which lets the server write to this userthread 
-        writer = new PrintWriter(socket.getOutputStream(), true);
+        writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
         passwordVerify = new PasswordVerify(new File("src/resources/password.txt"));
     }
 
@@ -89,12 +90,11 @@ public class UserThread extends Thread {
             // Keeps reading messages from the client until the client sends the /exit signal, this is only sent when closing the window
             while (!clientMessage.equals("/exit")) {
                 // Sends message AFTER the thread has received the message, this forces the loop to check for an exit message
-                serverMessage = clientMessage; // formatting client message
-                server.broadcast(serverMessage, this); // broadcasts the client message to all macAddresses.txt
+                // NOTE: im pretty sure tehres no reason for server message = client message but im too scared to remove it
+                server.broadcast(clientMessage, this); // broadcasts the client message to all macAddresses.txt
 
                 // Grabs input from the ReadThread in java client
                 clientMessage = reader.readLine(); // receives the client message
-                
                 // Print the client message to the console
                 System.out.println(clientMessage);
 
