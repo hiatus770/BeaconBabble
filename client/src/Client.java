@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.text.Style;
 import javax.swing.text.StyledDocument;
 
+// to make executable jar, navigate to client/src
+// run: jar cvfe beacon.jar Client *.class
+
 /**
  * Client class that connects to the server and sends messages to the server.
  * Inherits the JPanel class for the GUI and implements ActionListener for polling keyboard input.
