@@ -158,15 +158,7 @@ public class GUI extends JPanel implements ActionListener{
             }
         });
 
-        /*
-         * TODO: Implement change server and change port
-         */
-        JMenuItem changeServer = new JMenuItem("Change server");
-        JMenuItem changePort = new JMenuItem("Change port");
-
         settingsMenu.add(changeUsername);
-        settingsMenu.add(changeServer);
-        settingsMenu.add(changePort);
 
         // creates menu bar, adds the settings menu to it
         menuBar = new JMenuBar();
