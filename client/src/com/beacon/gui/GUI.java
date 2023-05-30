@@ -1,9 +1,11 @@
-package com.beacon;
+package com.beacon.gui;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+
+import com.beacon.client.Client;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -149,6 +151,8 @@ public class GUI extends JPanel implements ActionListener{
                 client.setUsername("Anonymous");
             } else if (client.getUsername().equals("")) {
                 client.setUsername("Anonymous");
+            } else if (client.getUsername().length() > 20) {
+                client.setUsername(client.getUsername().substring(0, 20));
             }
             // if the user presses ok, the username is set to the input
             else {
@@ -180,7 +184,7 @@ public class GUI extends JPanel implements ActionListener{
         String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
 
         // Format and package the message to be sent to the server
-        message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText(); 
+        message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText().substring(0, 1000); 
         System.out.println(message); // Print for debugging
         writer.println(message); // Write the message to the server socket
 

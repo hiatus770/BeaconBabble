@@ -1,9 +1,11 @@
-package com.beacon;
+package com.beacon.client;
 import java.awt.event.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.io.*;
 import javax.swing.*;
+
+import com.beacon.gui.GUI;
 
 /**
  * Client class that connects to the server and sends messages to the server.
@@ -25,8 +27,6 @@ public class Client {
     public JTextField outgoingMessage;
     public JMenuBar menuBar;
     public JFrame frame;
-
-    public Icon icon = new ImageIcon(getClass().getResource("resources/icon.png"));
 
     /**
      * Constructor for the Client class.
@@ -148,6 +148,8 @@ public class Client {
                 System.exit(0);
             } else if (username.equals("")) {
                 username = "Anonymous";
+            } else if (username.length() > 20) {
+                username = username.substring(0, 20);
             }
 
             gui.incomingMessages.insertString(gui.incomingMessages.getLength(), "Welcome to the chat, " + username + "!\n", gui.serverstyle);

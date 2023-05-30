@@ -1,0 +1,191 @@
+
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+User oliver.huang24@ycdsbk12.ca has connected to the server from 127.0.0.1
+Server started on port 8000
+Server started on port 8000
+User lmfao has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] 09:59 [lmfao]: lol
+[IP: 127.0.0.1] 09:59 [lmfao]: lol
+[IP: 127.0.0.1] 09:59 [lmfao]: lol
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+Server started on port 8000
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User hello has connected to the server from 127.0.0.1
+User hello has disconnected from the server at 127.0.0.1
+User esf has connected to the server from 127.0.0.1
+User esf has disconnected from the server at 127.0.0.1
+Server started on port 8000
+User hello has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] 00:45 [hello]: sdfsdf
+[IP: 127.0.0.1] 00:45 [hello]: sdfsd
+[IP: 127.0.0.1] 00:45 [hello]: fsdf
+[IP: 127.0.0.1] 00:45 [hello]: sdf
+User hello has disconnected from the server at 127.0.0.1
+Server started on port 8000
+User lol has connected to the server from 127.0.0.1
+User hello has connected to the server from 127.0.0.1
+User hello has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] 09:14 [hello]: sdlckdmlskmdc
+User hello has disconnected from the server at 127.0.0.1
+User sldkcmsldkmcslc has connected to the server from 127.0.0.1
+User sldkcmsldkmcslc has disconnected from the server at 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User kjnkjnkj has connected to the server from 127.0.0.1
+User kjnkjnkj has disconnected from the server at 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User lskdmclskdmclsdc has connected to the server from 127.0.0.1
+User lskdmclskdmclsdc has disconnected from the server at 127.0.0.1
+Server started on port 8000
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User hello has connected to the server from 127.0.0.1
+User lskdmclksdmc has connected to the server from 127.0.0.1
+User lol has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User beacon has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User /exit has connected to the server from 127.0.0.1
+User beacon has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] 10:43 [beacon]: LETS GOOOO
+[IP: 127.0.0.1] 10:43 [beacon]: LETS FUCKING GOOOOOOO
+User beacon has disconnected from the server at 127.0.0.1
+Server started on port 8000
+User hello has connected to the server from 127.0.0.1
+User hello has disconnected from the server at 127.0.0.1
+Server started on port 8000
+User oliver has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] 11:10 [oliver]: s
+[IP: 127.0.0.1] 11:10 [oliver]: s
+[IP: 127.0.0.1] 11:10 [oliver]: s
+[IP: 127.0.0.1] 11:10 [oliver]: s
+User oliver has disconnected from the server at 127.0.0.1
+User oliver has connected to the server from 127.0.0.1
+User oliver has disconnected from the server at 127.0.0.1
+User oliver has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] [11:32] <oliver>: what the
+[IP: 127.0.0.1] [11:32] <oliver>: hell
+[IP: 127.0.0.1] [11:32] <oliver>: LOL
+User oliver has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] [11:33] <oliver>: what
+[IP: 127.0.0.1] [11:33] <oliver>: what
+User oliver has disconnected from the server at 127.0.0.1
+User oliver has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] [11:34] <oliver>: ?
+[IP: 127.0.0.1] [11:34] <oliver>: ?
+[IP: 127.0.0.1] [11:34] <oliver>: 
+[IP: 127.0.0.1] [11:34] <oliver>: 
+[IP: 127.0.0.1] [11:34] <oliver>: 
+[IP: 127.0.0.1] [11:34] <oliver>: ?
+[IP: 127.0.0.1] [11:34] <oliver>: ?
+[IP: 127.0.0.1] [11:34] <oliver>: bruh
+[IP: 127.0.0.1] [11:34] <oliver>: bruh
+User oliver has disconnected from the server at 127.0.0.1
+User oliver has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] [12:45] <oliver>: hello
+[IP: 127.0.0.1] [12:45] <oliver>: hello
+[IP: 127.0.0.1] [12:45] <oliver>: hello
+[IP: 127.0.0.1] [12:45] <oliver>: hello
+[IP: 127.0.0.1] [12:45] <oliver>: hello
+[IP: 127.0.0.1] /chgusrnmcd bruh
+[IP: 127.0.0.1] [12:45] <bruh>: hello
+[IP: 127.0.0.1] [12:45] <bruh>: /users
+[IP: 127.0.0.1] [12:45] <bruh>: /users
+[IP: 127.0.0.1] /chgusrnmcd oliver
+Server started on port 8000
+User goose has connected to the server from 127.0.0.1
+User pp has connected to the server from 10.10.161.212
+[IP: 10.10.161.212] [12:52] <pp>: live pp reaction
+[IP: 127.0.0.1] [12:52] <goose>: oh
+[IP: 127.0.0.1] [12:52] <goose>: it works
+[IP: 10.10.161.212] [12:52] <pp>: wahooo
+[IP: 10.10.161.212] [12:52] <pp>: :smiley:
+[IP: 127.0.0.1] [12:52] <goose>: good shit
+[IP: 127.0.0.1] [12:52] <goose>: but the other colour does not work
+[IP: 10.10.161.212] [12:52] <pp>: he he he haw
+[IP: 127.0.0.1] [12:52] <goose>: your message is supposed to be like
+[IP: 127.0.0.1] [12:52] <goose>: brown
+[IP: 127.0.0.1] [12:52] <goose>: i think
+[IP: 10.10.161.212] [12:52] <pp>: you know what else is brown
+[IP: 127.0.0.1] [12:52] <goose>: shit
+[IP: 10.10.161.212] [12:52] <pp>: wow
+[IP: 127.0.0.1] [12:52] <goose>: wow
+[IP: 127.0.0.1] [12:52] <goose>: wait
+[IP: 127.0.0.1] [12:52] <goose>: i wonder
+[IP: 127.0.0.1] [12:52] <goose>: if it can show emojis
+[IP: 127.0.0.1] [12:52] <goose>: because i changed the 
+[IP: 10.10.161.212] [12:52] <pp>: ..............................................................................................................................................
+[IP: 127.0.0.1] [12:53] <goose>: text field type
+[IP: 10.10.161.212] [12:53] <pp>: my honest reaction
+[IP: 127.0.0.1] [12:53] <goose>: woah
+[IP: 127.0.0.1] [12:53] <goose>: no word wrap
+[IP: 127.0.0.1] [12:53] <goose>: i probably should fix that
+[IP: 10.10.161.212] [12:53] <pp>: ඞ
+[IP: 127.0.0.1] [12:53] <goose>: wtf
+[IP: 10.10.161.212] [12:53] <pp>: damn
+[IP: 10.10.161.212] [12:53] <pp>: it didnt send
+[IP: 127.0.0.1] [12:53] <goose>: ?
+[IP: 127.0.0.1] [12:53] <goose>: oh
+[IP: 127.0.0.1] [12:53] <goose>: that works
+[IP: 10.10.161.212] [12:53] <pp>: im finding ascii art mone moment
+[IP: 10.10.161.212] [12:53] <pp>: i didnt get an emoji
+[IP: 127.0.0.1] [12:53] <goose>: oh
+[IP: 127.0.0.1] [12:53] <goose>: i got an emoji
+[IP: 127.0.0.1] [12:53] <goose>: ohhh i know why
+[IP: 127.0.0.1] [12:53] <goose>: when it sends through the server
+[IP: 127.0.0.1] [12:54] <goose>: it's sending by plaintext
+[IP: 127.0.0.1] [12:54] <goose>: and not by like
+[IP: 127.0.0.1] [12:54] <goose>: unicode
+[IP: 10.10.161.212] [12:54] <pp>: ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⠋⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠈⢻⣿⣿⡄⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⣸⣿�?⠀⠀⠀⣠⣶⣾⣿⣿⣿⠿⠿⠿⢿⣿⣿⣿⣄⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⣿⣿�?⠀⠀⢰⣿⣿⣯�?⠀⠀⠀⠀⠀⠀⠀⠈⠙⢿⣷⡄⠀ ⠀⠀⣀⣤⣴⣶⣶⣿⡟⠀⠀⠀⢸⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣷⠀ ⠀⢰⣿⡟⠋⠉⣹⣿⡇⠀⠀⠀⠘⣿⣿⣿⣿⣷⣦⣤⣤⣤⣶⣶⣶⣶⣿⣿⣿⠀ ⠀⢸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀ ⠀⣸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠉⠻⠿⣿⣿⣿⣿⡿⠿⠿⠛⢻⣿⡇⠀⠀ ⠀⣿⣿�?⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣧⠀⠀ ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀ ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀ ⠀⢿⣿⡆⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡇⠀⠀ ⠀⠸⣿⣧⡀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠃⠀⠀ ⠀⠀⠛⢿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⣰⣿⣿⣷⣶⣶⣶⣶⠶⠀⢠⣿⣿⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⣽⣿�?�?⠀⠀⢸⣿⡇⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⢹⣿⡆⠀⠀⠀⣸⣿⠇⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿�?⠀⠈⠻⣿⣿⣿⣿⡿�?⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋�?⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+[IP: 10.10.161.212] [12:54] <pp>: ahhh
+[IP: 127.0.0.1] [12:54] <goose>: what the hhell
+[IP: 10.10.161.212] [12:54] <pp>: its so wide
+[IP: 10.10.161.212] [12:54] <pp>: fuc
+User goose has disconnected from the server at 127.0.0.1
+Server started on port 8000
+User oliver has connected to the server from 127.0.0.1
+User oliver has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] [21:02] <oliver>: hello
+[IP: 127.0.0.1] [21:02] <oliver>: 早上好
+User oliver has disconnected from the server at 127.0.0.1
+Server started on port 8000
+User goose has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] [21:12] <goose>: sup bro
+[IP: 127.0.0.1] [21:12] <goose>: ßßßß
+[IP: 127.0.0.1] [21:12] <goose>: ßßß
+[IP: 127.0.0.1] [21:12] <goose>: ß
+[IP: 127.0.0.1] [21:12] <goose>: ßßß
+[IP: 127.0.0.1] [21:12] <goose>: ßßßßß
+[IP: 127.0.0.1] [21:12] <goose>: ss
+[IP: 127.0.0.1] [21:12] <goose>: s \n s
+[IP: 127.0.0.1] [21:13] <goose>: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+User goose has disconnected from the server at 127.0.0.1
+User goose has connected to the server from 127.0.0.1
+[IP: 127.0.0.1] [21:25] <goose>: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+[IP: 127.0.0.1] [21:25] <goose>: asdasdsadasdasdsadasdasdsadasdasdsadasdasdsadasdasdsadasdasdsadasdasdsadasdasdsadasdasdsadasdasdsadasdasdsadasdasdsadasdasdsad  asdasdsadasdasdsadasdasdsadasdasdsad asdasdsad
+User goose has disconnected from the server at 127.0.0.1

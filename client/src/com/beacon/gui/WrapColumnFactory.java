@@ -1,4 +1,4 @@
-package com.beacon;
+package com.beacon.gui;
 import javax.swing.text.*;
 
 public class WrapColumnFactory implements ViewFactory {

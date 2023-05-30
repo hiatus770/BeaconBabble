@@ -1,6 +1,8 @@
-package com.beacon;
+package com.beacon.client;
 // Acts as the thread that reads the messages from the server and displays it 
 import javax.swing.text.BadLocationException;
+
+import com.beacon.gui.GUI;
 
 import java.awt.*;
 import java.io.BufferedReader;

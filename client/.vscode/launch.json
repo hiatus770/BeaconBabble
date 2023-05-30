@@ -8,6 +8,13 @@
             "type": "java",
             "name": "Client",
             "request": "launch",
+            "mainClass": "com.beacon.client.Client",
+            "projectName": "client_97da14e3"
+        },
+        {
+            "type": "java",
+            "name": "Client",
+            "request": "launch",
             "mainClass": "com.beacon.Client",
             "projectName": "client_97da14e3"
         },

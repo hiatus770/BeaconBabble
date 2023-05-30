@@ -1,3 +1,4 @@
+package com.beacon;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.io.*;
@@ -32,7 +33,7 @@ public class UserThread extends Thread {
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         // Output stream for the socket which lets the server write to this userthread 
         writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
-        passwordVerify = new PasswordVerify(new File("src/resources/password.txt"));
+        passwordVerify = new PasswordVerify(new File("resources/password.txt"));
     }
 
 
@@ -41,7 +42,7 @@ public class UserThread extends Thread {
      */
     public void printUsers() {
         if (server.hasUsers()) {
-            writer.println("Connected user: " + server.getUsernames());
+            writer.println("Connected users: " + server.getUsernames());
         } else {
             writer.println("No other users connected.");
         }
@@ -102,6 +103,10 @@ public class UserThread extends Thread {
                 if (!clientMessage.equals("/exit")){
                     // Add ip information
                     logger.log("[IP: " + socket.getInetAddress().getHostAddress() + "] " + clientMessage);
+                }
+
+                if (clientMessage.equals("/users")) {
+                    printUsers();
                 }
 
                 // checks if the user changed their username
