@@ -1,3 +1,4 @@
+package com.beacon;
 import javax.swing.text.*;
 
 public class WrapLabelView extends LabelView { 

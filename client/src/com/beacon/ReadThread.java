@@ -1,5 +1,5 @@
+package com.beacon;
 // Acts as the thread that reads the messages from the server and displays it 
-import javax.swing.*;
 import javax.swing.text.BadLocationException;
 
 import java.awt.*;
@@ -43,11 +43,10 @@ public class ReadThread extends Thread {
      */
     public void run() {
         tray = SystemTray.getSystemTray(); // initialize a system tray
-        Image icon = new ImageIcon(getClass().getResource("resources/icon.png")).getImage();
-        trayIcon = new TrayIcon(icon, "Beacon"); // initialize a tray icon
+        trayIcon = new TrayIcon(gui.icon, "Beacon"); // initialize a tray icon
         trayIcon.setImageAutoSize(true);
         trayIcon.setToolTip("Beacon");
-        trayIcon.setImage(icon);
+        trayIcon.setImage(gui.icon);
 
         try {
             tray.add(trayIcon); // adds to the system tray

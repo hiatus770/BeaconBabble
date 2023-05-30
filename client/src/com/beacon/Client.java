@@ -1,13 +1,9 @@
+package com.beacon;
 import java.awt.event.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.io.*;
 import javax.swing.*;
-import javax.swing.text.Style;
-import javax.swing.text.StyledDocument;
-
-// to make executable jar, navigate to client/src
-// run: jar cvfe beacon.jar Client *.class
 
 /**
  * Client class that connects to the server and sends messages to the server.

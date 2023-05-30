@@ -1,3 +1,4 @@
+package com.beacon;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
@@ -32,9 +33,8 @@ public class GUI extends JPanel implements ActionListener{
     private String message;
 
     private PrintWriter writer;
-    private BufferedReader reader;
 
-    public Icon icon = new ImageIcon(getClass().getResource("resources/icon.png"));
+    public Image icon;
 
     // TODO: Add a method to make setting messages in the incomingMessageBox easier
 
@@ -51,7 +51,7 @@ public class GUI extends JPanel implements ActionListener{
         this.client = client;
         message = ""; // initialize message to empty string
         writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
-        reader = new BufferedReader(new java.io.InputStreamReader(socket.getInputStream())); // used for reading messages from the server
+        icon = new ImageIcon(getClass().getResource("resources/icon.png")).getImage();
     }
 
     /**
@@ -79,7 +79,6 @@ public class GUI extends JPanel implements ActionListener{
         frame.setVisible(true);
         frame.setJMenuBar(menuBar);
 
-        Image icon = new ImageIcon(getClass().getResource("resources/icon.png")).getImage();
         try {
             frame.setIconImage(icon);
         } catch (Exception e) {
