@@ -184,7 +184,9 @@ public class GUI extends JPanel implements ActionListener{
         String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
 
         // Format and package the message to be sent to the server
-        message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText().substring(0, 1000); 
+        if (outgoingMessage.getText().length() > 1000) message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText().substring(0, 1000) + "..."; 
+        else message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText().substring(0, 1000); 
+
         System.out.println(message); // Print for debugging
         writer.println(message); // Write the message to the server socket
 
