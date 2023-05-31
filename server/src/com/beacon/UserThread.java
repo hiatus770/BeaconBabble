@@ -33,7 +33,7 @@ public class UserThread extends Thread {
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         // Output stream for the socket which lets the server write to this userthread 
         writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
-        passwordVerify = new PasswordVerify(new File("com/beacon/resources/password.txt"));
+        passwordVerify = new PasswordVerify(new File("/home/amogus/BeaconBabble/server/src/com/beacon/resources/password.txt"));
     }
 
 
@@ -66,8 +66,6 @@ public class UserThread extends Thread {
             // Password verification
             while (!passwordVerify.verify(reader.readLine())) {
                 writer.println("incorrectpassword");
-                socket.close();
-                return;
             }
             writer.println("correctpassword");
 
