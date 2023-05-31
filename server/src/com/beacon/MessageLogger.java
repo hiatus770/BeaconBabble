@@ -20,7 +20,7 @@ public class MessageLogger {
      */
     public MessageLogger() {
         // Checks if the log file exists, if not, it creates it
-        this.logFile = new File("src/com/beacon/resources/logs.txt");
+        this.logFile = new File("/home/amogus/BeaconBabble/server/src/com/beacon/resources/logs.txt");
         if (this.logFile.exists()) {
             System.out.println("Log file exists");
         } else {
