@@ -16,7 +16,6 @@ public class Server {
 
     // this is only to errors with the MACLogger
     public Server() throws IOException {
-
     }
 
     /**
@@ -61,7 +60,6 @@ public class Server {
             }
         }
     }
-
     /**
      * This method is called by the UserThread class to add a user
      * and their respective user thread from the ArrayList of usernames and user threads.

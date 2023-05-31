@@ -8,6 +8,13 @@
             "type": "java",
             "name": "Server",
             "request": "launch",
+            "mainClass": "com.beacon.Server",
+            "projectName": "server_b2c9505b"
+        },
+        {
+            "type": "java",
+            "name": "Server",
+            "request": "launch",
             "mainClass": "Server",
             "projectName": "server_b2c9505b",
             "args": [
