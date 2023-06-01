@@ -15,18 +15,17 @@ import com.beacon.gui.GUI;
  * @author goose, hiatus
  */
 public class Client {
+    // Connection variables
     private String hostname; // hostname of the server
     private int port; // port to connect on
+
     private String username; // username, message being sent to the server
+
+    // I/O variables
     private PrintWriter writer; // used for writing messages to the server
     private BufferedReader reader;
-    private boolean fullDebug = true; // if true, prints out all the debug messages
 
-    // GUI components are public to avoid needing getters and setters for them as they are accessed in the read thread
-    public JTextArea incomingMessageBox;
-    public JTextField outgoingMessage;
-    public JMenuBar menuBar;
-    public JFrame frame;
+    private boolean fullDebug = true; // if true, prints out all the debug messages
 
     /**
      * Constructor for the Client class.
@@ -40,6 +39,11 @@ public class Client {
         this.port = port;
     }
 
+    /**
+     * Prompts the user to input a password through a dialog box.
+     * @return null if the user presses cancel, the password string if the user presses ok
+     * @author goose
+     */
     public String getPassword() {
         JPasswordField passworldField = new JPasswordField(20);
         Object[] message = {

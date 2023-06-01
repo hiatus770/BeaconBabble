@@ -69,7 +69,6 @@ public class UserThread extends Thread {
             }
             writer.println("correctpassword");
 
-            // grabs user mac address
             String username = reader.readLine(); // obtains username from the client
 
             server.addUsername(username, this); // adds the username to the set of usernames and the user object 
@@ -147,5 +146,4 @@ public class UserThread extends Thread {
             }
         }
     }
-
 }

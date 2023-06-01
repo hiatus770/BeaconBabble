@@ -104,7 +104,7 @@ public class GUI extends JPanel implements ActionListener{
         mystyle = incomingMessageBox.addStyle("My message", null);
 
         StyleConstants.setForeground(serverstyle, Color.BLUE);
-        StyleConstants.setForeground(clientstyle, new Color(53, 0, 0));
+        StyleConstants.setForeground(clientstyle, Color.gray);
         StyleConstants.setForeground(mystyle, Color.BLACK);
         
         outgoingMessage = new JTextField();
