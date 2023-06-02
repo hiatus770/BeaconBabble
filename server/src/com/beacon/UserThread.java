@@ -79,7 +79,7 @@ public class UserThread extends Thread {
             // Log the information
             logger.log("User " + username + " has connected to the server from " + socket.getInetAddress().getHostAddress());
 
-            // Prints a list of online macAddresses.txt to the newly connected user
+            // Prints a list of online users to the newly connected user
             printUsers();
 
             // String for the client message
@@ -102,8 +102,8 @@ public class UserThread extends Thread {
                     logger.log("[IP: " + socket.getInetAddress().getHostAddress() + "] " + clientMessage);
                 }
 
-                if (clientMessage.equals("/users")) {
-                    printUsers();
+                if (clientMessage.contains("/users")) {
+                    printUsers();   
                 }
 
                 // checks if the user changed their username

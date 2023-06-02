@@ -129,16 +129,20 @@ public class Client {
             while (!response.equals("correctpassword")) { // While the password is incorrect, keep asking for a password
                 String password = getPassword(); // Retrieve password
                 if (password == null) { // If the user presses cancel, exit the program
-                    writer.println("/exit");
                     socket.close();
                     System.exit(0);
                 }
+                Thread.sleep(100);
                 writer.println(password); // Send the password to the server
                 response = reader.readLine(); // Get the response from the server
+                Thread.sleep(100);
+
                 if (response.equals("incorrectpassword")) { // If the password is incorrect, display an error message
                     JOptionPane.showMessageDialog(null, "Incorrect password.", "Beacon", JOptionPane.ERROR_MESSAGE);
                 }
             }
+
+
 
             gui.createFrame(gui); // Creates the frame for the GUI
             System.out.println("Connected to the chat server");
