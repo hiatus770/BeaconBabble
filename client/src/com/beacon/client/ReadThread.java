@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Thread responsible for reading messages from the server.
@@ -32,7 +33,7 @@ public class ReadThread extends Thread {
         this.gui = gui;
  
         try {
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream())); // Reads an input stream from the socket
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8)); // Reads an input stream from the socket
         } catch (IOException e) {
             System.out.println("Error getting input stream: " + e.getMessage());
             e.printStackTrace();
