@@ -145,12 +145,11 @@ public class GUI extends JPanel implements ActionListener{
         JMenuItem changeUsername = new JMenuItem("Change username");
         changeUsername.addActionListener(e -> { // lambda expression for the change username button
             // prompts the user to enter a new username
+            String oldUsername = client.getUsername();
             client.setUsername(JOptionPane.showInputDialog(frame, "Enter a new username:", "Beacon", JOptionPane.PLAIN_MESSAGE)); 
             // if the user presses cancel, the username is set to null
-            if (client.getUsername() == null) {
-                client.setUsername("Anonymous");
-            } else if (client.getUsername().equals("")) {
-                client.setUsername("Anonymous");
+            if (client.getUsername().trim().equals("")) {
+                client.setUsername(oldUsername);
             } else if (client.getUsername().length() > 20) {
                 client.setUsername(client.getUsername().substring(0, 20));
             }
@@ -184,20 +183,19 @@ public class GUI extends JPanel implements ActionListener{
         String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
 
         // Format and package the message to be sent to the server
-        if (outgoingMessage.getText().length() > 1000) message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText().substring(0, 1000) + "..."; 
-        else message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText(); 
-
-        System.out.println(message); // Print for debugging
-        writer.println(message); // Write the message to the server socket
-
-        // sets the text in the message box to the username and the message ADDED ON TO the rest of the text
-        try {
-            incomingMessages.insertString(incomingMessages.getLength(), message + "\n", mystyle);
-        } catch (BadLocationException e1) {
-            e1.printStackTrace();
+        if (outgoingMessage.getText().trim().length() > 0) {
+            if (outgoingMessage.getText().length() > 1000) message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText().substring(0, 1000) + "..."; 
+            else message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText(); 
+            System.out.println(message); // Print for debugging
+            writer.println(message); // Write the message to the server socket
+            outgoingMessage.setText(""); // reset the text box
+            incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
+            // sets the text in the message box to the username and the message ADDED ON TO the rest of the text
+            try {
+                incomingMessages.insertString(incomingMessages.getLength(), message + "\n", mystyle);
+            } catch (BadLocationException e1) {
+                e1.printStackTrace();
+            }
         }
-
-        outgoingMessage.setText(""); // reset the text box
-        incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
     } 
 }

@@ -122,7 +122,7 @@ public class Client {
             GUI gui = new GUI(socket, this); 
             // Initializing readers and writers
             writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
 
             // Gets and checks the password provided by the user
             String response = "";
@@ -141,8 +141,6 @@ public class Client {
                     JOptionPane.showMessageDialog(null, "Incorrect password.", "Beacon", JOptionPane.ERROR_MESSAGE);
                 }
             }
-
-
 
             gui.createFrame(gui); // Creates the frame for the GUI
             System.out.println("Connected to the chat server");
