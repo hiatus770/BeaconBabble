@@ -1,6 +1,6 @@
 # Beacon
-A simple Java swing app designed to send messages over a LAN.
+A simple Java swing app designed to send messages over a LAN server.
 
-## How to use
-Download the jar and double-click the file to run.
-Have fun :)
+## Usage
+### Client side
+To use the client side version of the app, you can either run client.jar in the client folder or compile the code yourself. Whatever floats your boat.
