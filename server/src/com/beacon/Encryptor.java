@@ -1,5 +1,5 @@
 package com.beacon;
-
+// TODO add char limit
 public class Encryptor {
     // Key variables
     private String key; // Password as key

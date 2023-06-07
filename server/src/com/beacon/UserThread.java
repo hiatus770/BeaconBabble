@@ -20,6 +20,7 @@ public class UserThread extends Thread {
     MessageLogger logger;
     BufferedReader reader;
     PasswordVerify passwordVerify;
+    Encryptor encryptor;
 
     /**
      *  Userthread constructor, only takes the server socket between the client and it takes the server object to access the server methods
@@ -33,8 +34,8 @@ public class UserThread extends Thread {
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         // Output stream for the socket which lets the server write to this userthread 
         writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
-        passwordVerify = new PasswordVerify(new File("src/com/beacon/resources/password.txt"));
-        //encryptor = new Encryptor(passwordVerify.password);
+        passwordVerify = new PasswordVerify(new File("/home/amogus/BeaconBabble/server/src/com/beacon/resources/password.txt"));
+        encryptor = new Encryptor(passwordVerify.password);
     }
 
 
@@ -77,8 +78,7 @@ public class UserThread extends Thread {
             server.addUsername(username, this); // adds the username to the set of usernames and the user object 
 
             String serverMessage = "New user connected: " + username + ". Welcome!";
-            //server.broadcast(encryptor.encrypt(serverMessage), this); 
-            server.broadcast(serverMessage, this); // Broadcasts the newly connected user to all macAddresses.txt
+            server.broadcast(encryptor.encrypt(serverMessage), this); 
             
             // Log the information
             logger.log("User " + username + " has connected to the server from " + socket.getInetAddress().getHostAddress());
@@ -92,15 +92,13 @@ public class UserThread extends Thread {
             // Keeps reading messages from the client until the client sends the /exit signal, this is only sent when closing the window
             while (!clientMessage.equals("/exit")) {
                 // Sends message AFTER the thread has received the message, this forces the loop to check for an exit message
-                // NOTE: im pretty sure tehres no reason for server message = client message but im too scared to remove it
-                server.broadcast(clientMessage, this); // broadcasts the client message to all macAddresses.txt
-
-                // Grabs input from the ReadThread in java client
-                clientMessage = reader.readLine(); // receives the client message
+                server.broadcast(encryptor.encrypt(clientMessage), this); 
+                // Waits for a signal/message from the client
+                clientMessage = encryptor.decrypt(reader.readLine()); 
                 // Print the client message to the console
                 System.out.println(clientMessage);
 
-                // Log the client message to the logger
+                // As long as the message is not the exit signal, log the client message to the logger
                 if (!clientMessage.equals("/exit")){
                     // Add ip information
                     logger.log("[IP: " + socket.getInetAddress().getHostAddress() + "] " + clientMessage);

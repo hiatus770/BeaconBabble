@@ -13,10 +13,7 @@ public class Server {
     private Set<UserThread> userThreads = new HashSet<>(); // Set of all the user threads
     public boolean fullDebug = false; // if true, prints out all the debug messages
     MessageLogger logger = new MessageLogger(); // logger for the server
-
-    // this is only to errors with the MACLogger
-    public Server() throws IOException {
-    }
+    
 
     /**
      * This method is called by the main method to initialize the server.
@@ -39,7 +36,7 @@ public class Server {
                 UserThread user = new UserThread(clientSocket, this, logger);
                 userThreads.add(user);
                 System.out.println("New user has connected from " + clientSocket.getInetAddress().getHostAddress() + " from port " + clientSocket.getPort());
-                user.start(); // run le thread
+                user.start(); // run the userthread
             }
         } catch (IOException e) {
             System.out.println("Exception caught when trying to listen on port " + port + " or listening for a connection");
