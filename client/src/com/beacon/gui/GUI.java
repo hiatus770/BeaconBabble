@@ -67,9 +67,10 @@ public class GUI extends JPanel implements ActionListener{
         frame = new JFrame("Beacon");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // If the user closes the window then send the exit window 
+        // If the user closes the window then send the exit signal to the server 
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
+                client.isRunning = false;
                 writer.println("/exit");
                 System.out.println("Exiting!");
             }
@@ -187,6 +188,7 @@ public class GUI extends JPanel implements ActionListener{
             if (outgoingMessage.getText().length() > 1000) message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText().substring(0, 1000) + "..."; 
             else message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText(); 
             System.out.println(message); // Print for debugging
+            //client.encryptor.encrypt(message); // Encrypt the message
             writer.println(message); // Write the message to the server socket
             outgoingMessage.setText(""); // reset the text box
             incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box

@@ -6,7 +6,7 @@ import java.io.*;
 /**
  * This thread is responsible for handling all the communication with a single client.
  * This way, the server can handle multiple clients at the same time.
- * Uses the logger to log all the messages and when a user joins and when the user leaves 
+ * The thread uses the logger to log all the messages and when a user joins and when the user leaves 
  * In simple terms, this class represents each user.
  * @author goose
  */
@@ -33,7 +33,8 @@ public class UserThread extends Thread {
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         // Output stream for the socket which lets the server write to this userthread 
         writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
-        passwordVerify = new PasswordVerify(new File("/home/amogus/BeaconBabble/server/src/com/beacon/resources/password.txt"));
+        passwordVerify = new PasswordVerify(new File("src/com/beacon/resources/password.txt"));
+        //encryptor = new Encryptor(passwordVerify.password);
     }
 
 
@@ -42,8 +43,10 @@ public class UserThread extends Thread {
      */
     public void printUsers() {
         if (server.hasUsers()) {
+            //writer.println(encryptor.encrypt("Connected users: " + server.getUsernames()));
             writer.println("Connected users: " + server.getUsernames());
         } else {
+            //writer.println(encryptor.encrypt("No other users connected."));
             writer.println("No other users connected.");
         }
     }
@@ -74,6 +77,7 @@ public class UserThread extends Thread {
             server.addUsername(username, this); // adds the username to the set of usernames and the user object 
 
             String serverMessage = "New user connected: " + username + ". Welcome!";
+            //server.broadcast(encryptor.encrypt(serverMessage), this); 
             server.broadcast(serverMessage, this); // Broadcasts the newly connected user to all macAddresses.txt
             
             // Log the information

@@ -24,8 +24,9 @@ public class Client {
     // I/O variables
     private PrintWriter writer; // used for writing messages to the server
     private BufferedReader reader;
+    //public Encryptor encryptor; // used for encrypting and decrypting messages
 
-    private boolean fullDebug = true; // if true, prints out all the debug messages
+    public boolean isRunning = true; // if true, the client is running
 
     /**
      * Constructor for the Client class.
@@ -37,6 +38,7 @@ public class Client {
     public Client(String hostname, int port) {
         this.hostname = hostname;
         this.port = port;
+        isRunning = true;
     }
 
     /**
@@ -126,8 +128,9 @@ public class Client {
 
             // Gets and checks the password provided by the user
             String response = "";
+            String password = "";
             while (!response.equals("correctpassword")) { // While the password is incorrect, keep asking for a password
-                String password = getPassword(); // Retrieve password
+                password = getPassword(); // Retrieve password
                 if (password == null) { // If the user presses cancel, exit the program
                     socket.close();
                     System.exit(0);
@@ -141,6 +144,8 @@ public class Client {
                     JOptionPane.showMessageDialog(null, "Incorrect password.", "Beacon", JOptionPane.ERROR_MESSAGE);
                 }
             }
+
+            //encryptor = new Encryptor(password); // Create the encryptor object with the password as key
 
             gui.createFrame(gui); // Creates the frame for the GUI
             System.out.println("Connected to the chat server");
@@ -168,15 +173,15 @@ public class Client {
 
             return true;
         } catch (UnknownHostException e) {
-            if (fullDebug) System.out.println("Server not found: " + e.getMessage());
+            System.out.println("Server not found: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Server not found: " + e.getMessage(), "Beacon", JOptionPane.ERROR_MESSAGE);
             return false;
         } catch (IOException e) {
-            if (fullDebug) System.out.println("I/O Error: " + e.getMessage());
+            System.out.println("I/O Error: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "I/O Error: " + e.getMessage(), "Beacon", JOptionPane.ERROR_MESSAGE);
             return false;
         } catch (Exception e) {
-            if (fullDebug) System.out.println("Error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Beacon", JOptionPane.ERROR_MESSAGE);
             return false;
         }

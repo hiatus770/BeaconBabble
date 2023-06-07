@@ -17,6 +17,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class ReadThread extends Thread {
     private BufferedReader reader;
+    private Client client;
     private GUI gui;
 
     // for the notification tray
@@ -31,7 +32,7 @@ public class ReadThread extends Thread {
      */
     public ReadThread(Socket socket, Client client, GUI gui) {
         this.gui = gui;
- 
+        this.client = client;
         try {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8)); // Reads an input stream from the socket
         } catch (IOException e) {
@@ -57,9 +58,10 @@ public class ReadThread extends Thread {
             throw new RuntimeException(e);
         }
 
-        while (true) { // thread stops once the user presses the exit button
+        while (client.isRunning) { // thread stops once the user presses the exit button
             try {
                 String incomingMessage = reader.readLine(); // sets the incoming message to the response from the server
+                //incomingMessage = gui.client.encryptor.decrypt(incomingMessage); // decrypts the incoming message
                 // sets the text of the incoming message box to the incoming message
                 gui.incomingMessages.insertString(gui.incomingMessages.getLength(), incomingMessage + "\n", gui.clientstyle); 
                 // scrolls to the bottom of the incoming message box
