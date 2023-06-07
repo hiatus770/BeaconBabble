@@ -172,7 +172,7 @@ public class Client {
 
             gui.addMessage("Welcome to the chat, " + username + "!\n", gui.serverstyle);
             
-            writer.println(username); // Sends the username to the server for logging
+            writer.println(encryptor.encrypt(username)); // Sends the username to the server for logging
 
             // Start the ReadThread, reading messages from the server
             ReadThread readThread = new ReadThread(socket, this, gui);

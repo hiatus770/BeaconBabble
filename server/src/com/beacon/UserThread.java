@@ -44,11 +44,9 @@ public class UserThread extends Thread {
      */
     public void printUsers() {
         if (server.hasUsers()) {
-            //writer.println(encryptor.encrypt("Connected users: " + server.getUsernames()));
-            writer.println("Connected users: " + server.getUsernames());
+            sendMessage(encryptor.encrypt("Connected users: " + server.getUsernames()));
         } else {
-            //writer.println(encryptor.encrypt("No other users connected."));
-            writer.println("No other users connected.");
+            sendMessage(encryptor.encrypt("No other users connected."));
         }
     }
 
@@ -69,11 +67,11 @@ public class UserThread extends Thread {
         try {
             // Password verification
             while (!passwordVerify.verify(reader.readLine())) {
-                writer.println("incorrectpassword");
+                sendMessage("incorrectpassword");
             }
-            writer.println("correctpassword");
+            sendMessage("correctpassword");
 
-            String username = reader.readLine(); // obtains username from the client
+            String username = encryptor.decrypt(reader.readLine()); // obtains username from the client
 
             server.addUsername(username, this); // adds the username to the set of usernames and the user object 
 
@@ -104,15 +102,12 @@ public class UserThread extends Thread {
                     logger.log("[IP: " + socket.getInetAddress().getHostAddress() + "] " + clientMessage);
                 }
 
-                if (clientMessage.contains("/users")) {
-                    printUsers();   
-                }
+                if (clientMessage.contains("/users")) printUsers();   
 
                 // checks if the user changed their username
                 if (clientMessage.contains("/chgusrnmcd")) {
                     // Get the new username from the client message
                     String newUsername = clientMessage.substring(12);
-
                     // Remove the old username from the server
                     server.removeUsername(username, this);
                     // Add the new username to the server
@@ -123,7 +118,7 @@ public class UserThread extends Thread {
                     username = newUsername;
 
                     // Send a message to the client that the username has been changed
-                    writer.println("Username changed to " + username + ".");
+                    sendMessage(encryptor.encrypt("Username changed to " + username + "."));
                     clientMessage = oldUsername + " has changed their username to " + username + ".";
                 }
             }
