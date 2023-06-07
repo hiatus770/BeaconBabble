@@ -8,7 +8,7 @@ public class Encryptor {
 
     /**
      * Constructor for the encryptor class.
-     * @author Jerry Wu
+     * @author Jerry
      */
     public Encryptor (String key) {
         this.key = key;
@@ -44,7 +44,7 @@ public class Encryptor {
      * Get an ASCII value from 8 digit binary
      * @param binary
      * @return ASCII value
-     * @author jerrybearwu 
+     * @author Jerry 
      */
     private int toAscii (String binary) {
         int output = 0;
@@ -63,7 +63,7 @@ public class Encryptor {
      * Convert binary value to character.
      * @param binary
      * @return character
-     * @author jerrybearwu
+     * @author Jerry
      */
     private char binaryToChar (String binary) {
         int ascii = toAscii(binary);
@@ -77,9 +77,12 @@ public class Encryptor {
      * @param char1
      * @param char2
      * @return XOR result of 2 characters
-     * @author jerrybearwu
+     * @author Jerry
      */
     private char charXOR (char char1, char char2) {
+        if (char1 > 255) { // TODO comment
+            return char1;
+        }
         // get binary string of each character
         String letter = Integer.toBinaryString(char1);
         String keyLetter = Integer.toBinaryString(char2);
@@ -119,7 +122,7 @@ public class Encryptor {
      * @param key
      * @return XOR result of 2 Strings
      * @see charXOR for more information on XOR operation on 2 characters
-     * @author jerrybearwu
+     * @author Jerry
      */
     public String XOR (String text, String key) {
         // get array of characters in text
