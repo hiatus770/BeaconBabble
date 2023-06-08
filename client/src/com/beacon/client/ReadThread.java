@@ -1,22 +1,19 @@
 package com.beacon.client;
-// Acts as the thread that reads the messages from the server and displays it 
-import javax.swing.text.BadLocationException;
-
 import com.beacon.gui.GUI;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import javax.swing.text.BadLocationException;
 
 /**
  * Thread responsible for reading messages from the server.
- * @author goose and hiatus
+ * @author Oliver, Matias
  */
 public class ReadThread extends Thread {
     private BufferedReader reader;
+    private Client client;
     private GUI gui;
 
     // for the notification tray
@@ -27,54 +24,46 @@ public class ReadThread extends Thread {
      * Implements thread responsible for reading messages from the server.
      * @param socket the socket to read from
      * @param client the client that is reading from the server
-     * @author goose and hiatus
+     * @author Oliver, Matias
      */
-    public ReadThread(Socket socket, Client client, GUI gui) {
+    public ReadThread(Socket socket, Client client, GUI gui) throws IOException {
         this.gui = gui;
- 
-        try {
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8)); // Reads an input stream from the socket
-        } catch (IOException e) {
-            System.out.println("Error getting input stream: " + e.getMessage());
-            e.printStackTrace();
-        }
+        this.client = client;
+        // Reads an input stream from the socket with UTF-8 encoding to support emojis
+        reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8)); 
     }
 
     /**
      * Runs the thread.
-     * @author goose and hiatus
+     * @author Oliver, Matias
      */
     public void run() {
-        tray = SystemTray.getSystemTray(); // initialize a system tray
-        trayIcon = new TrayIcon(gui.icon, "Beacon"); // initialize a tray icon
+        tray = SystemTray.getSystemTray(); // Initialize a system tray
+        trayIcon = new TrayIcon(gui.icon, "Beacon"); // Make a tray icon
         trayIcon.setImageAutoSize(true);
         trayIcon.setToolTip("Beacon");
         trayIcon.setImage(gui.icon);
 
         try {
-            tray.add(trayIcon); // adds to the system tray
+            tray.add(trayIcon); // Adds the app to the system tray
         } catch (AWTException e) {
             throw new RuntimeException(e);
         }
 
-        while (true) { // thread stops once the user presses the exit button
+        // Thread stops once the user presses the exit button
+        while (client.isRunning) { 
             try {
                 String incomingMessage = reader.readLine(); // sets the incoming message to the response from the server
-                // sets the text of the incoming message box to the incoming message
-                gui.incomingMessages.insertString(gui.incomingMessages.getLength(), incomingMessage + "\n", gui.clientstyle); 
-                // scrolls to the bottom of the incoming message box
-                gui.incomingMessageBox.setCaretPosition(gui.incomingMessageBox.getDocument().getLength()); 
-                System.out.println(incomingMessage); 
-
-                // checks if the frame is active
-                if (!gui.frame.isActive()) {
-                    // send a notification to the user
-                    trayIcon.displayMessage("Beacon", incomingMessage, TrayIcon.MessageType.INFO);
-                }
+                incomingMessage = client.encryptor.decrypt(incomingMessage);
+                gui.addMessage(incomingMessage, gui.clientstyle); // Sets the text of the incoming message box to the incoming message
+                System.out.println(incomingMessage); // Debugging purposes
+                // Checks if the frame is active, sends a notification if it is not
+                if (!gui.frame.isActive()) trayIcon.displayMessage("Beacon", incomingMessage, TrayIcon.MessageType.INFO);
             } catch (IOException e){
                 System.out.println("Error reading from server: " + e.getMessage());
                 e.printStackTrace();
             } catch (BadLocationException e) {
+                System.out.println("Error adding message to incomingMessageBox: " + e.getMessage());
                 e.printStackTrace();
             }
         }

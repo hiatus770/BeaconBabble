@@ -9,10 +9,8 @@ import com.beacon.gui.GUI;
 
 /**
  * Client class that connects to the server and sends messages to the server.
- * Inherits the JPanel class for the GUI and implements ActionListener for polling keyboard input.
- * @see javax.swing.JPanel for more information on JPanel.
  * @see ActionListener for more information on ActionListener.
- * @author goose, hiatus
+ * @author Oliver, Matias
  */
 public class Client {
     // Connection variables
@@ -24,25 +22,27 @@ public class Client {
     // I/O variables
     private PrintWriter writer; // used for writing messages to the server
     private BufferedReader reader;
+    public Encryptor encryptor; // used for encrypting and decrypting messages
 
-    private boolean fullDebug = true; // if true, prints out all the debug messages
+    public boolean isRunning = true; // if true, the client is running
 
     /**
      * Constructor for the Client class.
      * Creates all the components for the window.
      * @param hostname the hostname of the server
      * @param port the port to connect on
-     * @author goose
+     * @author Oliver
      */
     public Client(String hostname, int port) {
         this.hostname = hostname;
         this.port = port;
+        isRunning = true;
     }
 
     /**
      * Prompts the user to input a password through a dialog box.
      * @return null if the user presses cancel, the password string if the user presses ok
-     * @author goose
+     * @author Oliver
      */
     public String getPassword() {
         JPasswordField passworldField = new JPasswordField(20);
@@ -58,9 +58,9 @@ public class Client {
     }
 
     /**
-     * Prompts the user to input a hostname and port through a dialog box.
+     * Prompts the user to input a hostname and port through a dialog box. Used in the main method, before the client is initialized.
      * @return An array of strings containing the hostname and port.
-     * @author goose, hiatus
+     * @author Oliver, Matias
      */
     public static String[] getConnection() {
         JPanel panel = new JPanel();
@@ -97,10 +97,18 @@ public class Client {
         } while (true);
     }
 
+    /**
+     * Getter for the username.
+     * @return the username of the client as a string
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Setter for the username.
+     * @param username the username of the client as a string
+     */
     public void setUsername(String username) {
         this.username = username;
     }
@@ -112,7 +120,7 @@ public class Client {
      * @throws IOException if there is an I/O server
      * @throws Exception if there is a strange error
      * @return true if the client runs successfully, false if there is an error
-     * @author goose
+     * @author Oliver
      */
     public boolean run() {
         try {
@@ -126,8 +134,9 @@ public class Client {
 
             // Gets and checks the password provided by the user
             String response = "";
+            String password = "";
             while (!response.equals("correctpassword")) { // While the password is incorrect, keep asking for a password
-                String password = getPassword(); // Retrieve password
+                password = getPassword(); // Retrieve password
                 if (password == null) { // If the user presses cancel, exit the program
                     socket.close();
                     System.exit(0);
@@ -141,10 +150,13 @@ public class Client {
                     JOptionPane.showMessageDialog(null, "Incorrect password.", "Beacon", JOptionPane.ERROR_MESSAGE);
                 }
             }
+            
+            encryptor = new Encryptor(password); // Create an encryptor with the password
 
             gui.createFrame(gui); // Creates the frame for the GUI
+
             System.out.println("Connected to the chat server");
-            gui.incomingMessages.insertString(gui.incomingMessages.getLength(), "Connected to the chat server on address " + hostname + " on port " + port + ".\n", gui.serverstyle);
+            gui.addMessage("Connected to the chat server on address " + hostname + " on port " + port + ".", gui.serverstyle);
 
             // Get the username from the user 
             username = JOptionPane.showInputDialog("Enter a username: ");
@@ -158,25 +170,27 @@ public class Client {
                 username = username.substring(0, 20);
             }
 
-            gui.incomingMessages.insertString(gui.incomingMessages.getLength(), "Welcome to the chat, " + username + "!\n", gui.serverstyle);
-            
-            writer.println(username); // sending the username to the server
+            gui.addMessage("Welcome to the chat, " + username + "!", gui.serverstyle);
 
-            // Start the read thread for the program, this will add any received messages to the incomingMessageBox
+            username = encryptor.encrypt(username);
+            
+            writer.println(username); // Sends the username to the server for logging
+
+            // Start the ReadThread, reading messages from the server
             ReadThread readThread = new ReadThread(socket, this, gui);
-            readThread.start(); // Start the ReadThread
+            readThread.start();
 
             return true;
         } catch (UnknownHostException e) {
-            if (fullDebug) System.out.println("Server not found: " + e.getMessage());
+            System.out.println("Server not found: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Server not found: " + e.getMessage(), "Beacon", JOptionPane.ERROR_MESSAGE);
             return false;
         } catch (IOException e) {
-            if (fullDebug) System.out.println("I/O Error: " + e.getMessage());
+            System.out.println("I/O Error: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "I/O Error: " + e.getMessage(), "Beacon", JOptionPane.ERROR_MESSAGE);
             return false;
         } catch (Exception e) {
-            if (fullDebug) System.out.println("Error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Beacon", JOptionPane.ERROR_MESSAGE);
             return false;
         }

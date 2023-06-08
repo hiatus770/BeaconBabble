@@ -15,6 +15,13 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+/**
+ * GUI class for the client.
+ * Inherits from JPanel and implements ActionListener.
+ * @see JPanel for more information on JPanel.
+ * @see ActionListener for more information on ActionListener.
+ * @author Oliver, Matias 
+ */
 public class GUI extends JPanel implements ActionListener{
     public Socket socket;
     public Client client;
@@ -58,7 +65,7 @@ public class GUI extends JPanel implements ActionListener{
 
     /**
      * Creates a frame for the client.
-     * @author goose
+     * @author Oliver
      */
     public void createFrame(GUI gui) {
         createGUIcomponents();
@@ -67,10 +74,11 @@ public class GUI extends JPanel implements ActionListener{
         frame = new JFrame("Beacon");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // If the user closes the window then send the exit window 
+        // If the user closes the window then send the exit signal to the server 
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                writer.println("/exit");
+                client.isRunning = false;
+                writer.println(client.encryptor.encrypt("/exit"));
                 System.out.println("Exiting!");
             }
         });
@@ -90,7 +98,7 @@ public class GUI extends JPanel implements ActionListener{
 
     /**
      * Creates GUI components for the client.
-     * @author goose
+     * @author Oliver
      */
     public void createGUIcomponents() {
         incomingMessageBox = new JTextPane();
@@ -137,7 +145,7 @@ public class GUI extends JPanel implements ActionListener{
 
     /**
      * Creates the menu bar for the client.
-     * @author goose
+     * @author Oliver
      */
     public void createMenuBar() {
         // creates a menu category for the menu bar
@@ -155,7 +163,7 @@ public class GUI extends JPanel implements ActionListener{
             }
             // if the user presses ok, the username is set to the input
             else {
-                writer.println("/chgusrnmcd " + client.getUsername());
+                writer.println(client.encryptor.encrypt("/chgusrnmcd " + client.getUsername()));
                 writer.flush();
             }
         });
@@ -165,6 +173,25 @@ public class GUI extends JPanel implements ActionListener{
         // creates menu bar, adds the settings menu to it
         menuBar = new JMenuBar();
         menuBar.add(settingsMenu);
+    }
+
+    /**
+     * Adds a message to the incoming message box.
+     * @param message the message to be added
+     * @param style the colour style of the message
+     * @throws BadLocationException if the location specified is invalid
+     */
+    public void addMessage(String message, Style style) throws BadLocationException {
+        incomingMessages.insertString(incomingMessages.getLength(), message + "\n", style);
+        incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength());
+    }
+
+    /**
+     * Sends a message to the server.
+     * @param message the message to be sent
+     */
+    public void sendMessage(String message) {
+        writer.println(message);
     }
 
     /**
@@ -183,16 +210,16 @@ public class GUI extends JPanel implements ActionListener{
         String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
 
         // Format and package the message to be sent to the server
-        if (outgoingMessage.getText().trim().length() > 0) {
+        // Checks if the message is empty or not
+        if (outgoingMessage.getText().trim().length() > 0) { // Checks i
             if (outgoingMessage.getText().length() > 1000) message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText().substring(0, 1000) + "..."; 
             else message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText(); 
+
             System.out.println(message); // Print for debugging
-            writer.println(message); // Write the message to the server socket
-            outgoingMessage.setText(""); // reset the text box
-            incomingMessageBox.setCaretPosition(incomingMessageBox.getDocument().getLength()); // scrolls to the bottom of the incoming message box
-            // sets the text in the message box to the username and the message ADDED ON TO the rest of the text
+            sendMessage(client.encryptor.encrypt(message)); // Send the message to the server
+            outgoingMessage.setText(""); // Reset the message input box
             try {
-                incomingMessages.insertString(incomingMessages.getLength(), message + "\n", mystyle);
+                addMessage(message, mystyle); // Add the message to the incoming message box
             } catch (BadLocationException e1) {
                 e1.printStackTrace();
             }

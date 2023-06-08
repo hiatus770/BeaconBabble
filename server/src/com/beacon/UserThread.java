@@ -6,7 +6,7 @@ import java.io.*;
 /**
  * This thread is responsible for handling all the communication with a single client.
  * This way, the server can handle multiple clients at the same time.
- * Uses the logger to log all the messages and when a user joins and when the user leaves 
+ * The thread uses the logger to log all the messages and when a user joins and when the user leaves 
  * In simple terms, this class represents each user.
  * @author goose
  */
@@ -20,6 +20,7 @@ public class UserThread extends Thread {
     MessageLogger logger;
     BufferedReader reader;
     PasswordVerify passwordVerify;
+    Encryptor encryptor;
 
     /**
      *  Userthread constructor, only takes the server socket between the client and it takes the server object to access the server methods
@@ -33,7 +34,8 @@ public class UserThread extends Thread {
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         // Output stream for the socket which lets the server write to this userthread 
         writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
-        passwordVerify = new PasswordVerify(new File("/home/amogus/BeaconBabble/server/src/com/beacon/resources/password.txt"));
+        passwordVerify = new PasswordVerify(new File("src/com/beacon/resources/password.txt"));
+        encryptor = new Encryptor(passwordVerify.password);
     }
 
 
@@ -42,9 +44,9 @@ public class UserThread extends Thread {
      */
     public void printUsers() {
         if (server.hasUsers()) {
-            writer.println("Connected users: " + server.getUsernames());
+            sendMessage(encryptor.encrypt("Connected users: " + server.getUsernames()));
         } else {
-            writer.println("No other users connected.");
+            sendMessage(encryptor.encrypt("No other users connected."));
         }
     }
 
@@ -65,16 +67,18 @@ public class UserThread extends Thread {
         try {
             // Password verification
             while (!passwordVerify.verify(reader.readLine())) {
-                writer.println("incorrectpassword");
+                sendMessage("incorrectpassword");
             }
-            writer.println("correctpassword");
+            sendMessage("correctpassword");
 
             String username = reader.readLine(); // obtains username from the client
+
+            username = encryptor.decrypt(username);
 
             server.addUsername(username, this); // adds the username to the set of usernames and the user object 
 
             String serverMessage = "New user connected: " + username + ". Welcome!";
-            server.broadcast(serverMessage, this); // Broadcasts the newly connected user to all macAddresses.txt
+            server.broadcast(encryptor.encrypt(serverMessage), this); 
             
             // Log the information
             logger.log("User " + username + " has connected to the server from " + socket.getInetAddress().getHostAddress());
@@ -88,29 +92,24 @@ public class UserThread extends Thread {
             // Keeps reading messages from the client until the client sends the /exit signal, this is only sent when closing the window
             while (!clientMessage.equals("/exit")) {
                 // Sends message AFTER the thread has received the message, this forces the loop to check for an exit message
-                // NOTE: im pretty sure tehres no reason for server message = client message but im too scared to remove it
-                server.broadcast(clientMessage, this); // broadcasts the client message to all macAddresses.txt
-
-                // Grabs input from the ReadThread in java client
-                clientMessage = reader.readLine(); // receives the client message
+                server.broadcast(encryptor.encrypt(clientMessage), this); 
+                // Waits for a signal/message from the client
+                clientMessage = encryptor.decrypt(reader.readLine()); 
                 // Print the client message to the console
                 System.out.println(clientMessage);
 
-                // Log the client message to the logger
+                // As long as the message is not the exit signal, log the client message to the logger
                 if (!clientMessage.equals("/exit")){
                     // Add ip information
                     logger.log("[IP: " + socket.getInetAddress().getHostAddress() + "] " + clientMessage);
                 }
 
-                if (clientMessage.contains("/users")) {
-                    printUsers();   
-                }
+                if (clientMessage.contains("/users")) printUsers();   
 
                 // checks if the user changed their username
                 if (clientMessage.contains("/chgusrnmcd")) {
                     // Get the new username from the client message
                     String newUsername = clientMessage.substring(12);
-
                     // Remove the old username from the server
                     server.removeUsername(username, this);
                     // Add the new username to the server
@@ -121,7 +120,7 @@ public class UserThread extends Thread {
                     username = newUsername;
 
                     // Send a message to the client that the username has been changed
-                    writer.println("Username changed to " + username + ".");
+                    sendMessage(encryptor.encrypt("Username changed to " + username + "."));
                     clientMessage = oldUsername + " has changed their username to " + username + ".";
                 }
             }
@@ -136,7 +135,7 @@ public class UserThread extends Thread {
 
             // Sends a message to all macAddresses.txt that the user has left the room before exiting
             serverMessage = username + " has left the room."; 
-            server.broadcast(serverMessage, this);
+            server.broadcast(encryptor.encrypt(serverMessage), this);
 
         } catch (IOException e) {
             // Catch the error if the user disconnects and print to the server 
