@@ -1,11 +1,12 @@
 package com.beacon.client;
-import java.awt.event.*;
-import java.net.*;
-import java.nio.charset.StandardCharsets;
-import java.io.*;
-import javax.swing.*;
+import com.beacon.gui.GUI; // Import the GUI class
 
-import com.beacon.gui.GUI;
+import java.awt.event.*; // AWT event imports for the action listener
+import java.net.Socket; // Socket import for connecting to the server
+import java.net.UnknownHostException; // UnknownHostException import for handling unknown host errors
+import java.nio.charset.StandardCharsets; // Charset import for UTF-8 encoding
+import java.io.*; // IO imports for reading and writing
+import javax.swing.*; // Swing imports
 
 /**
  * Client class that connects to the server and sends messages to the server.
@@ -14,17 +15,17 @@ import com.beacon.gui.GUI;
  */
 public class Client {
     // Connection variables
-    private String hostname; // hostname of the server
-    private int port; // port to connect on
+    private String hostname; // Hostname of the server
+    private int port; // Port to connect on
 
-    private String username; // username, message being sent to the server
+    private String username; // Username, message being sent to the server
 
     // I/O variables
-    private PrintWriter writer; // used for writing messages to the server
-    private BufferedReader reader;
-    public Encryptor encryptor; // used for encrypting and decrypting messages
+    private PrintWriter writer; // Used for writing messages to the server
+    private BufferedReader reader; // Used for reading messages to the server
+    public Encryptor encryptor; // Used for encrypting and decrypting messages
 
-    public boolean isRunning = true; // if true, the client is running
+    public boolean isRunning = true; // If true, the client is running
 
     /**
      * Constructor for the Client class.
@@ -50,11 +51,9 @@ public class Client {
                 "Password:", passworldField
         };
         int result = JOptionPane.showConfirmDialog(null, message, "Beacon", JOptionPane.OK_CANCEL_OPTION);
-        if (result == JOptionPane.OK_OPTION) {
-            return new String(passworldField.getPassword());
-        } else {
-            return null;
-        }
+        // If the presses cancel, return null
+        if (result == JOptionPane.OK_OPTION) return new String(passworldField.getPassword());
+        else return null;
     }
 
     /**
@@ -64,7 +63,7 @@ public class Client {
      */
     public static String[] getConnection() {
         JPanel panel = new JPanel();
-        panel.setLayout(new SpringLayout());
+        panel.setLayout(new SpringLayout()); // Gives the dialogue box a nice layout
 
         JTextField hostnameField = new JTextField(20);
         JTextField portField = new JTextField(20);
@@ -74,10 +73,11 @@ public class Client {
                 "Port:", portField
         };
 
-        // keep running until the user enters a valid hostname and port
+        // Keep running until the user enters a valid hostname and port
+        int result = 0;
         do {
-            int result = JOptionPane.showConfirmDialog(null, message, "Beacon", JOptionPane.OK_CANCEL_OPTION);
-            // a lot of error handling for the connection dialog
+            result = JOptionPane.showConfirmDialog(null, message, "Beacon", JOptionPane.OK_CANCEL_OPTION);
+            // A lot of error handling for the connection dialog
             if (result == JOptionPane.OK_OPTION) {
                 if (hostnameField.getText().equals("") && portField.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Please enter a host name and port number.", "Beacon", JOptionPane.ERROR_MESSAGE);
@@ -87,14 +87,15 @@ public class Client {
                     JOptionPane.showMessageDialog(null, "Please enter a port number.", "Beacon", JOptionPane.ERROR_MESSAGE);
                 } else if (hostnameField.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Please enter a host name.", "Beacon", JOptionPane.ERROR_MESSAGE);
-                } else {
+                } else { // The good case
                     System.out.println("hostname: " + hostnameField.getText() + ", port: " + portField.getText());
                     return new String[] {hostnameField.getText(), portField.getText()};
                 }
             } else {
                 return null;
             }
-        } while (true);
+        } while (result == JOptionPane.OK_OPTION);
+        return null; // This should never be reached, but it is here to make the compiler happy
     }
 
     /**
@@ -141,7 +142,7 @@ public class Client {
                     socket.close();
                     System.exit(0);
                 }
-                Thread.sleep(100);
+                Thread.sleep(100); // Delay for the server to catch up (this is a hacky solution for bad wifi, but it works)
                 writer.println(password); // Send the password to the server
                 response = reader.readLine(); // Get the response from the server
                 Thread.sleep(100);
@@ -155,25 +156,25 @@ public class Client {
 
             gui.createFrame(gui); // Creates the frame for the GUI
 
-            System.out.println("Connected to the chat server");
+            System.out.println("Connected to the chat server"); // Debugging message
             gui.addMessage("Connected to the chat server on address " + hostname + " on port " + port + ".", gui.serverstyle);
 
             // Get the username from the user 
             username = JOptionPane.showInputDialog("Enter a username: ");
-            if (username == null) {
+            if (username == null) { // Exit program if the user presses cancel
                 socket.close();
                 System.exit(0);
-            } else if (username.equals("")) {
+            } else if (username.equals("")) { // If the user enters an empty string, set the username to "Anonymous"
                 username = "Anonymous";
-            } else if (username.length() > 20) {
+            } else if (username.length() > 20) { // If the username is longer than 20 characters, truncate it
                 username = username.substring(0, 20);
             }
 
             gui.addMessage("Welcome to the chat, " + username + "!", gui.serverstyle);
 
-            writer.println(encryptor.encrypt(username)); // Sends the username to the server for logging
+            gui.sendMessage(encryptor.encrypt(username)); // Sends the username to the server
 
-            // Start the ReadThread, reading messages from the server
+            // Start the ReadThread for asynchronously reading messages from the server
             ReadThread readThread = new ReadThread(socket, this, gui);
             readThread.start();
 
@@ -195,6 +196,8 @@ public class Client {
 
     /**
      * Main method for the client, handles for the command line arguments and initializing the client object
+     * @param args command line arguments, should never be used
+     * @author Oliver
      */
     public static void main(String[] args) {
         // Store the string connection information 

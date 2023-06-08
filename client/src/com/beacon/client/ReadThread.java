@@ -1,11 +1,11 @@
 package com.beacon.client;
-import com.beacon.gui.GUI;
+import com.beacon.gui.GUI; // Import the GUI class
 
-import java.awt.*;
-import java.io.*;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import javax.swing.text.BadLocationException;
+import java.awt.*; // AWT imports
+import java.io.*; // IO imports for reading and writing
+import java.net.Socket; // Socket import for connecting to the server
+import java.nio.charset.StandardCharsets; // Charset import for UTF-8 encoding
+import javax.swing.text.BadLocationException; // BadLocationException import for adding messages to the incomingMessageBox
 
 /**
  * Thread responsible for reading messages from the server.

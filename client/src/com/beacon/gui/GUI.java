@@ -1,19 +1,19 @@
 package com.beacon.gui;
+
+import com.beacon.client.Client; // Import the client class
+import com.beacon.gui.wordwrap.WrapEditorKit; // Import the wrap editor kit for wrapping text
+
+// Swing imports
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+import javax.swing.text.*;
 
-import com.beacon.client.Client;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.awt.*; // AWT imports
+import java.awt.event.*; // AWT event imports for the action listener
+import java.io.*; // IO imports for reading and writing
+import java.net.Socket; // Socket import for connecting to the server
+import java.nio.charset.StandardCharsets; // Charset import for UTF-8 encoding
+import java.text.SimpleDateFormat; // Date format import for formatting the timestamp
+import java.util.Calendar; // Calendar import for getting the current time
 
 /**
  * GUI class for the client.
@@ -27,7 +27,7 @@ public class GUI extends JPanel implements ActionListener{
     public Client client;
 
     public JTextPane incomingMessageBox;
-    public JTextField outgoingMessage;
+    public JTextField inputMessageBox;
     public JMenuBar menuBar;
     public JFrame frame;
     public JPanel panel;
@@ -44,8 +44,6 @@ public class GUI extends JPanel implements ActionListener{
     private PrintWriter writer;
 
     public Image icon;
-
-    // TODO: Add a method to make setting messages in the incomingMessageBox easier
 
     /**
      * Constructor for the GUI class. 
@@ -83,17 +81,12 @@ public class GUI extends JPanel implements ActionListener{
             }
         });
 
-        frame.setResizable(true); // allow frame to be resized
-        frame.setSize(400, 300); // set dimensions
-        frame.add(gui);
-        frame.setVisible(true);
-        frame.setJMenuBar(menuBar);
-
-        try {
-            frame.setIconImage(icon);
-        } catch (Exception e) {
-            System.out.println("Could not find icon.png");
-        }
+        frame.setResizable(true); // Allow frame to be resized
+        frame.setSize(400, 300); // Set preferred dimensions
+        frame.add(gui); // Add the GUI panel to the window frame
+        frame.setVisible(true); // Make the window visible
+        frame.setJMenuBar(menuBar); // Add the menu bar to the window frame
+        frame.setIconImage(icon); // Set the icon of the window
     }
 
     /**
@@ -101,42 +94,48 @@ public class GUI extends JPanel implements ActionListener{
      * @author Oliver
      */
     public void createGUIcomponents() {
+        // Creates the incoming message box
         incomingMessageBox = new JTextPane();
-        incomingMessageBox.setEditable(false);
-        incomingMessageBox.setEditorKit(new WrapEditorKit());
-        JScrollPane scrollPane = new JScrollPane(incomingMessageBox);
-        incomingMessages = incomingMessageBox.getStyledDocument();
+        incomingMessageBox.setEditable(false); // Makes the incoming message box uneditable
+        incomingMessageBox.setEditorKit(new WrapEditorKit()); // Allows the incoming message box to wrap text
+        JScrollPane scrollPane = new JScrollPane(incomingMessageBox); // Creates a scroll pane for the incoming message box
+        incomingMessages = incomingMessageBox.getStyledDocument(); 
 
+        // Defining a few message styles
         serverstyle = incomingMessageBox.addStyle("Server message", null);
         clientstyle = incomingMessageBox.addStyle("Client message", null);
         mystyle = incomingMessageBox.addStyle("My message", null);
-
         StyleConstants.setForeground(serverstyle, Color.BLUE);
         StyleConstants.setForeground(clientstyle, Color.gray);
         StyleConstants.setForeground(mystyle, Color.BLACK);
         
-        outgoingMessage = new JTextField();
-        outgoingMessage.addActionListener(this);
+        // Creates the message input box
+        inputMessageBox = new JTextField();
+        inputMessageBox.addActionListener(this);
 
+        // Creates the send button
         sendButton = new JButton("Send");
-        sendButton.setPreferredSize(new Dimension(70, outgoingMessage.getPreferredSize().height));
+        sendButton.setPreferredSize(new Dimension(70, inputMessageBox.getPreferredSize().height));
         sendButton.addActionListener(this);
 
+        // Constraint properties for components
         GridBagConstraints c = new GridBagConstraints();
+        // Constraint properties for the message input box
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
         c.gridy = 1;
         c.gridwidth = GridBagConstraints.RELATIVE;
-        add(outgoingMessage, c);
+        add(inputMessageBox, c);
 
+        // Constraint properties for the send button
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.LINE_END;
         c.weightx = 0;
         add(sendButton, c);
 
-         // constraint properties for the incoming message box
-        c.gridy = 0; // sets the x position of the component to the first grid spot
+         // Constraint properties for the incoming message box
+        c.gridy = 0; // Sets the x position of the component to the first grid spot
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1.0;
         c.weighty = 1.0;
@@ -148,27 +147,28 @@ public class GUI extends JPanel implements ActionListener{
      * @author Oliver
      */
     public void createMenuBar() {
-        // creates a menu category for the menu bar
+        // Creates a menu category for the menu bar
         JMenu settingsMenu = new JMenu("Settings");
         JMenuItem changeUsername = new JMenuItem("Change username");
-        changeUsername.addActionListener(e -> { // lambda expression for the change username button
-            // prompts the user to enter a new username
+        changeUsername.addActionListener(e -> { // Define action for the change username button
+            // Prompts the user to enter a new username
             String oldUsername = client.getUsername();
             client.setUsername(JOptionPane.showInputDialog(frame, "Enter a new username:", "Beacon", JOptionPane.PLAIN_MESSAGE)); 
-            // if the user presses cancel, the username is set to null
+            // If the user presses cancel, the username is set to null
             if (client.getUsername() == null) client.setUsername(oldUsername);
             if (client.getUsername().trim().equals("")) {
                 client.setUsername(oldUsername);
             } else if (client.getUsername().length() > 20) {
                 client.setUsername(client.getUsername().substring(0, 20));
             }
-            // if the user presses ok, the username is set to the input
+            // If the user presses ok, the username is set to the input
             else {
                 writer.println(client.encryptor.encrypt("/chgusrnmcd " + client.getUsername()));
                 writer.flush();
             }
         });
 
+        // Adds the change username button to the settings menu
         settingsMenu.add(changeUsername);
 
         // creates menu bar, adds the settings menu to it
@@ -212,13 +212,13 @@ public class GUI extends JPanel implements ActionListener{
 
         // Format and package the message to be sent to the server
         // Checks if the message is empty or not
-        if (outgoingMessage.getText().trim().length() > 0) { // Checks i
-            if (outgoingMessage.getText().length() > 1000) message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText().substring(0, 1000) + "..."; 
-            else message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + outgoingMessage.getText(); 
+        if (inputMessageBox.getText().trim().length() > 0) { // Checks i
+            if (inputMessageBox.getText().length() > 1000) message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + inputMessageBox.getText().substring(0, 1000) + "..."; 
+            else message = "[" + timeStamp + "]" + " <" + client.getUsername() + ">: " + inputMessageBox.getText(); 
 
             System.out.println(message); // Print for debugging
             sendMessage(client.encryptor.encrypt(message)); // Send the message to the server
-            outgoingMessage.setText(""); // Reset the message input box
+            inputMessageBox.setText(""); // Reset the message input box
             try {
                 addMessage(message, mystyle); // Add the message to the incoming message box
             } catch (BadLocationException e1) {
