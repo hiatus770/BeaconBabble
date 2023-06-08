@@ -156,7 +156,7 @@ public class Client {
             gui.createFrame(gui); // Creates the frame for the GUI
 
             System.out.println("Connected to the chat server");
-            gui.addMessage("Connected to the chat server on address " + hostname + " on port " + port + ".\n", gui.serverstyle);
+            gui.addMessage("Connected to the chat server on address " + hostname + " on port " + port + ".", gui.serverstyle);
 
             // Get the username from the user 
             username = JOptionPane.showInputDialog("Enter a username: ");
@@ -170,9 +170,11 @@ public class Client {
                 username = username.substring(0, 20);
             }
 
-            gui.addMessage("Welcome to the chat, " + username + "!\n", gui.serverstyle);
+            gui.addMessage("Welcome to the chat, " + username + "!", gui.serverstyle);
+
+            username = encryptor.encrypt(username);
             
-            writer.println(encryptor.encrypt(username)); // Sends the username to the server for logging
+            writer.println(username); // Sends the username to the server for logging
 
             // Start the ReadThread, reading messages from the server
             ReadThread readThread = new ReadThread(socket, this, gui);

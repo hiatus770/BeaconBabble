@@ -34,7 +34,7 @@ public class UserThread extends Thread {
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         // Output stream for the socket which lets the server write to this userthread 
         writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
-        passwordVerify = new PasswordVerify(new File("/home/amogus/BeaconBabble/server/src/com/beacon/resources/password.txt"));
+        passwordVerify = new PasswordVerify(new File("src/com/beacon/resources/password.txt"));
         encryptor = new Encryptor(passwordVerify.password);
     }
 
@@ -71,7 +71,9 @@ public class UserThread extends Thread {
             }
             sendMessage("correctpassword");
 
-            String username = encryptor.decrypt(reader.readLine()); // obtains username from the client
+            String username = reader.readLine(); // obtains username from the client
+
+            username = encryptor.decrypt(username);
 
             server.addUsername(username, this); // adds the username to the set of usernames and the user object 
 
@@ -133,7 +135,7 @@ public class UserThread extends Thread {
 
             // Sends a message to all macAddresses.txt that the user has left the room before exiting
             serverMessage = username + " has left the room."; 
-            server.broadcast(serverMessage, this);
+            server.broadcast(encryptor.encrypt(serverMessage), this);
 
         } catch (IOException e) {
             // Catch the error if the user disconnects and print to the server 

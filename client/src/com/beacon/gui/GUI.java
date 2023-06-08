@@ -78,7 +78,7 @@ public class GUI extends JPanel implements ActionListener{
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 client.isRunning = false;
-                writer.println("/exit");
+                writer.println(client.encryptor.encrypt("/exit"));
                 System.out.println("Exiting!");
             }
         });
@@ -163,7 +163,7 @@ public class GUI extends JPanel implements ActionListener{
             }
             // if the user presses ok, the username is set to the input
             else {
-                writer.println("/chgusrnmcd " + client.getUsername());
+                writer.println(client.encryptor.encrypt("/chgusrnmcd " + client.getUsername()));
                 writer.flush();
             }
         });
