@@ -161,7 +161,6 @@ public class Client {
             // Get the username from the user 
             username = JOptionPane.showInputDialog("Enter a username: ");
             if (username == null) {
-                writer.println("/exit");
                 socket.close();
                 System.exit(0);
             } else if (username.equals("")) {

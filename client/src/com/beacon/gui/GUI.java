@@ -156,6 +156,7 @@ public class GUI extends JPanel implements ActionListener{
             String oldUsername = client.getUsername();
             client.setUsername(JOptionPane.showInputDialog(frame, "Enter a new username:", "Beacon", JOptionPane.PLAIN_MESSAGE)); 
             // if the user presses cancel, the username is set to null
+            if (client.getUsername() == null) client.setUsername(oldUsername);
             if (client.getUsername().trim().equals("")) {
                 client.setUsername(oldUsername);
             } else if (client.getUsername().length() > 20) {

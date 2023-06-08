@@ -147,19 +147,6 @@ public class Encryptor {
     }
 
     /**
-     * Convert binary value to character.
-     * @param binary
-     * @return character
-     * @author jerrybearwu
-     */
-    private char binaryToChar (String binary) {
-        int ascii = toAscii(binary);
-
-        return (char) ascii;
-    }
-
-    // apply XOR operation to 2 characters
-    /**
      * Apply XOR operation to 2 characters.
      * @param char1 ascii
      * @param char2 ascii
