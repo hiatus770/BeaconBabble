@@ -4,17 +4,56 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c02893d-69de-4f75-af74-385cf4432b1b" name="Changes" comment="" />
+    <list default="true" id="42282f09-b922-40d6-bf4e-0d281b8ac0a5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/client.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../server/src/main/java/com/beacon/GUI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../server/src/main/java/com/beacon/UserThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../server/src/main/resources/log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/HelloController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/beacon/client/hello-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/beacon/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/beacon/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/beacon/UserHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/src/main/resources/response.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/src/main/resources/server.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/resources/server.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/target/classes/com/beacon/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/../server/target/classes/com/beacon/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/target/classes/com/beacon/UserHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/target/classes/response.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/target/classes/server.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../server/target/classes/server.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
-  <component name="ProjectId" id="2RyS05uOzD040mFetsYrTnf1NpC" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2RyTu8gE1ezkKXniUMNDlOdHIkv" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -24,20 +63,51 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/Olive/OneDrive/Documents/Code/java/beacon/client",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "last_opened_file_path": "C:/Users/Olive/OneDrive/Documents/Code/java/beacon/server"
   }
 }]]></component>
+  <component name="RunManager" selected="Application.Client">
+    <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.beacon.client.Client" />
+      <module name="client" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.beacon.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.beacon.client.GUI" />
+      <module name="client" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.beacon.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Client" />
+        <item itemvalue="Application.GUI" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3c02893d-69de-4f75-af74-385cf4432b1b" name="Changes" comment="" />
-      <created>1688220606596</created>
+      <changelist id="42282f09-b922-40d6-bf4e-0d281b8ac0a5" name="Changes" comment="" />
+      <created>1688221544011</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1688220606596</updated>
+      <updated>1688221544011</updated>
     </task>
     <servers />
   </component>
