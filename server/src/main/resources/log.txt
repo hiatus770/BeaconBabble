@@ -1,0 +1,28 @@
+
+Server is listening on port 8000
+Server is listening on port 8000
+Server is listening on port 8000
+Connected to mySQL database
+New user connected from 127.0.0.1 on port 45206
+[2023-07-04T17:41:32.806187300]Server is listening on port 8000
+[2023-07-04T17:41:32.810185600]Connected to mySQL database
+[2023-07-04T17:56:55.259517900] Server is listening on port 8000
+[2023-07-04T17:56:55.262951700] Connected to mySQL database
+[2023-07-04T17:57:05.031717] New user connected from 127.0.0.1 on port 45647
+[2023-07-04T17:57:53.094934600] New user connected from 127.0.0.1 on port 45656
+[2023-07-04T18:00:19.727587900] New user connected from 127.0.0.1 on port 45716
+[2023-07-04T18:00:47.061618100] New user connected from 127.0.0.1 on port 45727
+[2023-07-04T19:33:21.165639100] New user connected from 127.0.0.1 on port 46883
+[2023-07-04T19:51:31.658964700] New user connected from 127.0.0.1 on port 47146
+[2023-07-04T19:53:01.647329700] New user connected from 127.0.0.1 on port 47171
+[2023-07-04T20:13:44.390980500] New user connected from 127.0.0.1 on port 47417
+[2023-07-04T20:28:17.399919200] New user connected from 127.0.0.1 on port 47559
+[2023-07-04T22:38:02.079328100] New user connected from 127.0.0.1 on port 49886
+[2023-07-04T23:04:26.919373800] New user connected from 127.0.0.1 on port 50452
+[2023-07-04T23:28:28.230086200] New user connected from 127.0.0.1 on port 50732
+[2023-07-04T23:30:11.972160800] New user connected from 127.0.0.1 on port 50788
+[2023-07-04T23:31:50.915031700] New user connected from 127.0.0.1 on port 50816
+[2023-07-04T23:32:23.741143] New user connected from 127.0.0.1 on port 50823
+[2023-07-04T23:34:07.966764100] New user connected from 127.0.0.1 on port 50846
+[2023-07-04T23:34:20.126606700] New user connected from 127.0.0.1 on port 50851
+[2023-07-04T23:40:39.429914500] New user connected from 127.0.0.1 on port 50912

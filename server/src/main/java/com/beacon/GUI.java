@@ -1,2 +1,4 @@
-package com.beacon;public class GUI {
+package com.beacon;
+
+public class GUI {
 }

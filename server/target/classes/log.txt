@@ -1,0 +1,8 @@
+
+Server is listening on port 8000
+Server is listening on port 8000
+Server is listening on port 8000
+Connected to mySQL database
+New user connected from 127.0.0.1 on port 45206
+[2023-07-04T17:41:32.806187300]Server is listening on port 8000
+[2023-07-04T17:41:32.810185600]Connected to mySQL database

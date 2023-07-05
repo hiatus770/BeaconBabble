@@ -1,15 +1,16 @@
 package com.beacon.client;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-// TODO: Relocate the inheritance of Application to another class that will be the main class
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
-public class GUI {
+public class ChatWindow implements EventHandler<ActionEvent> {
     Client client;
     BorderPane borderPane;
     GridPane gridPane;
@@ -19,41 +20,44 @@ public class GUI {
     TextField messageInput;
     Button sendButton;
 
-    public GUI(Client client) {
-        createStage(createScene());
+    public ChatWindow(Client client) {
+        this.client = client;
+        createStage(createRootScene());
     }
 
     /**
-     * Creates a stage for the chat window
+     * Creates the main stage for the chat window.
+     * @param scene the scene to be displayed
      */
     public void createStage(Scene scene) {
         Stage stage = new Stage();
-        stage.setTitle("Beacon");
         stage.setScene(scene);
-        // akin to the window listener in swing
-        stage.setOnCloseRequest(e -> {
-            System.out.println("Closing");
+        // TODO: implementation
+        stage.setOnCloseRequest(event -> {
+            System.out.println("closing command");
             System.exit(0);
         });
-
         stage.setResizable(true);
+        // TODO: implement server name into the title ie: "Beacon - Server Name"
+        stage.setTitle("Beacon Chat");
         stage.show();
     }
 
-    /**
-     * Creates a scene from the chat-view.fxml file
-     */
-    public Scene createScene() {
+    public Scene createRootScene() {
         borderPane = new BorderPane();
         borderPane.maxHeight(Double.MAX_VALUE);
         borderPane.maxWidth(Double.MAX_VALUE);
         borderPane.setTop(createMenuBar());
         borderPane.setCenter(createGridPane());
 
-        return new Scene(borderPane, 640, 480);
+        return new Scene(borderPane, 600, 400);
     }
 
-    public GridPane createGridPane() {
+    /**
+     * Creates the grid pane for the chat window.
+     * @return the grid pane
+     */
+    private GridPane createGridPane() {
         gridPane = new GridPane();
         ColumnConstraints column1 = new ColumnConstraints();
         ColumnConstraints column2 = new ColumnConstraints();
@@ -90,11 +94,12 @@ public class GUI {
         messageInput.setPromptText("Enter message here...");
         messageInput.setMaxHeight(Double.MAX_VALUE);
         messageInput.setMaxWidth(Double.MAX_VALUE);
-        messageInput.addEventHandler(ActionEvent.ACTION, e -> client.sendMessage());
+        messageInput.addEventHandler(ActionEvent.ACTION, this);
 
         sendButton = new Button("Send");
         sendButton.setMaxHeight(Double.MAX_VALUE);
         sendButton.setMaxWidth(Double.MAX_VALUE);
+        sendButton.addEventHandler(ActionEvent.ACTION, this);
 
         gridPane.add(messageBox, 0, 0, 2, 1);
         gridPane.add(messageInput, 0, 1, 1, 1);
@@ -103,7 +108,11 @@ public class GUI {
         return gridPane;
     }
 
-    public MenuBar createMenuBar() {
+    /**
+     * Creates the menu bar for the chat window.
+     * @return the menu bar
+     */
+    private MenuBar createMenuBar() {
         menuBar = new MenuBar();
 
         Menu menuFile = new Menu("File");
@@ -125,5 +134,23 @@ public class GUI {
         menuBar.getMenus().addAll(menuFile);
 
         return menuBar;
+    }
+
+    @Override
+    public void handle(ActionEvent event) {
+        String message = messageInput.getText().trim();
+        if (message.isBlank()) {
+            return;
+        }
+        String timestamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+
+        // Shorten message to 2000 characters if it is longer than 2000 characters
+        if (message.length() > 2000) {
+            message = message.substring(0, 2000);
+        }
+
+        client.sendMessage(message);
+        messageBox.appendText("\n[" + timestamp + "] <" + client.username + "> " + message);
+        messageInput.clear();
     }
 }
