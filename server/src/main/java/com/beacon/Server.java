@@ -4,10 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.*;
 import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 public class Server {
@@ -90,12 +87,24 @@ public class Server {
      * @return whether the credentials match a user in the database
      */
     public boolean checkCredentials(String username, String password) throws SQLException {
-        ResultSet credentials = connection.createStatement().executeQuery("SELECT username, password FROM accounts WHERE username = " + username);
-        return Objects.equals(password, credentials.getString("password"));
+        String query = "SELECT USERNAME, PASSWORD FROM accounts WHERE USERNAME = \"" + username + "\"";
+        System.out.println(query);
+        PreparedStatement statement = connection.prepareStatement(query);
+        System.out.println(statement.toString());
+        ResultSet credentials = statement.executeQuery();
+        if (credentials.next()) return Objects.equals(password, credentials.getString("password"));
+        else return false;
     }
 
     public void registerUser(String username, String password) throws SQLException {
-        connection.createStatement().executeUpdate("INSERT INTO accounts (username, password) VALUES (" + username + ", " + password + ")");
+        System.out.println(username);
+        System.out.println(password);
+        String update = "INSERT INTO accounts (USERNAME, PASSWORD) VALUES (\"" + username + "\", \"" + password + "\")";
+        System.out.println(update);
+        PreparedStatement statement = connection.prepareStatement(update);
+        System.out.println(statement.toString());
+        int result = statement.executeUpdate();
+        System.out.println("Rows affected: " + result);
     }
 
     /**

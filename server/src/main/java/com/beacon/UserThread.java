@@ -75,7 +75,6 @@ public class UserThread extends Thread {
      */
     public void run() {
         // TODO:
-        // 0. Check if the user has already logged on before
         // 1. Read the username and password from the client socket
         // 2. Verify the username and password
         // 3. If the username and password are correct, add the username to the list and send a signal to allow the connection
@@ -83,11 +82,13 @@ public class UserThread extends Thread {
         try {
             // Read login info
             String loginType = reader.readLine();
+            System.out.println(loginType);
             if (loginType.equals("login")) { // login
                 boolean loginState = false;
                 while (!loginState) {
                     String username = reader.readLine();
                     String password = reader.readLine();
+                    System.out.println("Username: " + username + " Password: " + password);
                     if (server.checkCredentials(username, password)) {
                         server.addUsername(username, this);
                         sendMessage("goodLogin");
@@ -97,8 +98,10 @@ public class UserThread extends Thread {
                     }
                 }
             } else { // registration
+                // TODO: check if user already exists
                 String username = reader.readLine();
                 String password = reader.readLine();
+                System.out.println("Username: " + username + " Password: " + password);
                 server.registerUser(username, password);
             }
         } catch (IOException e) {

@@ -190,6 +190,26 @@ public class DialogBoxes {
 
         // Checks if the result is present and if the result is not the login button
         return result.filter(buttonType -> buttonType != loginButton).isPresent();
+    }
 
+    /**
+     * Displays an alert to the user if the server could not be connected to.
+     */
+    public void serverConnectionAlert(String hostname, int port) {
+        System.err.println("Couldn't get I/O for the connection to: " + hostname);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Could not connect to the server specified.");
+        alert.setContentText("Please enter a valid IP address and port number.\nProvided hostname: " + hostname + "\nProvided port number: " + port);
+        alert.showAndWait();
+    }
+
+    public void badLoginAlert() {
+        System.err.println("Invalid username or password.");
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Invalid username or password.");
+        alert.setContentText("Please try again.");
+        alert.showAndWait();
     }
 }

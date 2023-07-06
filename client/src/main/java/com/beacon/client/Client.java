@@ -43,32 +43,29 @@ public class Client extends Application {
             if (dialogBoxes.askRegister()) {
                 writer.println("register"); // Send register request to server
                 String[] registerInfo = dialogBoxes.register();
-                writer.println(registerInfo[0] + " " + registerInfo[1]); // Send register info to server
+                writer.println(registerInfo[0] + "\n" + registerInfo[1]); // Send register info to server
             } else {
                 writer.println("login"); // Send login request to server
                 String[] loginInfo = dialogBoxes.login();
-                writer.println(loginInfo[0] + " " + loginInfo[1]); // Send login info to server
+                writer.println(loginInfo[0] + "\n" + loginInfo[1]); // Send login info to server
+
+                while (reader.readLine().equals("badLogin")) {
+                    dialogBoxes.badLoginAlert();
+                    loginInfo = dialogBoxes.login();
+                    writer.println(loginInfo[0] + "\n" + loginInfo[1]); // Send login info to server
+                }
             }
 
-
-
+            ReadThread readThread = new ReadThread(this);
             ChatWindow chatWindow = new ChatWindow(this);
 
         } catch (UnknownHostException e) {
             System.err.println("Unknown host: " + hostname);
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Could not connect to the server specified.");
-            alert.setContentText("Please enter a valid IP address and port number.");
-            alert.showAndWait();
+            dialogBoxes.serverConnectionAlert(hostname, port);
             return 1;
         } catch (IOException e) {
             System.err.println("Couldn't get I/O for the connection to: " + hostname);
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Could not connect to the server specified.");
-            alert.setContentText("Please enter a valid IP address and port number.");
-            alert.showAndWait();
+            dialogBoxes.serverConnectionAlert(hostname, port);
             return 2;
         }
         return 0;

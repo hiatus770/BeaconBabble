@@ -5,26 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6d808dc0-c499-402c-9ff0-40a9e6a8ac0d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/ChatWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/DialogBoxes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/ReadThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/network.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/user_accounts.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/GUI.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/beacon/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/beacon/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/DialogBoxes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/DialogBoxes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.idea/discord.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../server/.idea/discord.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/beacon/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/beacon/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/beacon/UserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/beacon/UserThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../server/src/main/resources/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/resources/log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/resources/server.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/resources/server.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/target/classes/com/beacon/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/../server/target/classes/com/beacon/Server.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/target/classes/com/beacon/UserHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/target/classes/response.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/target/classes/server.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../server/target/classes/server.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,23 +40,26 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2S4JhgC0QVh9lzoHwQcc1fJ7MLP" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/Olive/OneDrive/Documents/Code/java/beacon/client/src/main/resources",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.26091954",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Olive/OneDrive/Documents/Code/java/beacon/client/src/main/resources&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.26091954&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Olive\OneDrive\Documents\Code\java\beacon\client\src\main\resources" />
