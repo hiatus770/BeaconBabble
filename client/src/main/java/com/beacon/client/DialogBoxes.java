@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.util.Objects;
@@ -14,8 +13,9 @@ import java.util.Optional;
 
 public class DialogBoxes {
     ImageView networkGraphic, loginGraphic;
+    Client client;
 
-    public DialogBoxes() {
+    public DialogBoxes(Client client) {
         networkGraphic = new ImageView(Objects.requireNonNull(this.getClass().getResource("/network.png")).toString());
         networkGraphic.setFitHeight(50);
         networkGraphic.setFitWidth(50);
@@ -172,7 +172,6 @@ public class DialogBoxes {
 
     /**
      * Asks the user if they want to register an account.
-     *
      * @return true if the user wants to register an account, false otherwise.
      */
     public boolean askRegister() {
@@ -212,4 +211,17 @@ public class DialogBoxes {
         alert.setContentText("Please try again.");
         alert.showAndWait();
     }
+
+    /*public String[] fontChooser() {
+        String[] fontInfo = new String[2];
+
+        FontSelectorDialog fontDialog = new FontSelectorDialog(new Font(client.properties.getProperty("font"), Integer.parseInt(client.properties.getProperty("fontSize"))));
+        fontDialog.setTitle("Choose a Font");
+        fontDialog.setHeaderText("Choose a font for the chat.");
+        fontDialog.showAndWait();
+        fontInfo[0] = fontDialog.getResult().getName();
+        fontInfo[1] = String.valueOf(fontDialog.getResult().getSize());
+
+        return fontInfo;
+    }*/
 }

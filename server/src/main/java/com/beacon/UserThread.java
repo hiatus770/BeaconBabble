@@ -26,6 +26,8 @@ public class UserThread extends Thread {
     private PrintWriter writer;
     BufferedReader reader;
 
+    String username;
+
     /**
      *  Userthread constructor, only takes the server socket between the client and it takes the server object to access the server methods
      * @param socket The socket between the client and the server
@@ -40,7 +42,6 @@ public class UserThread extends Thread {
         // Output stream for the socket which lets the server write to this userthread
         writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
     }
-
 
     /**
      * Prints a list of online users to the newly connected user.
@@ -104,6 +105,20 @@ public class UserThread extends Thread {
                 System.out.println("Username: " + username + " Password: " + password);
                 server.registerUser(username, password);
             }
+
+            server.broadcast("User <" + username + "> has connected.", this);
+            printOnlineUsers();
+
+            String clientMessage = "";
+            while (!clientMessage.equals("exit") && socket.isConnected()) {
+                clientMessage = reader.readLine();
+                server.broadcast("[" + server.getTimestamp() + "] <" + username + "> " + clientMessage, this);
+                System.out.println(clientMessage);
+                // TODO: add ip address to log
+                server.log(username + ": " + clientMessage);
+            }
+
+            server.log("User <" + username + "> has disconnected.");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {

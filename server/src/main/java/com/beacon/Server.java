@@ -5,6 +5,7 @@ import java.awt.*;
 import java.net.*;
 import java.io.*;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Server {
@@ -14,7 +15,7 @@ public class Server {
     private Set<String> onlineUsers = new HashSet<>(); // Set of users currently online
     private Set<UserThread> userThreads = new HashSet<>(); // Set of each thread for each user
     static Properties properties = new Properties(); // Server properties
-    File logFile;
+    File logFile; // The log file for the server
 
     String url, password, username; // SQL connection details
 
@@ -24,6 +25,10 @@ public class Server {
     //BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); // For reading input from the console
     Socket clientSocket;
 
+    /**
+     * Constructor for the server. Initializes the log file and the SQL connection details.
+     * @throws IOException if the log file cannot be created
+     */
     public Server() throws IOException {
         logFile = new File("src/main/resources/log.txt");
         if (logFile.exists()) System.out.println("Log file exists at " + logFile.getAbsolutePath());
@@ -34,6 +39,10 @@ public class Server {
         password = "!GLVWF*Xu$M5Bj#8&AR^%BPFrpJ4U38bDE2WYKbW";
     }
 
+    /**
+     * Runs the server loop.
+     * @param port the port to run the server on
+     */
     public void run(int port) {
         try {
             serverSocket = new ServerSocket(port);
@@ -96,6 +105,12 @@ public class Server {
         else return false;
     }
 
+    // TODO: Make sure the user is not already registered
+    /**
+     * Registers a new user in the database.
+     * @param username the username of the user
+     * @param password the password of the user
+     */
     public void registerUser(String username, String password) throws SQLException {
         System.out.println(username);
         System.out.println(password);
@@ -182,6 +197,10 @@ public class Server {
      */
     public Set<String> getUsernames() {
         return onlineUsers;
+    }
+
+    public String getTimestamp() {
+        return new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
     }
 
     /**
