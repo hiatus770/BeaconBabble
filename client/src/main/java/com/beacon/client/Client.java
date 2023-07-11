@@ -23,6 +23,8 @@ public class Client extends Application {
 
     String username;
 
+    boolean isRunning;
+
     @Override
     public void start(Stage stage) throws IOException {
         System.out.println("Hello");
@@ -41,11 +43,6 @@ public class Client extends Application {
             writer = new PrintWriter(socket.getOutputStream(), true);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             // Account login
-            /*
-            TODO:
-                1. yep
-             */
-
 
             if (dialogBoxes.askRegister()) {
                 writer.println("register"); // Send register request to server
@@ -65,9 +62,13 @@ public class Client extends Application {
                 }
             }
 
+            String connectedUsers = reader.readLine();
+
             ChatWindow chatWindow = new ChatWindow(this);
             ReadThread readThread = new ReadThread(this, chatWindow);
+
             chatWindow.appendServerMessage("Connected to server at " + hostname + " on port " + port + ".");
+            chatWindow.appendServerMessage("\n" + connectedUsers);
 
         } catch (UnknownHostException e) {
             System.err.println("Unknown host: " + hostname);
@@ -87,6 +88,11 @@ public class Client extends Application {
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void exit() {
+        isRunning = false;
+        writer.println("/exit");
     }
 
     /**

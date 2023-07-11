@@ -40,11 +40,12 @@ public class ChatWindow implements EventHandler<ActionEvent> {
     public void createStage(Scene scene) {
         Stage stage = new Stage();
         stage.setScene(scene);
-        // TODO: implementation
+
         stage.setOnCloseRequest(event -> {
-            System.out.println("closing command");
+            client.exit();
             System.exit(0);
         });
+
         stage.setResizable(true);
         // TODO: implement server name into the title ie: "Beacon - Server Name"
         stage.setTitle("Beacon Chat");
@@ -94,18 +95,6 @@ public class ChatWindow implements EventHandler<ActionEvent> {
         gridPane.getColumnConstraints().addAll(column1, column2);
         gridPane.getRowConstraints().addAll(row1, row2);
 
-        /*messageBox = new TextArea();
-        messageBox.setEditable(false);
-        messageBox.setWrapText(true);
-        messageBox.setMaxHeight(Double.MAX_VALUE);
-        messageBox.setMaxWidth(Double.MAX_VALUE);
-        messageBox.setStyle("-fx-font-family: " + client.properties.getProperty("font") + ";"
-                + "-fx-font-size: " + client.properties.getProperty("fontsize") + ";"
-                + "-fx-text-fill: " + client.properties.getProperty("fontColor") + ";"
-                + "-fx-padding: 5px;"
-                + "-fx-background-color: transparent;");
-        messageBox.setStyle(messageBoxText);*/
-
         chatBox = new StyleClassedTextArea();
         chatBox.setEditable(false);
         chatBox.setWrapText(true);
@@ -150,17 +139,20 @@ public class ChatWindow implements EventHandler<ActionEvent> {
         menuBar = new MenuBar();
 
         Menu menuFile = new Menu("File");
+        MenuItem menuItemSave = new MenuItem("Save Chat Log");
+        MenuItem menuItemConnect = new MenuItem("Connect");
         MenuItem menuItemSettings = new MenuItem("Settings");
         MenuItem menuItemExit = new MenuItem("Exit");
 
         menuItemSettings.addEventHandler(ActionEvent.ACTION, e -> {
             System.out.println("Settings button pressed");
             // TODO: create settings window
+            SettingsWindow settingsWindow = new SettingsWindow();
         });
 
         menuItemExit.addEventHandler(ActionEvent.ACTION, e -> {
             System.out.println("Exit button pressed, closing");
-            client.writer.println("/exit");
+            client.exit();
             System.exit(0);
         });
 
@@ -171,16 +163,28 @@ public class ChatWindow implements EventHandler<ActionEvent> {
         return menuBar;
     }
 
+    /**
+     * Appends a red message to the chat box.
+     * @param message the message to append
+     */
     public void appendServerMessage(String message) {
         chatBox.append(message, "server");
         System.out.println(message);
     }
 
+    /**
+     * Appends a blue message to the chat box.
+     * @param message the message to append
+     */
     public void appendUserMessage(String message) {
         chatBox.append(message, "user");
         System.out.println(message);
     }
 
+    /**
+     * Appends a green message to the chat box.
+     * @param message the message to append
+     */
     public void appendClientMessage(String message) {
         chatBox.append(message, "client");
         System.out.print(message);

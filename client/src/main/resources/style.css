@@ -3,11 +3,11 @@
 }
 
 .server {
-    -fx-fill: blue;
+    -fx-fill: red;
 }
 
 .user {
-    -fx-fill: red;
+    -fx-fill: blue;
 }
 
 .client {

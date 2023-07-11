@@ -15,14 +15,25 @@ public class DialogBoxes {
     ImageView networkGraphic, loginGraphic;
     Client client;
 
+    /**
+     * Constructor for the DialogBoxes class.
+     * Creates icons for the dialog boxes.
+     * @param client the client object, used for a few methods
+     */
     public DialogBoxes(Client client) {
         networkGraphic = new ImageView(Objects.requireNonNull(this.getClass().getResource("/network.png")).toString());
         networkGraphic.setFitHeight(50);
         networkGraphic.setFitWidth(50);
+
         loginGraphic = new ImageView(Objects.requireNonNull(this.getClass().getResource("/user_accounts.png")).toString());
         loginGraphic.setFitHeight(50);
         loginGraphic.setFitWidth(50);
     }
+
+    /**
+     * Creates a dialog box for connecting to a server.
+     * @return an array of strings containing the IP address and port number
+     */
     public String[] connect() {
         String[] connectInfo = new String[2];
         Dialog<ButtonType> connectDialog = new Dialog<>();
@@ -67,6 +78,10 @@ public class DialogBoxes {
         return connectInfo;
     }
 
+    /**
+     * Creates a dialog box for registering a new user.
+     * @return an array of strings containing the username and password
+     */
     public String[] register() {
         String[] registerInfo = new String[2];
         Dialog<Pair<String, String>> registerDialog = new Dialog<>();
@@ -118,6 +133,10 @@ public class DialogBoxes {
         return registerInfo;
     }
 
+    /**
+     * Creates a dialog box for logging in.
+     * @return an array of strings containing the username and password
+     */
     public String[] login() {
         String[] loginInfo = new String[2];
         Dialog<Pair<String, String>> loginDialog = new Dialog<>();
