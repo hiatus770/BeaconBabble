@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -28,6 +29,8 @@ public class DialogBoxes {
         loginGraphic = new ImageView(Objects.requireNonNull(this.getClass().getResource("/user_accounts.png")).toString());
         loginGraphic.setFitHeight(50);
         loginGraphic.setFitWidth(50);
+
+        this.client = client;
     }
 
     /**
@@ -82,7 +85,7 @@ public class DialogBoxes {
      * Creates a dialog box for registering a new user.
      * @return an array of strings containing the username and password
      */
-    public String[] register() {
+    public Optional<Pair<String, String>> register() {
         String[] registerInfo = new String[2];
         Dialog<Pair<String, String>> registerDialog = new Dialog<>();
         registerDialog.setTitle("Register");
@@ -117,27 +120,18 @@ public class DialogBoxes {
         Platform.runLater(username::requestFocus);
 
         registerDialog.setResultConverter(dialogButton -> {
-            if (dialogButton == registerButtonType) {
-                return new Pair<>(username.getText(), password.getText());
-            }
+            if (dialogButton == registerButtonType) return new Pair<>(username.getText(), password.getText());
             return null;
         });
 
-        Optional<Pair<String, String>> result = registerDialog.showAndWait();
-
-        result.ifPresent(credentials -> {
-            registerInfo[0] = credentials.getKey();
-            registerInfo[1] = credentials.getValue();
-        });
-
-        return registerInfo;
+        return registerDialog.showAndWait();
     }
 
     /**
      * Creates a dialog box for logging in.
      * @return an array of strings containing the username and password
      */
-    public String[] login() {
+    public Optional<Pair<String, String>> login() {
         String[] loginInfo = new String[2];
         Dialog<Pair<String, String>> loginDialog = new Dialog<>();
         loginDialog.setTitle("Log In");
@@ -151,63 +145,58 @@ public class DialogBoxes {
         gridPane.setHgap(10);
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(10));
-        TextField username = new TextField();
-        username.setPromptText("Username");
-        PasswordField password = new PasswordField();
-        password.setPromptText("Password");
+        TextField usernameField = new TextField();
+        usernameField.setPromptText("Username");
+        PasswordField passwordField = new PasswordField();
+        passwordField.setPromptText("Password");
 
         gridPane.add(new Label("Username:"), 0, 0);
-        gridPane.add(username, 1, 0);
+        gridPane.add(usernameField, 1, 0);
         gridPane.add(new Label("Password:"), 0, 1);
-        gridPane.add(password, 1, 1);
+        gridPane.add(passwordField, 1, 1);
 
         Node loginButton = loginDialog.getDialogPane().lookupButton(loginButtonType);
         loginButton.setDisable(true);
         // Do not allow the user to register if the username is blank
-        username.textProperty().addListener((observable, oldValue, newValue) -> {
+        usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
             loginButton.setDisable(newValue.trim().isEmpty());
         });
 
         loginDialog.getDialogPane().setContent(gridPane);
-        Platform.runLater(username::requestFocus);
+        Platform.runLater(usernameField::requestFocus);
 
         loginDialog.setResultConverter(dialogButton -> {
-            if (dialogButton == loginButtonType) {
-                return new Pair<>(username.getText(), password.getText());
-            }
-            System.exit(0);
+            if (dialogButton == loginButtonType) return new Pair<>(usernameField.getText(), passwordField.getText());
             return null;
         });
 
-        Optional<Pair<String, String>> result = loginDialog.showAndWait();
-
-        result.ifPresent(credentials -> {
-            loginInfo[0] = credentials.getKey();
-            loginInfo[1] = credentials.getValue();
-        });
-
-        return loginInfo;
+        return loginDialog.showAndWait();
     }
 
     /**
      * Asks the user if they want to register an account.
+     *
      * @return true if the user wants to register an account, false otherwise.
      */
-    public boolean askRegister() {
-        Alert registerAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        registerAlert.setTitle("Sign in");
-        registerAlert.setHeaderText("Would you like to log in or register an new account?");
-        registerAlert.setContentText("If you already have an account, click \"Log In\".");
+    public int askRegister() {
+        Dialog<Integer> registerDialog = new Dialog<>();
+        registerDialog.setTitle("Sign in");
+        registerDialog.setHeaderText("Would you like to log in or register an new account?");
+        registerDialog.setContentText("If you already have an account, click \"Log In\".");
 
-        ButtonType loginButton = new ButtonType("Log In");
-        ButtonType registerButton = new ButtonType("Register");
+        ButtonType loginButton = new ButtonType("Log In", ButtonBar.ButtonData.OK_DONE);
+        ButtonType registerButton = new ButtonType("Register", ButtonBar.ButtonData.OK_DONE);
 
-        registerAlert.getButtonTypes().setAll(loginButton, registerButton);
+        registerDialog.getDialogPane().getButtonTypes().setAll(loginButton, registerButton, ButtonType.CANCEL);
 
-        Optional<ButtonType> result = registerAlert.showAndWait();
+        registerDialog.setResultConverter(dialogButton -> {
+            if (dialogButton == loginButton) return 0;
+            else if (dialogButton == registerButton) return 1;
+            return 2;
+        });
 
-        // Checks if the result is present and if the result is not the login button
-        return result.filter(buttonType -> buttonType != loginButton).isPresent();
+        Optional<Integer> result = registerDialog.showAndWait();
+        return result.orElse(2);
     }
 
     /**
@@ -231,16 +220,12 @@ public class DialogBoxes {
         alert.showAndWait();
     }
 
-    /*public String[] fontChooser() {
-        String[] fontInfo = new String[2];
-
-        FontSelectorDialog fontDialog = new FontSelectorDialog(new Font(client.properties.getProperty("font"), Integer.parseInt(client.properties.getProperty("fontSize"))));
-        fontDialog.setTitle("Choose a Font");
-        fontDialog.setHeaderText("Choose a font for the chat.");
-        fontDialog.showAndWait();
-        fontInfo[0] = fontDialog.getResult().getName();
-        fontInfo[1] = String.valueOf(fontDialog.getResult().getSize());
-
-        return fontInfo;
-    }*/
+    public void badRegistrationAlert() {
+        System.err.println("Username already taken.");
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Username already taken.");
+        alert.setContentText("Please try again.");
+        alert.showAndWait();
+    }
 }

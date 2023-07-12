@@ -16,6 +16,7 @@ import java.util.Objects;
 // TODO: Create settings window, font choice window, color choice window, different coloured text
 
 public class ChatWindow implements EventHandler<ActionEvent> {
+    Stage stage;
     Client client;
     BorderPane borderPane;
     GridPane gridPane;
@@ -38,11 +39,12 @@ public class ChatWindow implements EventHandler<ActionEvent> {
      * @param scene the scene to be displayed
      */
     public void createStage(Scene scene) {
-        Stage stage = new Stage();
+        stage = new Stage();
         stage.setScene(scene);
 
         stage.setOnCloseRequest(event -> {
             client.exit();
+            stage.close();
             System.exit(0);
         });
 
@@ -153,6 +155,7 @@ public class ChatWindow implements EventHandler<ActionEvent> {
         menuItemExit.addEventHandler(ActionEvent.ACTION, e -> {
             System.out.println("Exit button pressed, closing");
             client.exit();
+            stage.close();
             System.exit(0);
         });
 
@@ -210,7 +213,7 @@ public class ChatWindow implements EventHandler<ActionEvent> {
         }
 
         client.sendMessage(message);
-        appendClientMessage("\n[" + timestamp + "] <" + client.getUsername() + "> " + message);
+        appendClientMessage("[" + timestamp + "] <" + client.getUsername() + "> " + message + "\n");
         messageInput.clear();
     }
 }

@@ -111,15 +111,24 @@ public class Server {
      * @param username the username of the user
      * @param password the password of the user
      */
-    public void registerUser(String username, String password) throws SQLException {
+    public boolean registerUser(String username, String password) throws SQLException {
         System.out.println(username);
         System.out.println(password);
-        String update = "INSERT INTO accounts (USERNAME, PASSWORD) VALUES (\"" + username + "\", \"" + password + "\")";
-        System.out.println(update);
-        PreparedStatement statement = connection.prepareStatement(update);
-        System.out.println(statement.toString());
-        int result = statement.executeUpdate();
-        System.out.println("Rows affected: " + result);
+        String queryUsername = "SELECT USERNAME FROM accounts WHERE USERNAME = \"" + username + "\"";
+        PreparedStatement queryStatement = connection.prepareStatement(queryUsername);
+        ResultSet usernameResult = queryStatement.executeQuery();
+        if (usernameResult.next()) {
+            System.out.println("Username already exists");
+            return false;
+        } else {
+            String update = "INSERT INTO accounts (USERNAME, PASSWORD) VALUES (\"" + username + "\", \"" + password + "\")";
+            System.out.println(update);
+            PreparedStatement updateStatement = connection.prepareStatement(update);
+            System.out.println(updateStatement.toString());
+            int result = updateStatement.executeUpdate();
+            System.out.println("Rows affected: " + result);
+            return true;
+        }
     }
 
     /**
@@ -167,7 +176,7 @@ public class Server {
      * Adds a new username to the ArrayList of usernames.
      * @param username the username of the user to be removed
      */
-    public void addUsername(String username, UserThread userThread) {
+    public void addUser(String username, UserThread userThread) {
         onlineUsers.add(username);
         userThreads.add(userThread);
     }
@@ -176,7 +185,7 @@ public class Server {
      * Removes a username from the ArrayList of usernames.
      * @param username the username of the user to be removed
      */
-    public void removeUsername(String username, UserThread userThread) {
+    public void removeUser(String username, UserThread userThread) {
         onlineUsers.remove(username);
         userThreads.remove(userThread);
     }

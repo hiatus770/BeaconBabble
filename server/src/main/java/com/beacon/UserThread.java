@@ -19,19 +19,19 @@ import java.sql.SQLException;
  */
 public class UserThread extends Thread {
     // Both the socket and the server object are passed during initialization of the userthread object
-    private Socket socket;
-    private Server server;
+    private final Socket socket;
+    private final Server server;
 
     // Message writing object and the timestamp for the message
-    private PrintWriter writer;
+    private final PrintWriter writer;
     BufferedReader reader;
 
     String username;
 
     /**
-     *  Userthread constructor, only takes the server socket between the client and it takes the server object to access the server methods
+     *  UserThread constructor, only takes the server socket between the client, and it takes the server object to access the server methods
      * @param socket The socket between the client and the server
-     * @throws IOException
+     * @throws IOException If the socket is not valid
      */
     public UserThread(Socket socket, Server server) throws IOException {
         // Initialize the socket and the server object
@@ -41,6 +41,15 @@ public class UserThread extends Thread {
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         // Output stream for the socket which lets the server write to this userthread
         writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
+    }
+
+    /**
+     * Sends a message from the user to the server for broadcast.
+     * @param message The message to be sent, in a String format.
+     */
+    public void sendMessage(String message) {
+        // Writes the message to the output stream
+        writer.println(message);
     }
 
     /**
@@ -57,65 +66,49 @@ public class UserThread extends Thread {
     }
 
     /**
-     * Sends a message from the user to the server for broadcast.
-     * @param message The message to be sent, in a String format.
-     */
-    public void sendMessage(String message) {
-        // Writes the message to the output stream
-        writer.println(message);
-    }
-
-    public boolean verifyPassword(String password) {
-        return Server.properties.getProperty("password").equals(password);
-    }
-
-    /**
      * Runs the user thread. Handles all the interactions the user thread should be able to do with the server.
      * This includes receiving messages from the user, sending messages to the user, and removing the user from the server when they disconnect.
      * @author goose and hiatus
      */
     public void run() {
-        // TODO:
-        // 1. Read the username and password from the client socket
-        // 2. Verify the username and password
-        // 3. If the username and password are correct, add the username to the list and send a signal to allow the connection
-        // 4. If the username and password are incorrect, send a signal to deny the connection
         try {
             // Read login info
-            String loginType = reader.readLine();
-            System.out.println(loginType);
-            if (loginType.equals("login")) { // login
-                boolean loginState = false;
-                while (!loginState) {
-                    String username = reader.readLine();
-                    String password = reader.readLine();
-                    System.out.println("Username: " + username + " Password: " + password);
-                    if (server.checkCredentials(username, password)) {
-                        server.addUsername(username, this);
-                        sendMessage("goodLogin");
-                        loginState = true;
-                    } else {
-                        sendMessage("badLogin");
-                    }
+            // Ask registration loop
+            boolean askRegister = true;
+            do {
+                String loginType = reader.readLine();
+                System.out.println(loginType);
+                if (loginType.equals("cancel")) {
+                    server.log("User <" + username + "> has cancelled.");
+                    socket.close();
+                    return;
                 }
-            } else { // registration
-                // TODO: check if user already exists
-                String username = reader.readLine();
-                String password = reader.readLine();
-                System.out.println("Username: " + username + " Password: " + password);
-                server.registerUser(username, password);
-            }
+
+                if (loginType.equals("login")) { // login
+                    askRegister = checkLogin();
+                } else { // registration
+                    askRegister = checkRegistration();
+                }
+            } while (askRegister);
 
             server.broadcast("User <" + username + "> has connected.", this);
+
             printOnlineUsers();
+            System.out.println("printed online users");
 
             String clientMessage = "";
-            while (!clientMessage.equals("exit") && socket.isConnected()) {
+            while (!clientMessage.equals("/exit")) {
+
                 clientMessage = reader.readLine();
-                server.broadcast("[" + server.getTimestamp() + "] <" + username + "> " + clientMessage, this);
-                System.out.println(clientMessage);
-                // TODO: add ip address to log
-                server.log(username + ": " + clientMessage);
+
+                if (clientMessage.equals("/exit")) {
+                    server.removeUser(username, this);
+                    server.broadcast("User <" + username + "> has disconnected.", this);
+                    socket.close();
+                } else {
+                    server.broadcast("[" + server.getTimestamp() + "] <" + username + "> " + clientMessage, this);
+                    server.log("[" + socket.getInetAddress().getHostAddress() + "] " + username + ": " + clientMessage);
+                }
             }
 
             server.log("User <" + username + "> has disconnected.");
@@ -123,6 +116,58 @@ public class UserThread extends Thread {
             e.printStackTrace();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Checks the registration credentials of the user.
+     * @return true if the user presses cancel, false if the user successfully registers.
+     * @throws IOException if the input stream is not found.
+     * @throws SQLException if the SQL query fails.
+     */
+    public boolean checkRegistration() throws IOException, SQLException {
+        while (true) {
+            String username = reader.readLine();
+            String password = reader.readLine();
+            System.out.println("Username: " + username + " Password: " + password);
+
+            if (username.equals(" ")) {
+                return false;
+            }
+
+            if (server.registerUser(username, password)) {
+                server.addUser(username, this);
+                sendMessage("goodRegistration");
+                return true;
+            } else {
+                sendMessage("badRegistration");
+            }
+        }
+    }
+
+    /**
+     * Checks the login credentials of the user.
+     * @return true if the user presses cancel, false if the user successfully logs in.
+     * @throws IOException if the input stream is not found.
+     * @throws SQLException if the SQL query fails.
+     */
+    public boolean checkLogin() throws IOException, SQLException {
+        while (true) {
+            String username = reader.readLine();
+            String password = reader.readLine();
+            System.out.println("Username: " + username + " Password: " + password);
+
+            if (username.equals(" ")) {
+                return true;
+            }
+
+            if (server.checkCredentials(username, password)) {
+                server.addUser(username, this);
+                sendMessage("goodLogin");
+                return false;
+            } else {
+                sendMessage("badLogin");
+            }
         }
     }
 }

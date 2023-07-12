@@ -12,13 +12,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.scene.text.*;
 import javafx.stage.Stage;
-
-import java.util.List;
 
 public class SettingsWindow {
 
@@ -33,14 +28,19 @@ public class SettingsWindow {
     // Appearance tab
     GridPane fontSelectionPane = new GridPane();
     GridPane colorSelectionPane = new GridPane();
+    ColorPicker bgColorPicker, frameColorPicker, serverColorPicker, userColorPicker, clientColorPicker;
 
     Stage stage = new Stage();
     Scene scene;
 
-    String fontName, fontSize, fontColor, backgroundColor, frameColor, serverMessageColor, userMessageColor, clientMessageColor;
+    String fontName, backgroundColor, frameColor, serverMessageColor, userMessageColor, clientMessageColor;
+    FontWeight fontWeight;
+    FontPosture fontPosture;
+    int fontSize;
 
     public SettingsWindow() {
         stage.setScene(create());
+        stage.show();
     }
 
     public Scene create() {
@@ -49,20 +49,8 @@ public class SettingsWindow {
         Button applyButton = new Button("Apply");
 
         OKButton.addEventHandler(ActionEvent.ACTION, event -> {
-            ListView<String> fontNameSelection = (ListView<String>) fontSelectionPane.getChildren().get(0);
-            ListView<String> fontSizeSelection = (ListView<String>) fontSelectionPane.getChildren().get(1);
-            ListView<String> fontColorSelection = (ListView<String>) fontSelectionPane.getChildren().get(2);
-
-            fontName = fontNameSelection.getSelectionModel().getSelectedItem();
-            fontSize = fontSizeSelection.getSelectionModel().getSelectedItem();
-            fontColor = fontColorSelection.getSelectionModel().getSelectedItem();
-
-            backgroundColor = colorSelectionPane.getChildren().get(6).toString();
-            frameColor = colorSelectionPane.getChildren().get(7).toString();
-            serverMessageColor = colorSelectionPane.getChildren().get(8).toString();
-            userMessageColor = colorSelectionPane.getChildren().get(9).toString();
-            clientMessageColor = colorSelectionPane.getChildren().get(10).toString();
-            System.out.println(fontName + fontSize + fontColor + backgroundColor + frameColor + serverMessageColor + userMessageColor + clientMessageColor);
+            System.out.println(fontName + fontSize + fontWeight + backgroundColor + frameColor + serverMessageColor + userMessageColor + clientMessageColor);
+            System.out.println("OK");
             stage.close();
         });
 
@@ -71,6 +59,7 @@ public class SettingsWindow {
         });
 
         applyButton.addEventHandler(ActionEvent.ACTION, event -> {
+            System.out.println(fontName + fontSize + fontWeight + backgroundColor + frameColor + serverMessageColor + userMessageColor + clientMessageColor);
             System.out.println("Apply");
         });
 
@@ -117,6 +106,8 @@ public class SettingsWindow {
         connectionPane.add(new TextField(), 1, 1);
         connectionPane.add(new TextField(), 1, 2);
 
+        anchorPane.getChildren().add(connectionPane);
+
         tab.setContent(anchorPane);
         return tab;
     }
@@ -137,12 +128,14 @@ public class SettingsWindow {
         gridPane.setPadding(new javafx.geometry.Insets(10));
 
         gridPane.add(createFontPane(), 0, 0);
-        gridPane.add(createColorPane(), 0, 1);
+        gridPane.add(createColorPane(), 1, 0);
 
         AnchorPane.setTopAnchor(gridPane, 0.0);
         AnchorPane.setBottomAnchor(gridPane, 0.0);
         AnchorPane.setLeftAnchor(gridPane, 0.0);
         AnchorPane.setRightAnchor(gridPane, 0.0);
+
+        anchorPane.getChildren().add(gridPane);
 
         tab.setContent(anchorPane);
         return tab;
@@ -171,11 +164,23 @@ public class SettingsWindow {
         colorSelectionPane.add(new Label("Your message colour"), 0, 4);
         colorSelectionPane.add(new Label("Other message colour"), 0, 5);
 
-        colorSelectionPane.add(new ColorPicker(Color.WHITE), 1, 1);
-        colorSelectionPane.add(new ColorPicker(Color.WHITE), 1, 2);
-        colorSelectionPane.add(new ColorPicker(Color.RED), 1, 3);
-        colorSelectionPane.add(new ColorPicker(Color.GREEN), 1, 4);
-        colorSelectionPane.add(new ColorPicker(Color.BLUE), 1, 5);
+        bgColorPicker = new ColorPicker(Color.WHITE);
+        frameColorPicker = new ColorPicker(Color.WHITE);
+        serverColorPicker = new ColorPicker(Color.RED);
+        userColorPicker = new ColorPicker(Color.GREEN);
+        clientColorPicker = new ColorPicker(Color.BLUE);
+
+        bgColorPicker.addEventHandler(ActionEvent.ACTION, event -> backgroundColor = bgColorPicker.getValue().toString());
+        frameColorPicker.addEventHandler(ActionEvent.ACTION, event -> frameColor = frameColorPicker.getValue().toString());
+        serverColorPicker.addEventHandler(ActionEvent.ACTION, event -> serverMessageColor = serverColorPicker.getValue().toString());
+        userColorPicker.addEventHandler(ActionEvent.ACTION, event -> userMessageColor = userColorPicker.getValue().toString());
+        clientColorPicker.addEventHandler(ActionEvent.ACTION, event -> clientMessageColor = clientColorPicker.getValue().toString());
+
+        colorSelectionPane.add(bgColorPicker, 1, 1);
+        colorSelectionPane.add(frameColorPicker, 1, 2);
+        colorSelectionPane.add(serverColorPicker, 1, 3);
+        colorSelectionPane.add(userColorPicker, 1, 4);
+        colorSelectionPane.add(clientColorPicker, 1, 5);
 
         return colorSelectionPane;
     }
@@ -218,16 +223,18 @@ public class SettingsWindow {
 
         // Font selection nodes
         ListView<String> fontListView = new ListView<>();
-        ListView<String> styleListView = new ListView<>();
+        ListView<FontWeight> weightListView = new ListView<>();
+        ListView<FontPosture> postureListView = new ListView<>();
         ListView<Integer> sizeListView = new ListView<>();
 
         // List view contents for the font selection
         ObservableList<String> fontList = FXCollections.observableArrayList(Font.getFamilies());
-        ObservableList<String> styleList = FXCollections.observableArrayList(); // Depends on the font selected
+        ObservableList<FontWeight> weightList = FXCollections.observableArrayList(FontWeight.values()); // Depends on the font selected
+        ObservableList<FontPosture> postureList = FXCollections.observableArrayList(FontPosture.values());
         ObservableList<Integer> sizeList = FXCollections.observableArrayList(8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48, 60, 72, 96);
 
         fontListView.setItems(fontList);
-        styleListView.setItems(styleList);
+        weightListView.setItems(weightList);
         sizeListView.setItems(sizeList);
 
         // Font sample nodes
@@ -237,30 +244,32 @@ public class SettingsWindow {
         textFlow.getChildren().add(sampleText);
 
         fontListView.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
-            String font = fontListView.getSelectionModel().getSelectedItem();
-            styleList.clear();
-            styleList.addAll(Font.getFontNames(font));
-            styleListView.setItems(styleList);
-            sampleText.fontProperty().set(Font.font(font));
+            fontName = fontListView.getSelectionModel().getSelectedItem();
+            weightListView.setItems(weightList);
+            sampleText.fontProperty().set(Font.font(fontName));
         });
 
-        styleListView.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
-            String style = styleListView.getSelectionModel().getSelectedItem();
-            sampleText.fontProperty().set(Font.font(style));
+        weightListView.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
+            fontWeight = weightListView.getSelectionModel().getSelectedItem();
+            sampleText.fontProperty().set(Font.font(fontName, fontWeight, 12));
+        });
+
+        postureListView.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
+            fontPosture = postureListView.getSelectionModel().getSelectedItem();
+            sampleText.fontProperty().set(Font.font(fontName, fontWeight, fontPosture, 12));
         });
 
         sizeListView.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
-            int size = sizeListView.getSelectionModel().getSelectedItem();
-            sampleText.fontProperty().set(Font.font(size));
+            fontSize = sizeListView.getSelectionModel().getSelectedItem();
+            sampleText.fontProperty().set(Font.font(fontName, fontWeight, fontSize));
         });
-
 
         fontSelectionPane.add(fontLabel, 0, 0);
         fontSelectionPane.add(styleLabel, 1, 0);
         fontSelectionPane.add(sizeLabel, 2, 0);
 
         fontSelectionPane.add(fontListView, 0, 1);
-        fontSelectionPane.add(styleListView, 1, 1);
+        fontSelectionPane.add(weightListView, 1, 1);
         fontSelectionPane.add(sizeListView, 2, 1);
 
         fontSelectionPane.add(textFlow, 0, 2, 3, 1);

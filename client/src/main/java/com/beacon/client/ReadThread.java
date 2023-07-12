@@ -10,14 +10,12 @@ public class ReadThread extends Thread {
     }
 
     public void run() {
-        while (true) {
-            try {
-                String message = client.reader.readLine();
-                chatWindow.appendUserMessage(message);
-                System.out.println(message);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        while (client.isRunning) try {
+            String message = client.reader.readLine();
+            chatWindow.appendUserMessage(message);
+            System.out.println(message);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
