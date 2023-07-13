@@ -1,8 +1,11 @@
 package com.beacon.client;
 
+import javafx.application.Platform;
+
 public class ReadThread extends Thread {
     Client client;
     ChatWindow chatWindow;
+    String message;
 
     public ReadThread(Client client, ChatWindow chatWindow) {
         this.client = client;
@@ -11,8 +14,10 @@ public class ReadThread extends Thread {
 
     public void run() {
         while (client.isRunning) try {
-            String message = client.reader.readLine();
-            chatWindow.appendUserMessage(message);
+            System.out.println("Reading...");
+            message = client.reader.readLine();
+            // Fixes java.lang.IllegalStateException: Not on FX application thread
+            Platform.runLater(() -> chatWindow.appendUserMessage(message + "\n"));
             System.out.println(message);
         } catch (Exception e) {
             e.printStackTrace();

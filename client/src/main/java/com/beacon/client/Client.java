@@ -34,6 +34,7 @@ public class Client extends Application {
         dialogBoxes = new DialogBoxes(this);
         properties = new Properties();
         properties.load(new FileInputStream("src/main/resources/client.properties"));
+        isRunning = true;
         run("localhost", 8000);
         // DO NOT DELETE: logic for checking whether a server connection has been properly established through user defined parameters
         /*do connectionInfo = dialogBoxes.connect();

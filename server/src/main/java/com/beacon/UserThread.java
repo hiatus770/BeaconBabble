@@ -97,6 +97,7 @@ public class UserThread extends Thread {
             System.out.println("printed online users");
 
             String clientMessage = "";
+
             while (!clientMessage.equals("/exit")) {
 
                 clientMessage = reader.readLine();
@@ -107,6 +108,7 @@ public class UserThread extends Thread {
                     socket.close();
                 } else {
                     server.broadcast("[" + server.getTimestamp() + "] <" + username + "> " + clientMessage, this);
+                    System.out.println("message broadcasted");
                     server.log("[" + socket.getInetAddress().getHostAddress() + "] " + username + ": " + clientMessage);
                 }
             }
@@ -127,7 +129,7 @@ public class UserThread extends Thread {
      */
     public boolean checkRegistration() throws IOException, SQLException {
         while (true) {
-            String username = reader.readLine();
+            username = reader.readLine();
             String password = reader.readLine();
             System.out.println("Username: " + username + " Password: " + password);
 
@@ -153,7 +155,7 @@ public class UserThread extends Thread {
      */
     public boolean checkLogin() throws IOException, SQLException {
         while (true) {
-            String username = reader.readLine();
+            username = reader.readLine();
             String password = reader.readLine();
             System.out.println("Username: " + username + " Password: " + password);
 

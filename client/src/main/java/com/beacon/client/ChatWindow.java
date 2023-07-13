@@ -173,6 +173,7 @@ public class ChatWindow implements EventHandler<ActionEvent> {
     public void appendServerMessage(String message) {
         chatBox.append(message, "server");
         System.out.println(message);
+        chatBoxScrollPane.scrollBy(0, 100);
     }
 
     /**
@@ -182,6 +183,7 @@ public class ChatWindow implements EventHandler<ActionEvent> {
     public void appendUserMessage(String message) {
         chatBox.append(message, "user");
         System.out.println(message);
+        chatBoxScrollPane.scrollBy(0, 100);
     }
 
     /**
