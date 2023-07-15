@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
@@ -37,9 +38,8 @@ public class DialogBoxes {
      * Creates a dialog box for connecting to a server.
      * @return an array of strings containing the IP address and port number
      */
-    public String[] connect() {
-        String[] connectInfo = new String[2];
-        Dialog<ButtonType> connectDialog = new Dialog<>();
+    public Optional<Pair<String, Integer>> connect() {
+        Dialog<Pair<String, Integer>> connectDialog = new Dialog<>();
         connectDialog.setTitle("Connect to Server");
         connectDialog.setHeaderText("Enter the server's IP address and port number.");
         connectDialog.setGraphic(networkGraphic);
@@ -60,25 +60,27 @@ public class DialogBoxes {
 
         connectDialog.getDialogPane().setContent(gridPane);
 
+        portNumber.addEventHandler(KeyEvent.KEY_TYPED, event -> {
+            if (!"0123456789".contains(event.getCharacter()) || portNumber.getText().length() > 4) {
+                event.consume();
+            }
+        });
+
         ButtonType connectButtonType = new ButtonType("Connect", ButtonBar.ButtonData.OK_DONE);
-        connectDialog.getDialogPane().getButtonTypes().add(connectButtonType);
+        connectDialog.getDialogPane().getButtonTypes().addAll(connectButtonType, ButtonType.CANCEL);
 
         connectDialog.setResultConverter(buttonType -> {
             if (buttonType == connectButtonType) {
                 if (ipAddress.getText().isBlank() || portNumber.getText().isBlank()) {
-                    connectInfo[0] = "";
-                    connectInfo[1] = "0";
+                    return new Pair<>("", 0);
                 } else {
-                    connectInfo[0] = ipAddress.getText();
-                    connectInfo[1] = portNumber.getText();
+                    return new Pair<>(ipAddress.getText(), Integer.parseInt(portNumber.getText()));
                 }
             }
             return null;
         });
 
-        connectDialog.showAndWait();
-
-        return connectInfo;
+        return connectDialog.showAndWait();
     }
 
     /**

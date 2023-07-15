@@ -8,11 +8,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/ChatWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/ChatWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/ReadThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/ReadThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/beacon/UserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/beacon/UserThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/DialogBoxes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/DialogBoxes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/SettingsWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/SettingsWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/client.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/client.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../server/src/main/resources/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/resources/log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/target/classes/com/beacon/UserThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/../server/target/classes/com/beacon/UserThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/target/classes/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../server/target/classes/log.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +21,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/20/javafx-controls-20-sources.jar!/javafx/scene/control/Alert.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/20/javafx-controls-20-sources.jar!/javafx/scene/control/ButtonBar.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/20/javafx-controls-20-sources.jar!/javafx/scene/control/ButtonType.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">

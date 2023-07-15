@@ -16,6 +16,8 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 
 public class SettingsWindow {
+    Client client;
+    ChatWindow chatWindow;
 
     // Panes
     BorderPane borderPane = new BorderPane();
@@ -33,12 +35,13 @@ public class SettingsWindow {
     Stage stage = new Stage();
     Scene scene;
 
-    String fontName, backgroundColor, frameColor, serverMessageColor, userMessageColor, clientMessageColor;
+    String fontName, backgroundColor, bezelColor, serverMessageColor, userMessageColor, clientMessageColor;
     FontWeight fontWeight;
     FontPosture fontPosture;
     int fontSize;
 
-    public SettingsWindow() {
+    public SettingsWindow(Client client, ChatWindow chatWindow) {
+        this.client = client;
         stage.setScene(create());
         stage.show();
     }
@@ -49,8 +52,15 @@ public class SettingsWindow {
         Button applyButton = new Button("Apply");
 
         OKButton.addEventHandler(ActionEvent.ACTION, event -> {
-            System.out.println(fontName + fontSize + fontWeight + backgroundColor + frameColor + serverMessageColor + userMessageColor + clientMessageColor);
-            System.out.println("OK");
+            client.properties.setProperty("font", fontName);
+            client.properties.setProperty("font-size", String.valueOf(fontSize));
+            client.properties.setProperty("font-weight", fontWeight.toString());
+            client.properties.setProperty("background-color", backgroundColor);
+            client.properties.setProperty("bezel-color", bezelColor);
+            client.properties.setProperty("server-message-color", serverMessageColor);
+            client.properties.setProperty("user-message-color", userMessageColor);
+            client.properties.setProperty("client-message-color", clientMessageColor);
+            updateSettings(fontName, fontSize, fontWeight, backgroundColor, bezelColor, serverMessageColor, userMessageColor, clientMessageColor);
             stage.close();
         });
 
@@ -59,7 +69,7 @@ public class SettingsWindow {
         });
 
         applyButton.addEventHandler(ActionEvent.ACTION, event -> {
-            System.out.println(fontName + fontSize + fontWeight + backgroundColor + frameColor + serverMessageColor + userMessageColor + clientMessageColor);
+            System.out.println(fontName + fontSize + fontWeight + backgroundColor + bezelColor + serverMessageColor + userMessageColor + clientMessageColor);
             System.out.println("Apply");
         });
 
@@ -170,8 +180,14 @@ public class SettingsWindow {
         userColorPicker = new ColorPicker(Color.GREEN);
         clientColorPicker = new ColorPicker(Color.BLUE);
 
+        backgroundColor = bgColorPicker.getValue().toString();
+        bezelColor = frameColorPicker.getValue().toString();
+        serverMessageColor = serverColorPicker.getValue().toString();
+        userMessageColor = userColorPicker.getValue().toString();
+        clientMessageColor = clientColorPicker.getValue().toString();
+
         bgColorPicker.addEventHandler(ActionEvent.ACTION, event -> backgroundColor = bgColorPicker.getValue().toString());
-        frameColorPicker.addEventHandler(ActionEvent.ACTION, event -> frameColor = frameColorPicker.getValue().toString());
+        frameColorPicker.addEventHandler(ActionEvent.ACTION, event -> bezelColor = frameColorPicker.getValue().toString());
         serverColorPicker.addEventHandler(ActionEvent.ACTION, event -> serverMessageColor = serverColorPicker.getValue().toString());
         userColorPicker.addEventHandler(ActionEvent.ACTION, event -> userMessageColor = userColorPicker.getValue().toString());
         clientColorPicker.addEventHandler(ActionEvent.ACTION, event -> clientMessageColor = clientColorPicker.getValue().toString());
@@ -216,21 +232,21 @@ public class SettingsWindow {
         // Font selection labels
         Label fontLabel = new Label("Font");
         fontLabel.fontProperty().set(Font.font("System", FontWeight.BOLD, 12));
-        Label styleLabel = new Label("Style");
+        Label styleLabel = new Label("Weight");
         styleLabel.fontProperty().set(Font.font("System", FontWeight.BOLD, 12));
+        Label postureLabel = new Label("Style");
+        postureLabel.fontProperty().set(Font.font("System", FontWeight.BOLD, 12));
         Label sizeLabel = new Label("Size");
         sizeLabel.fontProperty().set(Font.font("System", FontWeight.BOLD, 12));
 
         // Font selection nodes
         ListView<String> fontListView = new ListView<>();
         ListView<FontWeight> weightListView = new ListView<>();
-        ListView<FontPosture> postureListView = new ListView<>();
         ListView<Integer> sizeListView = new ListView<>();
 
         // List view contents for the font selection
         ObservableList<String> fontList = FXCollections.observableArrayList(Font.getFamilies());
         ObservableList<FontWeight> weightList = FXCollections.observableArrayList(FontWeight.values()); // Depends on the font selected
-        ObservableList<FontPosture> postureList = FXCollections.observableArrayList(FontPosture.values());
         ObservableList<Integer> sizeList = FXCollections.observableArrayList(8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48, 60, 72, 96);
 
         fontListView.setItems(fontList);
@@ -254,11 +270,6 @@ public class SettingsWindow {
             sampleText.fontProperty().set(Font.font(fontName, fontWeight, 12));
         });
 
-        postureListView.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
-            fontPosture = postureListView.getSelectionModel().getSelectedItem();
-            sampleText.fontProperty().set(Font.font(fontName, fontWeight, fontPosture, 12));
-        });
-
         sizeListView.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
             fontSize = sizeListView.getSelectionModel().getSelectedItem();
             sampleText.fontProperty().set(Font.font(fontName, fontWeight, fontSize));
@@ -270,10 +281,14 @@ public class SettingsWindow {
 
         fontSelectionPane.add(fontListView, 0, 1);
         fontSelectionPane.add(weightListView, 1, 1);
-        fontSelectionPane.add(sizeListView, 2, 1);
+        fontSelectionPane.add(sizeListView, 3, 1);
 
         fontSelectionPane.add(textFlow, 0, 2, 3, 1);
 
         return fontSelectionPane;
+    }
+
+    public void updateSettings(String fontName, int fontSize, FontWeight fontWeight, String backgroundColor, String frameColor, String serverMessageColor, String userMessageColor, String clientMessageColor) {
+        chatWindow.chatBox.setStyle("-fx-font-family: " + fontName + "; -fx-font-weight: " + fontWeight.toString() + "; -fx-font-size: " + fontSize + "; -fx-background-color: " + backgroundColor + ";");
     }
 }

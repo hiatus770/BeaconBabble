@@ -30,15 +30,15 @@ public class Client extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         System.out.println("Hello");
-        String[] connectionInfo; // maybe use this for future stuff
+        Optional<Pair<String, Integer>> connectionInfo; // maybe use this for future stuff
         dialogBoxes = new DialogBoxes(this);
         properties = new Properties();
         properties.load(new FileInputStream("src/main/resources/client.properties"));
         isRunning = true;
-        run("localhost", 8000);
+        //run("localhost", 8000);
         // DO NOT DELETE: logic for checking whether a server connection has been properly established through user defined parameters
-        /*do connectionInfo = dialogBoxes.connect();
-        while (run(connectionInfo[0], Integer.parseInt(connectionInfo[1])) != 0);*/
+        do connectionInfo = dialogBoxes.connect();
+        while (run(connectionInfo.get().getKey(), connectionInfo.get().getValue()) != 0);
     }
 
     /**
@@ -47,7 +47,7 @@ public class Client extends Application {
      * @param hostname the hostname of the server
      * @param port     the port of the server
      */
-    public void run(String hostname, int port) {
+    public int run(String hostname, int port) {
         try {
             socket = new Socket(hostname, port);
             writer = new PrintWriter(socket.getOutputStream(), true);
@@ -64,7 +64,7 @@ public class Client extends Application {
                     writer.println("cancel");
                     socket.close();
                     System.exit(0);
-                    return;
+                    return 0;
                 }
             } while (askRegister);
 
@@ -77,14 +77,16 @@ public class Client extends Application {
 
             chatWindow.appendServerMessage("Connected to server at " + hostname + " on port " + port + ".\n");
             chatWindow.appendServerMessage(connectedUsers + "\n");
+
+            return 0;
         } catch (UnknownHostException e) {
             System.err.println("Unknown host: " + hostname);
             dialogBoxes.serverConnectionAlert(hostname, port);
-            System.exit(1);
+            return 1;
         } catch (IOException e) {
             System.err.println("Couldn't get I/O for the connection to: " + hostname);
             dialogBoxes.serverConnectionAlert(hostname, port);
-            System.exit(2);
+            return 2;
         }
     }
 

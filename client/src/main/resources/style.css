@@ -4,6 +4,7 @@
 
 .server {
     -fx-fill: red;
+    -fx-font: 12px "Arial";
 }
 
 .user {

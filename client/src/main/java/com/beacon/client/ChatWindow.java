@@ -105,8 +105,8 @@ public class ChatWindow implements EventHandler<ActionEvent> {
         chatBox.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         // i hate my life
         chatBox.setStyle("-fx-font-family: " + client.properties.getProperty("font") + ";" +
-                "-fx-font-size: " + client.properties.getProperty("fontsize") + ";" +
-                "-fx-text-fill: " + client.properties.getProperty("fontColor") + ";" +
+                "-fx-font-size: " + client.properties.getProperty("font-size") + ";" +
+                "-fx-font-weight: " + client.properties.getProperty("font-weight") + ";" +
                 "-fx-padding: 5 5 5 5;" +
                 "-fx-background-color: transparent;" +
                 "-fx-border-color: gray;" +
@@ -149,7 +149,7 @@ public class ChatWindow implements EventHandler<ActionEvent> {
         menuItemSettings.addEventHandler(ActionEvent.ACTION, e -> {
             System.out.println("Settings button pressed");
             // TODO: create settings window
-            SettingsWindow settingsWindow = new SettingsWindow();
+            SettingsWindow settingsWindow = new SettingsWindow(client, this);
         });
 
         menuItemExit.addEventHandler(ActionEvent.ACTION, e -> {
