@@ -72,6 +72,20 @@ public class UserThread extends Thread {
      */
     public void run() {
         try {
+            // Read request signal
+            StringBuilder request = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                request.append(line);
+            }
+
+            // Verify request signal
+            if (!request.toString().startsWith("vbcnclnt")) {
+                server.log("User <" + username + "> has sent an invalid request signal.");
+                socket.close();
+                return;
+            }
+
             // Read login info
             // Ask registration loop
             boolean askRegister = true;

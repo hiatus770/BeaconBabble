@@ -6,13 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="aa43a0f1-2c77-4c5f-9321-d56d6bfe64df" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/ChatWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/ChatWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/DialogBoxes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/DialogBoxes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/SettingsWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/SettingsWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/client.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/client.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/beacon/UserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/beacon/UserThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../server/src/main/resources/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/resources/log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/target/classes/com/beacon/UserThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/../server/target/classes/com/beacon/UserThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/target/classes/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../server/target/classes/log.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,10 +46,11 @@
     "Repository.Attach.Sources": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "full.screen.before.presentation.mode": "false",
     "git-widget-placeholder": "javafx",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/Olive/OneDrive/Documents/Code/java/beacon/server",
+    "last_opened_file_path": "C:/Users/Olive/Documents/Code/java/beacon/server",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.26091954",

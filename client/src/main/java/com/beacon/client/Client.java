@@ -53,6 +53,9 @@ public class Client extends Application {
             writer = new PrintWriter(socket.getOutputStream(), true);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+            // Verification
+            writer.println("vbcnclnt " + socket.getInetAddress());
+
             // Account login
             boolean askRegister;
             do {
