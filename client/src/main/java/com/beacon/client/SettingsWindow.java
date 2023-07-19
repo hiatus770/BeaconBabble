@@ -231,12 +231,10 @@ public class SettingsWindow {
 
         // Font selection labels
         Label fontLabel = new Label("Font");
-        fontLabel.fontProperty().set(Font.font("System", FontWeight.BOLD, 12));
         Label styleLabel = new Label("Weight");
-        styleLabel.fontProperty().set(Font.font("System", FontWeight.BOLD, 12));
-        Label postureLabel = new Label("Style");
-        postureLabel.fontProperty().set(Font.font("System", FontWeight.BOLD, 12));
         Label sizeLabel = new Label("Size");
+        fontLabel.fontProperty().set(Font.font("System", FontWeight.BOLD, 12));
+        styleLabel.fontProperty().set(Font.font("System", FontWeight.BOLD, 12));
         sizeLabel.fontProperty().set(Font.font("System", FontWeight.BOLD, 12));
 
         // Font selection nodes
@@ -281,7 +279,7 @@ public class SettingsWindow {
 
         fontSelectionPane.add(fontListView, 0, 1);
         fontSelectionPane.add(weightListView, 1, 1);
-        fontSelectionPane.add(sizeListView, 3, 1);
+        fontSelectionPane.add(sizeListView, 2, 1);
 
         fontSelectionPane.add(textFlow, 0, 2, 3, 1);
 

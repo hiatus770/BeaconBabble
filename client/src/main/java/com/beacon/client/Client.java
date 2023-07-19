@@ -22,6 +22,8 @@ public class Client extends Application {
     BufferedReader reader;
     DialogBoxes dialogBoxes;
     Properties properties;
+    File logFile;
+    FileWriter fileWriter;
 
     String username;
 
@@ -34,31 +36,36 @@ public class Client extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        System.out.println("Starting client...");
+        logFile = new File("src/main/resources/log.txt");
+        if (!logFile.createNewFile()) System.out.println("Log file exists at " + logFile.getAbsolutePath());
+        fileWriter = new FileWriter(logFile, true);
+
+        log("Starting client...");
 
         Optional<Pair<String, Integer>> connectionInfo;
         dialogBoxes = new DialogBoxes(this);
 
         // Loading properties file
-        // TODO: Replace with built-in preference storage
+        // TODO: Replace with built-in preference storage and fix the dumbass cancel error
         properties = new Properties();
         properties.load(new FileInputStream("src/main/resources/client.properties"));
-
-        isRunning = true;
+        int result = -1;
 
         do {
             connectionInfo = dialogBoxes.connect();
-            if (connectionInfo.isEmpty()) {
-                System.err.println("Connection cancelled");
+            if (connectionInfo.isPresent()) {
+                // Avoids the application crashing if the user inputs a port that is out of range
+                if (connectionInfo.get().getValue() > 65535 || connectionInfo.get().getValue() < 0) {
+                    dialogBoxes.invalidPortAlert();
+                } else {
+                    result = run(connectionInfo.get().getKey(), connectionInfo.get().getValue());
+                }
+            } else {
+                log("Cancelling...");
                 return;
             }
-            if (connectionInfo.get().getValue() > 65535 || connectionInfo.get().getValue() < 0) {
-                System.err.println("Invalid port number");
-                dialogBoxes.invalidPortAlert();
-                continue;
-            }
-        }
-        while (run(connectionInfo.get().getKey(), connectionInfo.get().getValue()) != 0);
+        } while (result != 0);
+        fileWriter.close();
     }
 
     /**
@@ -67,8 +74,9 @@ public class Client extends Application {
      * @param hostname the hostname of the server
      * @param port     the port of the server
      */
-    public int run(String hostname, int port) {
+    public int run(String hostname, int port) throws IOException {
         try {
+            isRunning = true;
             socket = new Socket(hostname, port);
             writer = new PrintWriter(socket.getOutputStream(), true);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -87,7 +95,7 @@ public class Client extends Application {
             // Account login
             boolean askRegister;
             do {
-                System.out.println("ask register");
+                log("ask register");
                 int registerStatus = dialogBoxes.askRegister();
                 if (registerStatus == 0) askRegister = handleLoginQuery();
                 else if (registerStatus == 1) askRegister = handleRegisterQuery();
@@ -113,12 +121,19 @@ public class Client extends Application {
         } catch (UnknownHostException e) {
             System.err.println("Unknown host: " + hostname);
             dialogBoxes.serverConnectionAlert(hostname, port);
+            isRunning = false;
             return 1;
         } catch (IOException e) {
             System.err.println("Couldn't get I/O for the connection to: " + hostname);
             dialogBoxes.serverConnectionAlert(hostname, port);
+            isRunning = false;
             return 2;
         }
+    }
+
+    public void log(String message) throws IOException {
+        fileWriter.append(message);
+        System.out.println(message);
     }
 
     /**

@@ -177,14 +177,13 @@ public class DialogBoxes {
 
     /**
      * Asks the user if they want to register an account.
-     *
      * @return true if the user wants to register an account, false otherwise.
      */
     public int askRegister() {
         Dialog<Integer> registerDialog = new Dialog<>();
         registerDialog.setTitle("Sign in");
         registerDialog.setHeaderText("Would you like to log in or register an new account?");
-        registerDialog.setContentText("If you already have an account, click \"Log In\".");
+        registerDialog.setContentText("If you already have an account for this server, click \"Log In\".");
 
         ButtonType loginButton = new ButtonType("Log In", ButtonBar.ButtonData.OK_DONE);
         ButtonType registerButton = new ButtonType("Register", ButtonBar.ButtonData.OK_DONE);
@@ -213,6 +212,9 @@ public class DialogBoxes {
         alert.showAndWait();
     }
 
+    /**
+     * Displays an alert to the user if the username or password is invalid.
+     */
     public void badLoginAlert() {
         System.err.println("Invalid username or password.");
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -222,7 +224,9 @@ public class DialogBoxes {
         alert.showAndWait();
     }
 
-
+    /**
+     * Displays an alert to the user if the username is already taken.
+     */
     public void badRegistrationAlert() {
         System.err.println("Username already taken.");
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -236,5 +240,10 @@ public class DialogBoxes {
      * Displays an alert to the user if the port number is invalid (over 65535).
      */
     public void invalidPortAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Invalid port number.");
+        alert.setContentText("Please enter a valid port number that is between 0 and 65535.");
+        alert.showAndWait();
     }
 }

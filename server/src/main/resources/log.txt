@@ -251,3 +251,21 @@
 [2023-07-19T15:18:27.462781700] User <null> has sent an invalid request signal.
 [2023-07-19T15:18:31.708328100] [127.0.0.1] gooose: bye
 [2023-07-19T15:18:32.879726600] User <gooose> has disconnected.
+[2023-07-19T15:31:33.655976800] New user connected from 127.0.0.1 on port 62038
+[2023-07-19T15:31:34.808578800] User <null> has cancelled.
+[2023-07-19T16:03:08.749271] Server is listening on port 8000
+[2023-07-19T16:03:08.750275700] Connected to mySQL database
+[2023-07-19T16:03:19.802814900] New user connected from 127.0.0.1 on port 62391
+[2023-07-19T16:03:19.817018900] Request: vbcnclnt localhost/127.0.0.1
+[2023-07-19T16:03:36.586732800] [127.0.0.1] gooose: sdlfkmsdlfkmsdlfkmsdflksdmfsldkmf
+[2023-07-19T16:03:43.293422] User <gooose> has disconnected.
+[2023-07-19T16:04:32.691502400] New user connected from 127.0.0.1 on port 62424
+[2023-07-19T16:04:32.692537] Request: vbcnclnt localhost/127.0.0.1
+[2023-07-19T16:05:00.084601600] [127.0.0.1] gooose: a
+[2023-07-19T16:05:01.550103600] [127.0.0.1] gooose: a
+[2023-07-19T16:06:19.810543800] New user connected from 127.0.0.1 on port 62441
+[2023-07-19T16:06:19.812838200] Request: vbcnclnt localhost/127.0.0.1
+[2023-07-19T16:06:26.630517300] [127.0.0.1] gooose: bruh
+[2023-07-19T16:06:28.102115100] [127.0.0.1] gooose: bruh
+[2023-07-19T16:06:28.785532700] [127.0.0.1] gooose: bruh
+[2023-07-19T16:06:29.3355068

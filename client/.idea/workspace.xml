@@ -6,11 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="aa43a0f1-2c77-4c5f-9321-d56d6bfe64df" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/ChatWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/ChatWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/beacon/UserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/beacon/UserThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/DialogBoxes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/DialogBoxes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/beacon/client/ReadThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/beacon/client/ReadThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/src/main/java/com/beacon/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/java/com/beacon/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../server/src/main/resources/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../server/src/main/resources/log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/target/classes/com/beacon/UserThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/../server/target/classes/com/beacon/UserThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/target/classes/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../server/target/classes/log.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

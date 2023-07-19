@@ -16,6 +16,7 @@ public class Server {
     private Set<UserThread> userThreads = new HashSet<>(); // Set of each thread for each user
     static Properties properties = new Properties(); // Server properties
     File logFile; // The log file for the server
+    FileWriter fileWriter; // The writer for the log file
 
     String url, password, username; // SQL connection details
 
@@ -31,8 +32,8 @@ public class Server {
      */
     public Server() throws IOException {
         logFile = new File("src/main/resources/log.txt");
-        if (logFile.exists()) System.out.println("Log file exists at " + logFile.getAbsolutePath());
-        else logFile.createNewFile();
+        if (!logFile.createNewFile()) System.out.println("Log file exists at " + logFile.getAbsolutePath());
+        fileWriter = new FileWriter(logFile, true);
 
         url = "jdbc:mysql://localhost:3306/beacon?useSSL=false";
         username = "root";
@@ -152,10 +153,8 @@ public class Server {
      * @throws IOException if the file cannot be written to
      */
     public void log(String event) throws IOException {
-        FileWriter fileWriter = new FileWriter(logFile, true);
         // Log the event with its timestamp
         fileWriter.append("\n[").append(java.time.LocalDateTime.now().toString()).append("] ").append(event);
-        fileWriter.close();
     }
 
     /**
@@ -221,5 +220,6 @@ public class Server {
         properties.load(new FileInputStream("src/main/resources/server.properties"));
         int port = properties.getProperty("port") != null ? Integer.parseInt(properties.getProperty("port")) : 8080;
         server.run(port); // initialize the server
+        server.fileWriter.close();
     }
 }

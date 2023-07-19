@@ -2,6 +2,8 @@ package com.beacon.client;
 
 import javafx.application.Platform;
 
+import java.io.IOException;
+
 public class ReadThread extends Thread {
     Client client;
     ChatWindow chatWindow;

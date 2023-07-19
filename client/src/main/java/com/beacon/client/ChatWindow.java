@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.StyleClassedTextArea;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
@@ -147,13 +148,10 @@ public class ChatWindow implements EventHandler<ActionEvent> {
         MenuItem menuItemExit = new MenuItem("Exit");
 
         menuItemSettings.addEventHandler(ActionEvent.ACTION, e -> {
-            System.out.println("Settings button pressed");
-            // TODO: create settings window
             SettingsWindow settingsWindow = new SettingsWindow(client, this);
         });
 
         menuItemExit.addEventHandler(ActionEvent.ACTION, e -> {
-            System.out.println("Exit button pressed, closing");
             client.exit();
             stage.close();
             System.exit(0);
@@ -172,7 +170,6 @@ public class ChatWindow implements EventHandler<ActionEvent> {
      */
     public void appendServerMessage(String message) {
         chatBox.append(message, "server");
-        System.out.println(message);
         chatBoxScrollPane.scrollBy(0, 100);
     }
 
@@ -182,7 +179,6 @@ public class ChatWindow implements EventHandler<ActionEvent> {
      */
     public void appendUserMessage(String message) {
         chatBox.append(message, "user");
-        System.out.println(message);
         chatBoxScrollPane.scrollBy(0, 100);
     }
 
@@ -192,9 +188,7 @@ public class ChatWindow implements EventHandler<ActionEvent> {
      */
     public void appendClientMessage(String message) {
         chatBox.append(message, "client");
-        System.out.print(message);
         chatBoxScrollPane.scrollBy(0, 100);
-        System.out.println("Scrolled");
     }
 
     /**

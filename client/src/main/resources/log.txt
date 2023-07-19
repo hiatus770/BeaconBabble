@@ -1,0 +1,5 @@
+Starting client...ask registerConnected to server at localhost on port 8000.
+Connected users: [gooose]
+Starting client...ask registerConnected to server at localhost on port 8000.
+Connected users: [gooose]
+Starting client...ask registerStarting client...ask register
