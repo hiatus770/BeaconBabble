@@ -55,7 +55,7 @@ public class DialogBoxes {
 
         gridPane.add(new Label("IP Address:"), 0, 0);
         gridPane.add(ipAddress, 1, 0);
-        gridPane.add(new Label("Port Number"), 0, 1);
+        gridPane.add(new Label("Port Number:"), 0, 1);
         gridPane.add(portNumber, 1, 1);
 
         connectDialog.getDialogPane().setContent(gridPane);
@@ -222,6 +222,7 @@ public class DialogBoxes {
         alert.showAndWait();
     }
 
+
     public void badRegistrationAlert() {
         System.err.println("Username already taken.");
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -229,5 +230,11 @@ public class DialogBoxes {
         alert.setHeaderText("Username already taken.");
         alert.setContentText("Please try again.");
         alert.showAndWait();
+    }
+
+    /**
+     * Displays an alert to the user if the port number is invalid (over 65535).
+     */
+    public void invalidPortAlert() {
     }
 }

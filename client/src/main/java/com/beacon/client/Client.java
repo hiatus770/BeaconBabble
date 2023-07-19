@@ -27,17 +27,37 @@ public class Client extends Application {
 
     boolean isRunning;
 
+    /**
+     * Main method for the client.
+     * @param stage the stage for the client
+     * @throws IOException if the client cannot connect to the server
+     */
     @Override
     public void start(Stage stage) throws IOException {
-        System.out.println("Hello");
-        Optional<Pair<String, Integer>> connectionInfo; // maybe use this for future stuff
+        System.out.println("Starting client...");
+
+        Optional<Pair<String, Integer>> connectionInfo;
         dialogBoxes = new DialogBoxes(this);
+
+        // Loading properties file
+        // TODO: Replace with built-in preference storage
         properties = new Properties();
         properties.load(new FileInputStream("src/main/resources/client.properties"));
+
         isRunning = true;
-        //run("localhost", 8000);
-        // DO NOT DELETE: logic for checking whether a server connection has been properly established through user defined parameters
-        do connectionInfo = dialogBoxes.connect();
+
+        do {
+            connectionInfo = dialogBoxes.connect();
+            if (connectionInfo.isEmpty()) {
+                System.err.println("Connection cancelled");
+                return;
+            }
+            if (connectionInfo.get().getValue() > 65535 || connectionInfo.get().getValue() < 0) {
+                System.err.println("Invalid port number");
+                dialogBoxes.invalidPortAlert();
+                continue;
+            }
+        }
         while (run(connectionInfo.get().getKey(), connectionInfo.get().getValue()) != 0);
     }
 
@@ -54,7 +74,15 @@ public class Client extends Application {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             // Verification
-            writer.println("vbcnclnt " + socket.getInetAddress());
+            writer.println("vbcnclnt " + socket.getInetAddress() + "\n");
+
+            // wait for signal back
+            String verification = reader.readLine();
+            if (!verification.equals("accepted")) {
+                System.err.println("Server verification failed");
+                dialogBoxes.serverConnectionAlert(hostname, port);
+                return 1;
+            }
 
             // Account login
             boolean askRegister;

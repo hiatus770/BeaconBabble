@@ -75,16 +75,23 @@ public class UserThread extends Thread {
             // Read request signal
             StringBuilder request = new StringBuilder();
             String line;
-            while ((line = reader.readLine()) != null) {
+            while (!(line = reader.readLine()).equals("")) {
                 request.append(line);
+                System.out.println(line);
             }
+
+            // printf :)
+            server.log(String.format("Request: %s", request));
+            System.out.println(request);
 
             // Verify request signal
             if (!request.toString().startsWith("vbcnclnt")) {
-                server.log("User <" + username + "> has sent an invalid request signal.");
+                server.log("User <" + username + "> has sent an invalid request signal, and the connection has been blocked.");
+                System.out.println("Connection blocked.");
                 socket.close();
                 return;
             }
+            writer.println("accepted");
 
             // Read login info
             // Ask registration loop

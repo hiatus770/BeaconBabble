@@ -149,3 +149,105 @@
 [2023-07-17T14:59:18.622328600] Server is listening on port 8000
 [2023-07-17T14:59:18.624845100] Connected to mySQL database
 [2023-07-17T14:59:26.634025800] New user connected from 127.0.0.1 on port 39859
+[2023-07-19T15:04:05.226149] Server is listening on port 8000
+[2023-07-19T15:04:05.229570400] Connected to mySQL database
+[2023-07-19T15:04:08.087187200] New user connected from 127.0.0.1 on port 61560
+[2023-07-19T15:06:10.926553300] Server is listening on port 8000
+[2023-07-19T15:06:10.928554300] Connected to mySQL database
+[2023-07-19T15:06:17.326710500] New user connected from 127.0.0.1 on port 61610
+[2023-07-19T15:14:16.354872200] Server is listening on port 8000
+[2023-07-19T15:14:16.356872300] Connected to mySQL database
+[2023-07-19T15:14:25.775719200] New user connected from 127.0.0.1 on port 61744
+[2023-07-19T15:15:02.876911100] Server is listening on port 8000
+[2023-07-19T15:15:02.880918900] Connected to mySQL database
+[2023-07-19T15:15:08.604618800] New user connected from 127.0.0.1 on port 61762
+[2023-07-19T15:15:59.102396700] Server is listening on port 8000
+[2023-07-19T15:15:59.108986600] Connected to mySQL database
+[2023-07-19T15:16:08.584233500] New user connected from 127.0.0.1 on port 61790
+[2023-07-19T15:16:08.586562500] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:08.588586400] New user connected from 127.0.0.1 on port 61791
+[2023-07-19T15:16:08.589594700] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:08.590596600] New user connected from 127.0.0.1 on port 61792
+[2023-07-19T15:16:08.592629900] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:08.595637800] New user connected from 127.0.0.1 on port 61793
+[2023-07-19T15:16:08.601959800] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:08.605502300] New user connected from 127.0.0.1 on port 61794
+[2023-07-19T15:16:08.608028500] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:08.610192700] New user connected from 127.0.0.1 on port 61795
+[2023-07-19T15:16:08.612614500] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:08.614624400] New user connected from 127.0.0.1 on port 61796
+[2023-07-19T15:16:08.615623500] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:08.619150400] New user connected from 127.0.0.1 on port 61797
+[2023-07-19T15:16:08.622653700] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:08.626966200] New user connected from 127.0.0.1 on port 61798
+[2023-07-19T15:16:08.633294100] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:08.637840700] New user connected from 127.0.0.1 on port 61799
+[2023-07-19T15:16:08.640843900] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:31.739784200] New user connected from 127.0.0.1 on port 61813
+[2023-07-19T15:16:31.742812800] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:31.745064100] New user connected from 127.0.0.1 on port 61814
+[2023-07-19T15:16:31.747277300] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:31.751086700] New user connected from 127.0.0.1 on port 61815
+[2023-07-19T15:16:31.753610600] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:31.755773400] New user connected from 127.0.0.1 on port 61816
+[2023-07-19T15:16:31.756784900] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:31.759796200] New user connected from 127.0.0.1 on port 61817
+[2023-07-19T15:16:31.761792500] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:31.764831] New user connected from 127.0.0.1 on port 61818
+[2023-07-19T15:16:31.773598600] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:31.775899500] New user connected from 127.0.0.1 on port 61819
+[2023-07-19T15:16:31.777933100] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:31.783345600] New user connected from 127.0.0.1 on port 61820
+[2023-07-19T15:16:31.784356100] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:31.786882300] New user connected from 127.0.0.1 on port 61821
+[2023-07-19T15:16:31.788424700] User <null> has sent an invalid request signal.
+[2023-07-19T15:16:31.792115400] New user connected from 127.0.0.1 on port 61822
+[2023-07-19T15:16:31.793658700] User <null> has sent an invalid request signal.
+[2023-07-19T15:17:15.461615800] Server is listening on port 8000
+[2023-07-19T15:17:15.468545700] Connected to mySQL database
+[2023-07-19T15:17:28.670324900] New user connected from 127.0.0.1 on port 61839
+[2023-07-19T15:17:28.673887400] User <null> has sent an invalid request signal.
+[2023-07-19T15:17:28.676599] New user connected from 127.0.0.1 on port 61840
+[2023-07-19T15:17:28.677607] User <null> has sent an invalid request signal.
+[2023-07-19T15:17:28.680881200] New user connected from 127.0.0.1 on port 61841
+[2023-07-19T15:17:28.683926100] User <null> has sent an invalid request signal.
+[2023-07-19T15:17:28.685923800] New user connected from 127.0.0.1 on port 61842
+[2023-07-19T15:17:28.687934700] User <null> has sent an invalid request signal.
+[2023-07-19T15:17:28.688938700] New user connected from 127.0.0.1 on port 61843
+[2023-07-19T15:17:28.692935900] User <null> has sent an invalid request signal.
+[2023-07-19T15:17:28.695398800] New user connected from 127.0.0.1 on port 61844
+[2023-07-19T15:17:28.697954300] User <null> has sent an invalid request signal.
+[2023-07-19T15:17:28.703517] New user connected from 127.0.0.1 on port 61845
+[2023-07-19T15:17:28.705470100] User <null> has sent an invalid request signal.
+[2023-07-19T15:17:28.708529100] New user connected from 127.0.0.1 on port 61846
+[2023-07-19T15:17:28.710720300] User <null> has sent an invalid request signal.
+[2023-07-19T15:17:28.712768300] New user connected from 127.0.0.1 on port 61847
+[2023-07-19T15:17:28.715083700] User <null> has sent an invalid request signal.
+[2023-07-19T15:17:28.720551400] New user connected from 127.0.0.1 on port 61848
+[2023-07-19T15:17:28.723925200] User <null> has sent an invalid request signal.
+[2023-07-19T15:17:48.919811400] Server is listening on port 8000
+[2023-07-19T15:17:48.922657300] Connected to mySQL database
+[2023-07-19T15:18:00.313756300] New user connected from 127.0.0.1 on port 61872
+[2023-07-19T15:18:18.490824200] [127.0.0.1] gooose: hello
+[2023-07-19T15:18:27.406989100] New user connected from 127.0.0.1 on port 61884
+[2023-07-19T15:18:27.412511400] User <null> has sent an invalid request signal.
+[2023-07-19T15:18:27.418508300] New user connected from 127.0.0.1 on port 61885
+[2023-07-19T15:18:27.424570] User <null> has sent an invalid request signal.
+[2023-07-19T15:18:27.427900200] New user connected from 127.0.0.1 on port 61886
+[2023-07-19T15:18:27.429901900] User <null> has sent an invalid request signal.
+[2023-07-19T15:18:27.435381400] New user connected from 127.0.0.1 on port 61887
+[2023-07-19T15:18:27.438537400] User <null> has sent an invalid request signal.
+[2023-07-19T15:18:27.442049800] New user connected from 127.0.0.1 on port 61888
+[2023-07-19T15:18:27.443584600] User <null> has sent an invalid request signal.
+[2023-07-19T15:18:27.446032900] New user connected from 127.0.0.1 on port 61889
+[2023-07-19T15:18:27.448552700] User <null> has sent an invalid request signal.
+[2023-07-19T15:18:27.450551700] New user connected from 127.0.0.1 on port 61890
+[2023-07-19T15:18:27.452060700] User <null> has sent an invalid request signal.
+[2023-07-19T15:18:27.453598500] New user connected from 127.0.0.1 on port 61891
+[2023-07-19T15:18:27.454599600] User <null> has sent an invalid request signal.
+[2023-07-19T15:18:27.456535800] New user connected from 127.0.0.1 on port 61892
+[2023-07-19T15:18:27.457691100] User <null> has sent an invalid request signal.
+[2023-07-19T15:18:27.459693800] New user connected from 127.0.0.1 on port 61893
+[2023-07-19T15:18:27.462781700] User <null> has sent an invalid request signal.
+[2023-07-19T15:18:31.708328100] [127.0.0.1] gooose: bye
+[2023-07-19T15:18:32.879726600] User <gooose> has disconnected.
