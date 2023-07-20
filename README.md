@@ -1,6 +1,7 @@
 # Beacon
-A simple Java swing app designed to send messages over a LAN server.
+A simple JavaFX app designed to send messages over a LAN server.
 
+# ! Currently, there is no executable JAR available. You will have to compile the code yourself if you want to use Beacon. !
 ## Usage
 ### Client side
 To use the client side version of the app, you can either run client.jar in the client folder or compile the code yourself. Whatever floats your boat.
