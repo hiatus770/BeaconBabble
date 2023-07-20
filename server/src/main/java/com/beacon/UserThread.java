@@ -80,13 +80,12 @@ public class UserThread extends Thread {
                 System.out.println(line);
             }
 
-            // printf :)
-            server.log(String.format("Request: %s", request));
+            server.log("Request: " + request);
             System.out.println(request);
 
             // Verify request signal
             if (!request.toString().startsWith("vbcnclnt")) {
-                server.log("User <" + username + "> has sent an invalid request signal, and the connection has been blocked.");
+                server.log(String.format("User <%s> has sent an invalid request signal, and the connection has been blocked.", username));
                 System.out.println("Connection blocked.");
                 socket.close();
                 return;
@@ -100,7 +99,7 @@ public class UserThread extends Thread {
                 String loginType = reader.readLine();
                 System.out.println(loginType);
                 if (loginType.equals("cancel")) {
-                    server.log("User <" + username + "> has cancelled.");
+                    server.log(String.format("User <%s> has cancelled.", username));
                     socket.close();
                     return;
                 }
@@ -113,12 +112,9 @@ public class UserThread extends Thread {
             } while (askRegister);
 
             server.broadcast("User <" + username + "> has connected.", this);
-
             printOnlineUsers();
-            System.out.println("printed online users");
 
             String clientMessage = "";
-
             while (!clientMessage.equals("/exit")) {
 
                 clientMessage = reader.readLine();
@@ -128,13 +124,13 @@ public class UserThread extends Thread {
                     server.broadcast("User <" + username + "> has disconnected.", this);
                     socket.close();
                 } else {
-                    server.broadcast("[" + server.getTimestamp() + "] <" + username + "> " + clientMessage, this);
+                    server.broadcast(String.format("[%s] <%s> %s", server.getTimestamp(), username, clientMessage), this);
                     System.out.println("message broadcasted");
-                    server.log("[" + socket.getInetAddress().getHostAddress() + "] " + username + ": " + clientMessage);
+                    server.log(String.format("[%s] <%s>: %s", socket.getInetAddress().getHostAddress(), username, clientMessage));
                 }
             }
 
-            server.log("User <" + username + "> has disconnected.");
+            server.log(String.format("User <%s> has disconnected.", username));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -152,7 +148,7 @@ public class UserThread extends Thread {
         while (true) {
             username = reader.readLine();
             String password = reader.readLine();
-            System.out.println("Username: " + username + " Password: " + password);
+            System.out.printf("Username: %s Password: %s%n", username, password);
 
             if (username.equals(" ")) {
                 return false;
@@ -178,7 +174,7 @@ public class UserThread extends Thread {
         while (true) {
             username = reader.readLine();
             String password = reader.readLine();
-            System.out.println("Username: " + username + " Password: " + password);
+            System.out.printf("Username: %s Password: %s", username, password);
 
             if (username.equals(" ")) {
                 return true;

@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="openjfx.javafx.base" type="repository">
+    <properties maven-id="org.openjfx:javafx-base:20" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-20.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-20-win.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-20-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-20-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-20-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-20-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

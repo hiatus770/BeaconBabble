@@ -1,7 +1,5 @@
 package com.beacon;
 
-import javax.swing.*;
-import java.awt.*;
 import java.net.*;
 import java.io.*;
 import java.sql.*;
@@ -9,22 +7,21 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Server {
-    ServerSocket serverSocket; // The server socket
-    Connection connection; // The connection to the account database
+    ServerSocket serverSocket;
+    Socket clientSocket;
+    Connection connection; // Connection SQL db
 
-    private Set<String> onlineUsers = new HashSet<>(); // Set of users currently online
-    private Set<UserThread> userThreads = new HashSet<>(); // Set of each thread for each user
+    private final Set<String> onlineUsers = new HashSet<>(); // Set of users currently online
+    private final Set<UserThread> userThreads = new HashSet<>(); // Set of threads for each user
     static Properties properties = new Properties(); // Server properties
-    File logFile; // The log file for the server
-    FileWriter fileWriter; // The writer for the log file
+
+    File logFile;
+    FileWriter fileWriter;
 
     String url, password, username; // SQL connection details
 
-    TextArea console = new TextArea(); // The console for the server
-    TextField commandLine = new TextField(); // The command line for the server
-
-    //BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); // For reading input from the console
-    Socket clientSocket;
+    GUI gui;
+    boolean isRunning = false;
 
     /**
      * Constructor for the server. Initializes the log file and the SQL connection details.
@@ -46,16 +43,20 @@ public class Server {
      */
     public void run(int port) {
         try {
+            gui = new GUI(this);
+
             serverSocket = new ServerSocket(port);
-            connection = DriverManager.getConnection(url, username, password);
-            System.out.println("Server is listening on port " + port);
             log("Server is listening on port " + port);
+            System.out.println("Server is listening on port " + port);
+
+            connection = DriverManager.getConnection(url, username, password);
             log("Connected to mySQL database");
 
             properties.setProperty("hostname", InetAddress.getLocalHost().getHostName());
+            isRunning = true;
 
             // TODO: Provide boolean condition through the closing of the gui window
-            while (true) {
+            while (isRunning) {
                 clientSocket = serverSocket.accept(); // Listens and accepts a new connection
                 UserThread userThread = new UserThread(clientSocket, this); // Creates a new thread for the user
                 userThreads.add(userThread); // Add the new user to the list of users
@@ -133,28 +134,14 @@ public class Server {
     }
 
     /**
-     * Creates a rudimentary GUI for the server
-     */
-    public void createGUI() {
-        JFrame frame = new JFrame("Beacon server");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(640, 480);
-        frame.setVisible(true);
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 1));
-
-        frame.add(panel);
-    }
-
-    /**
      * Logs an event to the log file
      * @param event the event to log
      * @throws IOException if the file cannot be written to
      */
     public void log(String event) throws IOException {
         // Log the event with its timestamp
-        fileWriter.append("\n[").append(java.time.LocalDateTime.now().toString()).append("] ").append(event);
+        fileWriter.append(String.format("\n[%s] %s", java.time.LocalDateTime.now().toString(), event));
+        gui.console.append(String.format("\n[%s] %s", java.time.LocalDateTime.now().toString(), event));
     }
 
     /**
