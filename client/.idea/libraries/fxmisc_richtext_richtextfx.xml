@@ -1,0 +1,45 @@
+<component name="libraryTable">
+  <library name="fxmisc.richtext.richtextfx" type="repository">
+    <properties maven-id="org.fxmisc.richtext:richtextfx:0.11.0" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/richtextfx-0.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/reactfx-2.0-M5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/undofx-2.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/flowless-0.7.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/wellbehavedfx-0.3.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-11-win.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-11-win.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-fxml-11-win.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-controls-11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-controls-11-win.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-11.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/richtextfx-0.11.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/reactfx-2.0-M5-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/undofx-2.1.1-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/flowless-0.7.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/wellbehavedfx-0.3.3-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-11-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-11-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-fxml-11-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-controls-11-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-controls-11-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/richtextfx-0.11.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/reactfx-2.0-M5-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/undofx-2.1.1-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/flowless-0.7.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/wellbehavedfx-0.3.3-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-11-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-11-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-11-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-fxml-11-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-controls-11-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-controls-11-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-11-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

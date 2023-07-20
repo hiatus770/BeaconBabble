@@ -1,0 +1,17 @@
+.chatbox {
+    
+}
+
+.server {
+    -fx-fill: red;
+    -fx-font: 12px "Arial";
+}
+
+.user {
+    -fx-fill: blue;
+}
+
+.client {
+    -fx-fill: green;
+}
+
