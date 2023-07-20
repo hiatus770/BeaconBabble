@@ -9,12 +9,14 @@ public class GUI implements ActionListener {
     JPanel panel;
     JTextArea console;
     JTextField input;
+    Server server;
 
     /**
      * Constructor for the server GUI.
      * @param server the server object, used for a singular boolean 💀
      */
     public GUI(Server server) {
+        this.server = server;
         frame = new JFrame("Beacon");
         panel = new JPanel(new GridBagLayout());
         createLayout();
@@ -23,7 +25,6 @@ public class GUI implements ActionListener {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 server.isRunning = false;
-                System.exit(0);
             }
         });
 
@@ -60,12 +61,22 @@ public class GUI implements ActionListener {
     }
 
     public void runCommand (String command) {
-        switch (command) {
+        String commandPrefix = command.split(" ")[0];
+        switch (commandPrefix) {
             case "/help" -> {
                 console.append("\n/help - Displays this help message.");
-                console.append("\n/exit - Exits the server.");
+                console.append("\n/users - Displays the current users.");
+                console.append("\n/send <message> - Broadcasts a message.");
+                console.append("\n/stop - Stops the server.");
             }
-            case "/exit" -> System.exit(0);
+            case "/users" -> {
+                console.append(String.format("\nUsers: %s", server.getUsernames()));
+            }
+            case "/send" -> {
+                console.append(String.format("\nMessage sent: %s", command.replace("/send ", "")));
+                server.broadcast(command.replace("/send ", ""), null);
+            }
+            case "/stop" -> server.isRunning = false;
             default -> console.append(String.format("\nUnknown command: %s", command));
         }
     }
@@ -78,7 +89,7 @@ public class GUI implements ActionListener {
             runCommand(input.getText());
             input.setText("");
         } else {
-            console.append(String.format("\n%s", input.getText()));
+            console.append(String.format("\n> %s", input.getText()));
             input.setText("");
         }
     }

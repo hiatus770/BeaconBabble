@@ -64,9 +64,10 @@ public class Server {
                 log("New user connected from " + clientSocket.getInetAddress().getHostAddress() + " on port " + clientSocket.getPort());
                 userThread.start();
             }
-
-            //serverSocket.close();
-            //connection.close();
+            log("Closing server...");
+            serverSocket.close();
+            connection.close();
+            System.exit(0);
         } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
