@@ -38,8 +38,6 @@ public class SettingsWindow {
     Scene scene;
 
     String fontName, backgroundColor, frameColor, serverMessageColor, userMessageColor, clientMessageColor;
-    FontWeight fontWeight;
-    FontPosture fontPosture;
     int fontSize;
 
 
@@ -72,9 +70,7 @@ public class SettingsWindow {
             stage.close();
         });
 
-        cancelButton.addEventHandler(ActionEvent.ACTION, event -> {
-            stage.close();
-        });
+        cancelButton.addEventHandler(ActionEvent.ACTION, event -> stage.close());
 
         applyButton.addEventHandler(ActionEvent.ACTION, event -> {
             chatWindow.preferences.put("font", fontName);
@@ -287,7 +283,7 @@ public class SettingsWindow {
 
         sizeListView.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, event -> {
             fontSize = sizeListView.getSelectionModel().getSelectedItem();
-            sampleText.fontProperty().set(Font.font(fontName, fontWeight, fontSize));
+            sampleText.fontProperty().set(Font.font(fontName, fontSize));
         });
 
         fontSelectionPane.add(fontLabel, 0, 0);
