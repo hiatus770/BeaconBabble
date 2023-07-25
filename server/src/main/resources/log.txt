@@ -1,0 +1,21 @@
+
+[2023-07-25T00:22:38.902158500] Log file exists at C:\Users\Olive\Documents\Code\beacon\server\src\main\resources\log.txt
+[2023-07-25T00:22:38.926948100] Log file writer initialized.
+[2023-07-25T00:22:38.929961600] Account file exists at C:\Users\Olive\Documents\Code\beacon\server\src\main\resources\accounts.txt
+[2023-07-25T00:22:38.930947900] Account file writer initialized.
+[2023-07-25T00:22:38.933486200] Server is listening on port 8000
+[2023-07-25T00:22:49.965961400] New user connected from 127.0.0.1 o
+[2023-07-25T00:23:29.797788100] Log file exists at C:\Users\Olive\Documents\Code\beacon\server\src\main\resources\log.txt
+[2023-07-25T00:23:29.821801200] Log file writer initialized.
+[2023-07-25T00:23:29.823814200] Account file exists at C:\Users\Olive\Documents\Code\beacon\server\src\main\resources\accounts.txt
+[2023-07-25T00:23:29.824812200] Account file writer initialized.
+[2023-07-25T00:23:29.827092500] Server is listening on port 8000
+[2023-07-25T00:23:40.663032600] New user connected from 127.0.0.1 on port 59449
+[2023-07-25T00:23:40.667999100] Request: vbcnclnt localhost/127.0.0.1
+[2023-07-25T00:23:44.238920600] Sent message: badLogin
+[2023-07-25T00:23:53.593505] Sent message: goodRegistration
+[2023-07-25T00:23:53.598012600] Sent message: Connected users: [gooose]
+[2023-07-25T00:23:53.598012600] Sent message: /exit - Exits the chat
+[2023-07-25T00:23:53.601081800] Sent message: /online - Lists all online users
+[2023-07-25T00:23:53.604096300] Sent message: /help - Displays this message
+[2023-07-25T00:23:

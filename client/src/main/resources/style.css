@@ -1,0 +1,9 @@
+.server {
+	-fx-fill: red;
+}
+.user {
+	-fx-fill: blue;
+}
+.client {
+	-fx-fill: green;
+}
