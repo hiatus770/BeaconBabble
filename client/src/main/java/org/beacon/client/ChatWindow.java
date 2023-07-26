@@ -3,16 +3,8 @@ package org.beacon.client;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -27,8 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
 import java.util.prefs.Preferences;
-
-// TODO: Create settings window, font choice window, color choice window, different coloured text
 
 public class ChatWindow implements EventHandler<ActionEvent> {
     Stage stage;
@@ -198,7 +188,7 @@ public class ChatWindow implements EventHandler<ActionEvent> {
      */
     public void loadSettings() throws IOException {
         chatBox.setStyle(
-                String.format("-fx-font: %dpx \"%s\";", preferences.getInt("font-size", 12), preferences.get("font", "Arial")) +
+                String.format("-fx-font: %dpx \"%s\";", preferences.getInt("font-size", 12), preferences.get("font", "System")) +
                 "-fx-padding: 5 5 5 5;" +
                 String.format("-fx-background-color: %s;", preferences.get("background-color", "white")) +
                 "-fx-border-color: gray;" +
