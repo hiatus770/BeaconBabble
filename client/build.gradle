@@ -37,7 +37,7 @@ dependencies {
 }
 
 distZip {
-    into("client-$version/bin") {
+    into("client-$project.version/bin") {
         from '.'
         include 'src/main/resources/**'
     }

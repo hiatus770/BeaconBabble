@@ -183,7 +183,7 @@ public class DialogBoxes {
 
     /**
      * Asks the user if they want to register an account.
-     * @return 0 if the user wants to login, 1 if the user wants to register.
+     * @return 0 if the user wants to log in, 1 if the user wants to register.
      */
     public int askRegister() {
         Dialog<Integer> registerDialog = new Dialog<>();
