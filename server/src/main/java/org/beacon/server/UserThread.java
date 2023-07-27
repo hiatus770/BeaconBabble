@@ -1,9 +1,3 @@
-/*
- * UserThread.java
- * Author: Goose
- * Purpose: This thread is responsible for handling all the communication with a single client.
- * This way, the server can handle multiple clients at the same time.
- */
 package org.beacon.server;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
@@ -12,9 +6,7 @@ import java.sql.SQLException;
 
 /**
  * This thread is responsible for handling all the communication with a single client.
- * This way, the server can handle multiple clients at the same time.
- * The thread uses the logger to log all the messages and when a user joins and when the user leaves
- * In simple terms, this class represents each user.
+ * The thread uses the logger to log all the messages and when a user joins and when the user leaves.
  * @author goose
  */
 public class UserThread extends Thread {
@@ -39,7 +31,7 @@ public class UserThread extends Thread {
         this.server = server;
         // Reads text from the character-input stream above
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        // Output stream for the socket which lets the server write to this userthread
+        // Output stream for the socket which lets the server write to this user thread
         writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
     }
 
@@ -76,18 +68,15 @@ public class UserThread extends Thread {
             // Read request signal
             StringBuilder request = new StringBuilder();
             String line;
-            while (!(line = reader.readLine()).equals("")) {
+            while (!(line = reader.readLine()).isEmpty()) {
                 request.append(line);
-                System.out.println(line);
             }
 
             server.log("Request: " + request);
-            System.out.println(request);
 
             // Verify request signal
             if (!request.toString().startsWith("vbcnclnt")) {
-                server.log(String.format("User <%s> has sent an invalid request signal, and the connection has been blocked.", username));
-                System.out.println("Connection blocked.");
+                server.log("Connection blocked; invalid request.");
                 socket.close();
                 return;
             }
@@ -95,10 +84,9 @@ public class UserThread extends Thread {
 
             // Read login info
             // Ask registration loop
-            boolean askRegister = true;
+            boolean askRegister;
             do {
                 String loginType = reader.readLine();
-                System.out.println(loginType);
                 if (loginType.equals("cancel")) {
                     server.log(String.format("User <%s> has cancelled.", username));
                     socket.close();
@@ -120,17 +108,19 @@ public class UserThread extends Thread {
             while (!clientMessage.equals("/exit")) {
 
                 clientMessage = reader.readLine();
-
+                // command handling
                 switch (clientMessage) {
                     case "/exit" -> {
                         server.removeUser(username, this);
-                        server.broadcast("User <" + username + "> has disconnected.", this);
+                        server.broadcast("User <%s> has disconnected.".formatted(username), this);
                         socket.close();
                     }
                     case "/online" -> {
+                        server.log("User <%s> requested online users.".formatted(username));
                         sendOnlineUsers();
                     }
                     case "/help" -> {
+                        server.log("User <%s> requested help menu.".formatted(username));
                         sendHelpMessage();
                     }
                     default -> {
@@ -141,9 +131,7 @@ public class UserThread extends Thread {
             }
 
             server.log(String.format("User <%s> has disconnected.", username));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException | InterruptedException e) {
+        } catch (IOException | SQLException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
@@ -158,7 +146,6 @@ public class UserThread extends Thread {
         while (true) {
             username = reader.readLine();
             String password = reader.readLine();
-            System.out.printf("Username:%s Password:%s\n", username, password);
 
             if (username.equals(" ")) {
                 return true;
@@ -166,9 +153,11 @@ public class UserThread extends Thread {
 
             if (server.registerUser(username, password)) {
                 server.addUser(username, this);
+                server.log("User registered: " + username);
                 sendMessage("goodRegistration");
                 return false;
             } else {
+                server.log("User registration failed: " + username);
                 sendMessage("badRegistration");
             }
         }
@@ -184,7 +173,6 @@ public class UserThread extends Thread {
         while (true) {
             username = reader.readLine();
             String password = reader.readLine();
-            System.out.printf("%s:%s\n", username, password);
 
             if (username.equals(" ")) {
                 return true;
@@ -192,9 +180,11 @@ public class UserThread extends Thread {
 
             if (server.checkCredentials(username, password)) {
                 server.addUser(username, this);
+                server.log("User logged in: " + username);
                 sendMessage("goodLogin");
                 return false;
             } else {
+                server.log("User login failed: " + username);
                 sendMessage("badLogin");
             }
         }

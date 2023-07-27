@@ -65,7 +65,6 @@ public class Server {
         try {
             serverSocket = new ServerSocket(port);
             log("Server is listening on port " + port);
-            System.out.println("Server is listening on port " + port);
 
             properties.setProperty("hostname", InetAddress.getLocalHost().getHostName());
             isRunning = true;
@@ -74,7 +73,6 @@ public class Server {
                 clientSocket = serverSocket.accept(); // Listens and accepts a new connection
                 UserThread userThread = new UserThread(clientSocket, this); // Creates a new thread for the user
                 userThreads.add(userThread); // Add the new user to the list of users
-                System.out.println("New user connected from " + clientSocket.getInetAddress().getHostAddress() + " on port " + clientSocket.getPort());
                 log("New user connected from " + clientSocket.getInetAddress().getHostAddress() + " on port " + clientSocket.getPort());
                 userThread.start();
             }
@@ -106,9 +104,6 @@ public class Server {
      * @return whether the user was successfully registered
      */
     public boolean registerUser(String username, String password) throws IOException {
-        System.out.println(username);
-        System.out.println(password);
-
         // check if username exists already
         if (accounts.containsKey(username)) {
             return false;
