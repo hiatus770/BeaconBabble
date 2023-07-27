@@ -1,16 +1,14 @@
 # Beacon
 A simple JavaFX app designed to send messages over a LAN server.
 
-# ! Currently, there is no executable JAR available. You will have to compile the code yourself if you want to use Beacon. !
 ## Usage
-The older version of this program is running on Java using Java.net and other networking libraries. You run a host server on a computer and use that IP address to connect to all the clients. The clients can send messages and emojis to each other, set user names, change usernames and it has many other features as well. 
-
 ### Client side
-To use the client side version of the app, you can either run client.jar in the client folder or compile the code yourself. Whatever floats your boat.
-After opening the client, enter the IP and port of the server you want to connect to. Have fun!
+To use the client, extract the contents of the zip file to wherever you want. Navigate to the `bin` folder and run the batch file.
+To connect to a server, specify the server hostname (IP address) and port number.
+If it is your first time connecting to said server, you must register an account. Otherwise, you can log in with the username and password you specified during registration.
 
 ### Server side
-To run a server side version of the app, you'll have to compile on your own. We might create a neat jar file in the future, but the raw java code will have to do for now. When running, specify the port of the server through console arguments. Ctrl+C to shut down the server. 
+Do the same as the client to run the server app. To change the port of the server, navigate to `bin/src/main/resources` and edit the `port` properties in the `server.properties` file.
+Use `/help` to obtain a list of commands.
 
-This app is still in development, so new features will be rolled out frequently.
-
+Unfortunately, there is only support for Windows as of now. Mac and Linux support will be rolled out soon.
