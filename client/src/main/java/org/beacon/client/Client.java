@@ -74,7 +74,7 @@ public class Client extends Application {
         String verification = reader.readLine();
         if (!verification.equals("accepted")) {
             log("Server verification failed");
-            dialogBoxes.IOConnectionAlert(hostname, port); // troll
+            dialogBoxes.IOConnectionAlert(hostname, port);
             return;
         }
 

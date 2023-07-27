@@ -61,7 +61,6 @@ public class ChatWindow implements EventHandler<ActionEvent> {
         });
 
         stage.setResizable(true);
-        // TODO: implement server name into the title ie: "Beacon - Server Name"
         stage.setTitle("Beacon");
         stage.show();
     }
@@ -83,9 +82,8 @@ public class ChatWindow implements EventHandler<ActionEvent> {
     /**
      * Creates the grid pane for the chat window.
      * @return the grid pane
-     * @throws IOException if the style sheet cannot be found
      */
-    private GridPane createGridPane() throws IOException {
+    private GridPane createGridPane() {
         gridPane = new GridPane();
         ColumnConstraints column1 = new ColumnConstraints();
         ColumnConstraints column2 = new ColumnConstraints();
@@ -167,6 +165,7 @@ public class ChatWindow implements EventHandler<ActionEvent> {
 
         menuItemSettings.addEventHandler(ActionEvent.ACTION, e -> {
             SettingsWindow settingsWindow = new SettingsWindow(client, this);
+            settingsWindow.createStage();
         });
 
         menuItemExit.addEventHandler(ActionEvent.ACTION, e -> {
