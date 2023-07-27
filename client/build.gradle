@@ -43,6 +43,13 @@ distZip {
     }
 }
 
+distTar {
+    into("client-$project.version/bin") {
+        from '.'
+        include 'src/main/resources/**'
+    }
+}
+
 test {
     useJUnitPlatform()
 }
