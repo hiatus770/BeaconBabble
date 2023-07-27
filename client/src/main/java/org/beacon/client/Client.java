@@ -19,7 +19,7 @@ public class Client extends Application {
 
     String username;
 
-    boolean isRunning;
+    boolean isRunning, debugMode = false;
 
     /**
      * Main method for the client.
@@ -30,8 +30,8 @@ public class Client extends Application {
     public void start(Stage stage) throws IOException {
         // check/create log file
         logFile = new File("src/main/resources/log.txt");
-        fileWriter = new FileWriter(logFile, true);
         if (!logFile.createNewFile()) {
+            fileWriter = new FileWriter(logFile, true);
             log("Log file exists at " + logFile.getAbsolutePath());
         }
 
@@ -133,7 +133,7 @@ public class Client extends Application {
      */
     public void log(String message) throws IOException {
         fileWriter.append("\n").append(message);
-        System.out.printf("%s\n", message);
+        if (debugMode) System.out.printf("%s\n", message);
     }
 
     /**
@@ -182,7 +182,7 @@ public class Client extends Application {
             response = reader.readLine();
             if (response.equals("badRegistration")) dialogBoxes.badRegistrationAlert(); // If registration failed
         }
-        System.out.println("Registration successful");
+        log("Registration successful");
         return false;
     }
 
