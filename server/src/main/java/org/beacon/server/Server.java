@@ -127,8 +127,8 @@ public class Server {
      */
     public void log(String event) throws IOException {
         // Log the event with its timestamp
-        logFileWriter.append(String.format("\n[%s] %s", java.time.LocalDateTime.now().toString(), event));
-        gui.console.append(String.format("\n[%s] %s", java.time.LocalDateTime.now().toString(), event));
+        logFileWriter.append(String.format("\n[%s] %s", java.time.LocalDateTime.now(), event));
+        gui.console.append(String.format("\n[%s] %s", java.time.LocalDateTime.now(), event));
     }
 
     /**

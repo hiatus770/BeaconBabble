@@ -2,6 +2,7 @@ package org.beacon.client;
 
 import javafx.application.Platform;
 
+import java.io.IOException;
 import java.util.concurrent.Semaphore;
 
 public class ReadThread extends Thread {
@@ -16,18 +17,17 @@ public class ReadThread extends Thread {
 
     public void run() {
         while (client.isRunning) try {
-            System.out.println("Reading...");
             // Fixes java.lang.IllegalStateException: Not on FX application thread
             message = client.reader.readLine();
             Platform.runLater(() -> chatWindow.appendUserMessage(message + "\n"));
             waitForRunLater();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
     /**
-     * Waits for the JavaFX thread to finish running.
+     * Waits until a JavaFX runLater call is finished.
      * @throws InterruptedException if the thread is interrupted
      */
     public static void waitForRunLater() throws InterruptedException {

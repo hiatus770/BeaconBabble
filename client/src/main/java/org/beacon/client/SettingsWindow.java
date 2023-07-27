@@ -54,7 +54,10 @@ public class SettingsWindow {
         OKButton.addEventHandler(ActionEvent.ACTION, event -> {
             chatWindow.preferences.put("font", fontName);
             chatWindow.preferences.putInt("font-size", fontSize);
-            /*chatWindow.preferences.put("background-color", backgroundColor);
+
+            /*
+            use later
+            chatWindow.preferences.put("background-color", backgroundColor);
             chatWindow.preferences.put("frame-color", frameColor);
             chatWindow.preferences.put("server-message-color", serverMessageColor);
             chatWindow.preferences.put("user-message-color", userMessageColor);

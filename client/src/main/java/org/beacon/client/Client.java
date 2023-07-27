@@ -73,7 +73,7 @@ public class Client extends Application {
         // wait for signal back
         String verification = reader.readLine();
         if (!verification.equals("accepted")) {
-            System.err.println("Server verification failed");
+            log("Server verification failed");
             dialogBoxes.IOConnectionAlert(hostname, port); // troll
             return;
         }
@@ -81,7 +81,7 @@ public class Client extends Application {
         // Account login
         boolean askRegister;
         do {
-            log("ask register");
+            log("Asking user to login or register...");
             int registerStatus = dialogBoxes.askRegister();
             if (registerStatus == 0) askRegister = handleLoginQuery();
             else if (registerStatus == 1) askRegister = handleRegisterQuery();
@@ -91,7 +91,8 @@ public class Client extends Application {
                 System.exit(0);
                 return;
             }
-            System.out.println(askRegister);
+            if (askRegister) log("Registration cancelled");
+            else log("Login cancelled");
         } while (askRegister);
 
         String connectedUsers = reader.readLine();
@@ -108,7 +109,7 @@ public class Client extends Application {
      * Attempts a connection to the specified server.
      * @return true if the connection was successful, false otherwise.
      */
-    public boolean connect(Pair<String, Integer> connectionInfo) throws IOException {
+    public boolean connect(Pair<String, Integer> connectionInfo) {
         if (connectionInfo.getValue() > 65535 || connectionInfo.getValue() < 0) {
             dialogBoxes.invalidPortAlert();
             return false;
@@ -127,13 +128,13 @@ public class Client extends Application {
     }
 
     /**
-     * Logs a message to the log file and prints it to the console.
-     * @param message the message to log.
+     * Logs an event to the log file and prints it to the console.
+     * @param event the event to log.
      * @throws IOException if an I/O error occurs when writing to the log file.
      */
-    public void log(String message) throws IOException {
-        fileWriter.append("\n").append(message);
-        if (debugMode) System.out.printf("%s\n", message);
+    public void log(String event) throws IOException {
+        fileWriter.append(String.format("[%s] %s\n", java.time.LocalDateTime.now(), event));
+        if (debugMode) System.out.printf("%s\n", event);
     }
 
     /**
@@ -206,11 +207,19 @@ public class Client extends Application {
                 return true; // Return to askRegister dialog
             }
             response = reader.readLine();
-            if (response.equals("badLogin")) dialogBoxes.badLoginAlert(); // If login failed
+            // If login failed
+            if (response.equals("badLogin")) {
+                dialogBoxes.badLoginAlert();
+                log("Login failed");
+            }
         }
         return false;
     }
 
+    /**
+     * Main method for the client.
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
         launch();
     }

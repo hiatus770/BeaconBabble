@@ -89,7 +89,6 @@ public class DialogBoxes {
      * @return an array of strings containing the username and password
      */
     public Optional<Pair<String, String>> register() {
-        String[] registerInfo = new String[2];
         Dialog<Pair<String, String>> registerDialog = new Dialog<>();
         registerDialog.setTitle("Register");
         registerDialog.setHeaderText("Enter a username and password.");
@@ -144,7 +143,6 @@ public class DialogBoxes {
      * @return an array of strings containing the username and password
      */
     public Optional<Pair<String, String>> login() {
-        String[] loginInfo = new String[2];
         Dialog<Pair<String, String>> loginDialog = new Dialog<>();
         loginDialog.setTitle("Log In");
         loginDialog.setHeaderText("Enter a username and password.");
@@ -170,9 +168,7 @@ public class DialogBoxes {
         Node loginButton = loginDialog.getDialogPane().lookupButton(loginButtonType);
         loginButton.setDisable(true);
         // Do not allow the user to register if the username is blank
-        usernameField.textProperty().addListener((observable, oldValue, newValue) -> {
-            loginButton.setDisable(newValue.trim().isEmpty());
-        });
+        usernameField.textProperty().addListener((observable, oldValue, newValue) -> loginButton.setDisable(newValue.trim().isEmpty()));
 
         loginDialog.getDialogPane().setContent(gridPane);
         Platform.runLater(usernameField::requestFocus);
@@ -187,7 +183,7 @@ public class DialogBoxes {
 
     /**
      * Asks the user if they want to register an account.
-     * @return true if the user wants to register an account, false otherwise.
+     * @return 0 if the user wants to login, 1 if the user wants to register.
      */
     public int askRegister() {
         Dialog<Integer> registerDialog = new Dialog<>();
